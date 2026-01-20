@@ -4,6 +4,7 @@ Updated for future-proof deployment to any host.
 """
 
 from pathlib import Path
+from decouple import config
 import os
 
 # ===========================
