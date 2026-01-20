@@ -21,7 +21,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 SECRET_KEY = 'django-insecure-e9rbd-kyn054u61iq6*awpddr*znuq4pc0@eal&$61hth@==73'
-DEBUG = True
+DEBUG = False
 ALLOWED_HOSTS = ['callsoso.wasmer.app', '127.0.0.1', 'localhost']  # Add ['*'] or your domain for production
 
 
