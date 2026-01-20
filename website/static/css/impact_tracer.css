@@ -1,0 +1,240 @@
+/* ================================
+   Impact Tracker - Soso Style (With Forest Dashboard)
+   ================================ */
+
+   :root {
+    --green-dark: #0d4d40;
+    --green-accent: #12b981;
+    --earth-brown: #8b5a3c;
+    --clay-orange: #c56a3d;
+    --cream-light: #f2f6f1;
+    --white-soft: #ffffff;
+    --grey-muted: #9aa59d;
+  
+    --radius-lg: 18px;
+    --radius-md: 12px;
+  
+    --shadow-soft: 0 8px 18px rgba(0,0,0,0.05);
+    --shadow-hover: 0 14px 30px rgba(0,0,0,0.12);
+  }
+  
+  /* Page Container */
+  .impact-tracker-page {
+    font-family: 'Open Sans', sans-serif;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+    color: var(--green-dark);
+  }
+  
+  /* HERO */
+  .tracker-hero {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+  
+  .tracker-hero h1 {
+    font-size: 2.6rem;
+    font-weight: 700;
+    color: var(--earth-brown);
+    margin-bottom: 0.5rem;
+  }
+  
+  .tracker-hero .lead {
+    font-size: 1.2rem;
+    color: #444;
+  }
+  
+  .tracker-hero .subtext {
+    font-size: 0.95rem;
+    color: #555;
+    margin-top: 0.5rem;
+  }
+  
+  /* Controls */
+  .tracker-controls {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+  
+  .tracker-controls select,
+  .tracker-controls .btn-secondary {
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius-md);
+    font-size: 0.95rem;
+    border: 1px solid var(--green-accent);
+  }
+  
+  .tracker-controls select:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(18,185,129,0.2);
+  }
+  
+  .tracker-controls .btn-secondary {
+    background: var(--white-soft);
+    color: var(--green-dark);
+    border: 1.5px solid var(--green-accent);
+    font-weight: 600;
+    transition: all 0.25s ease;
+  }
+  
+  .tracker-controls .btn-secondary:hover {
+    background-color: var(--green-accent);
+    color: var(--white-soft);
+  }
+  
+  /* Forest Summary Panel */
+  .forest-summary {
+    margin: 2rem auto;
+    text-align: center;
+  }
+  
+  .forest-summary h4 {
+    font-weight: 600;
+    color: var(--green-dark);
+    margin-bottom: 1rem;
+  }
+  
+  .summary-bars {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  
+  .summary-bar {
+    text-align: center;
+  }
+  
+  .summary-bar span {
+    display: block;
+    font-size: 0.85rem;
+    color: var(--green-dark);
+    margin-bottom: 0.3rem;
+  }
+  
+  .summary-bar .bar {
+    height: 18px;
+    background-color: var(--green-accent);
+    border-radius: var(--radius-md);
+    transition: width 1s ease-in-out;
+    color: var(--white-soft);
+    font-size: 0.8rem;
+    line-height: 18px;
+    font-weight: 600;
+  }
+  
+  /* Forest Grid */
+  .forest-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+  }
+  
+  /* Seed Cards */
+  .seed-card {
+    background: var(--cream-light);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+    text-align: center;
+    box-shadow: var(--shadow-soft);
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .seed-card h4 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--green-dark);
+    margin: 0.5rem 0;
+  }
+  
+  .seed-card p {
+    font-size: 0.9rem;
+    color: #444;
+    margin: 0.5rem 0;
+  }
+  
+  .seed-card .planted-date {
+    font-size: 0.85rem;
+    color: var(--grey-muted);
+  }
+  
+  .seed-card .microcopy {
+    font-size: 0.8rem;
+    color: var(--green-accent);
+    margin-top: 0.5rem;
+    font-style: italic;
+  }
+  
+  .seed-icon {
+    width: 50px;
+    height: 50px;
+    margin: 0 auto 10px;
+    background: url('../images/seed.png') no-repeat center center;
+    background-size: contain;
+  }
+  
+  /* Growth Stage Colors */
+  .seed-card.stage-1 { border-top: 4px solid #a5d6a7; transform: scale(0.8); }
+  .seed-card.stage-2 { border-top: 4px solid #81c784; transform: scale(0.9); }
+  .seed-card.stage-3 { border-top: 4px solid #4caf50; transform: scale(1); }
+  .seed-card.stage-4 { border-top: 4px solid #388e3c; transform: scale(1.1); }
+  .seed-card.stage-5 { border-top: 4px solid #1b5e20; transform: scale(1.2); }
+  
+  /* Quick Actions */
+  .tracker-actions {
+    margin-top: 2rem;
+    text-align: center;
+  }
+  
+  .tracker-actions .btn-primary {
+    background-color: var(--green-accent);
+    color: var(--white-soft);
+    border-radius: var(--radius-md);
+    padding: 0.5rem 1.2rem;
+    font-weight: 600;
+    margin: 0.25rem;
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.25s ease;
+  }
+  
+  .tracker-actions .btn-primary:hover {
+    background-color: #0fae73;
+  }
+  
+  .tracker-actions .btn-outline-primary {
+    border: 1.5px solid var(--green-accent);
+    color: var(--green-dark);
+    border-radius: var(--radius-md);
+    padding: 0.5rem 1.2rem;
+    font-weight: 600;
+    margin: 0.25rem;
+    transition: all 0.25s ease;
+  }
+  
+  .tracker-actions .btn-outline-primary:hover {
+    background-color: var(--green-accent);
+    color: var(--white-soft);
+  }
+  
+  /* Responsive */
+  @media (max-width: 768px) {
+    .tracker-controls {
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .forest-grid {
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    }
+    .summary-bars {
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+  

@@ -1,0 +1,59 @@
+{% extends "website/base.html" %}
+{% load static %}
+
+{% block title %}Demand Listings{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/demand.css' %}">
+
+<div class="container mt-4 demand-list-container">
+    <h2 class="mb-4">📋 My Demand Listings</h2>
+
+    <div class="mb-3 text-center">
+        <a href="{% url 'demand_create' %}" class="btn btn-success">➕ Add New Demand</a>
+    </div>
+
+    <!-- SEARCH & FILTERS -->
+    <section class="search-filters mb-4">
+        <form method="GET" class="d-flex flex-wrap gap-2 justify-content-center">
+            <input type="text" name="q" class="form-control" placeholder="Search requests..." value="{{ request.GET.q|default:'' }}">
+            
+            <select name="material_wanted" class="form-select">
+                <option value="">All Materials</option>
+                <option value="wood" {% if request.GET.material_wanted == 'wood' %}selected{% endif %}>Wood</option>
+                <option value="metal" {% if request.GET.material_wanted == 'metal' %}selected{% endif %}>Metal</option>
+                <option value="textiles" {% if request.GET.material_wanted == 'textiles' %}selected{% endif %}>Textiles</option>
+            </select>
+
+            <select name="location" class="form-select">
+                <option value="">All Locations</option>
+                <option value="Milton Keynes" {% if request.GET.location == 'Milton Keynes' %}selected{% endif %}>Milton Keynes</option>
+                <option value="London" {% if request.GET.location == 'London' %}selected{% endif %}>London</option>
+            </select>
+
+            <button type="submit" class="btn btn-secondary">🔍 Search</button>
+        </form>
+    </section>
+
+    {% if listings %}
+        <ul class="list-group demand-list">
+            {% for demand in listings %}
+                <li class="list-group-item">
+                    <strong>{{ demand.org }}</strong> is looking for 
+                    <em>{{ demand.material_wanted }}</em> — 
+                    <span class="text-muted">{{ demand.quantity_needed }} units</span> 
+                    in <strong>{{ demand.location }}</strong>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <div class="alert alert-info mt-3 text-center">
+            No demand listings found.
+        </div>
+    {% endif %}
+
+    <div class="mt-4 text-center">
+        <a href="{% url 'directory_home' %}" class="btn btn-secondary">🔙 Back to Directory Home</a>
+    </div>
+</div>
+{% endblock %}

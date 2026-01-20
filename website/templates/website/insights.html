@@ -1,0 +1,135 @@
+{% extends "website/base.html" %}
+{% load static %}
+
+{% block title %}Insights - Call Soso{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/insights.css' %}">
+
+<!-- HERO -->
+<header class="insights-hero">
+  <h1>Insights & Knowledge</h1>
+  <p class="subtitle">Stay updated with Call Soso’s research, opinion, and circular economy innovations.</p>
+  <p class="microcopy">“Circularity begins with attention.”</p>
+</header>
+
+<div class="insights-container">
+
+  <!-- SIDEBAR FILTERS -->
+  <aside class="insights-sidebar">
+      <div class="popular-section">
+          <h3>Filter by Type</h3>
+          <ul id="filter-tabs">
+              <li class="active" data-filter="all">All</li>
+              <li data-filter="research">Research</li>
+              <li data-filter="opinion">Opinion</li>
+              <li data-filter="circular-economy">Circular Economy</li>
+              <li data-filter="case-studies">Case Studies</li>
+              <li id="clear-filters">Clear Filters</li>
+          </ul>
+      </div>
+
+      <div class="popular-section">
+          <h3>Most Popular This Week</h3>
+          <ul>
+              {% for item in popular %}
+              <li>
+                  <a href="{{ item.get_absolute_url|default:'#' }}">{{ item.title }}</a>
+                  {% if item.published_date %}
+                  <div class="date">{{ item.published_date|date:"jS M, Y" }}</div>
+                  {% endif %}
+              </li>
+              {% empty %}
+              <li>No popular items yet.</li>
+              {% endfor %}
+          </ul>
+      </div>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="insights-main">
+      {% for category, articles in categories_dict.items %}
+      <section class="category-section" data-category="{{ category|slugify }}">
+          <h2 class="category-title">{{ category }}</h2>
+          <div class="articles-grid">
+              {% if articles %}
+                  {% for article in articles %}
+                  <article class="article-card">
+                      <div class="image-container">
+                          <img src="{% if article.display_image %}{{ article.display_image }}{% else %}{% static 'images/placeholder.jpg' %}{% endif %}" alt="{{ article.title|default:'Article image' }}">
+                      </div>
+                      <div class="article-content">
+                          <h4><a href="{{ article.get_absolute_url|default:'#' }}">{{ article.title }}</a></h4>
+                          {% if article.published_date %}
+                          <div class="date">{{ article.published_date|date:"jS F, Y" }}</div>
+                          {% endif %}
+                          <div class="categories">
+                            {% if article.categories %}{{ article.categories|join:" / " }}{% endif %}
+                          </div>
+                          <p class="excerpt">
+                            {% if article.excerpt %}{{ article.excerpt|truncatewords:28 }}
+                            {% elif article.summary %}{{ article.summary|truncatewords:28 }}
+                            {% elif article.body %}{{ article.body|striptags|truncatewords:28 }}
+                            {% else %}No description available.{% endif %}
+                          </p>
+                          <a class="read-more" href="{{ article.get_absolute_url|default:'#' }}">Read more →</a>
+                      </div>
+                  </article>
+                  {% endfor %}
+              {% else %}
+                  <p>No articles found in this category.</p>
+              {% endif %}
+          </div>
+          <a href="#" class="see-more-btn">SEE MORE</a>
+      </section>
+      {% empty %}
+        <p>No categories found yet.</p>
+      {% endfor %}
+  </main>
+
+</div>
+
+<!-- JS for category filtering -->
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const tabs = document.querySelectorAll('#filter-tabs li[data-filter]');
+    const sections = document.querySelectorAll('.category-section');
+    const clearBtn = document.getElementById('clear-filters');
+
+    function setActiveTab(clicked) {
+      tabs.forEach(t => t.classList.remove('active'));
+      clicked.classList.add('active');
+    }
+
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            const filter = tab.getAttribute('data-filter');
+            setActiveTab(tab);
+            sections.forEach(sec => {
+                if (filter === 'all') {
+                    sec.style.display = 'block';
+                } else {
+                    const secCategory = sec.getAttribute('data-category');
+                    // Show if section matches filter
+                    if (secCategory === filter) {
+                        sec.style.display = 'block';
+                    } else {
+                        sec.style.display = 'none';
+                    }
+                }
+            });
+            document.querySelector('.insights-main').scrollIntoView({ behavior: 'smooth' });
+        });
+    });
+
+    if (clearBtn) {
+        clearBtn.addEventListener('click', () => {
+            sections.forEach(sec => sec.style.display = 'block');
+            tabs.forEach(t => t.classList.remove('active'));
+            // Activate 'All' tab
+            document.querySelector('#filter-tabs li[data-filter="all"]').classList.add('active');
+        });
+    }
+});
+</script>
+{% endblock %}

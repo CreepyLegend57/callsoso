@@ -1,0 +1,72 @@
+{% extends "website/base.html" %}
+{% load static %}
+{% block title %}Material & Edible Loops{% endblock %}
+
+{% block content %}
+<h1>Material & Edible Loops 🌱</h1>
+<p>Learn how resources are circulated and reused in our community.</p>
+
+<div class="loops-container">
+
+    <!-- Material Loop -->
+    <div class="loop-card" id="material-loop">
+        <h2>Material Loop ♻️</h2>
+        <p>Track the flow of materials from production to reuse and recycling.</p>
+        <img src="{% static 'images/material-loop.png' %}" alt="Material Loop Diagram" class="loop-img">
+        <ul class="loop-steps">
+            <li data-step="1">Collection of used materials</li>
+            <li data-step="2">Sorting & processing</li>
+            <li data-step="3">Manufacturing into new products</li>
+            <li data-step="4">Distribution & use</li>
+            <li data-step="5">Return for reuse or recycling</li>
+        </ul>
+    </div>
+
+    <!-- Edible Loop -->
+    <div class="loop-card" id="edible-loop">
+        <h2>Edible Loop 🍎</h2>
+        <p>Reduce food waste by circulating edible resources back to the community.</p>
+        <img src="{% static 'images/edible-loop.png' %}" alt="Edible Loop Diagram" class="loop-img">
+        <ul class="loop-steps">
+            <li data-step="1">Surplus food collection</li>
+            <li data-step="2">Inspection & sorting</li>
+            <li data-step="3">Redistribution to communities</li>
+            <li data-step="4">Consumption & feedback</li>
+            <li data-step="5">Composting for remaining waste</li>
+        </ul>
+    </div>
+
+</div>
+
+<!-- Inline JS for interactivity -->
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const loopCards = document.querySelectorAll('.loop-card');
+
+    loopCards.forEach(card => {
+        const steps = card.querySelectorAll('.loop-steps li');
+
+        steps.forEach(step => {
+            step.addEventListener('mouseover', () => {
+                step.style.backgroundColor = '#ffecb3';
+                step.style.transform = 'scale(1.05)';
+            });
+            step.addEventListener('mouseout', () => {
+                step.style.backgroundColor = '#fff';
+                step.style.transform = 'scale(1)';
+            });
+        });
+
+        const img = card.querySelector('.loop-img');
+        img.addEventListener('click', () => {
+            img.classList.toggle('enlarge');
+        });
+    });
+});
+</script>
+
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/loops.css' %}">
+{% endblock %}

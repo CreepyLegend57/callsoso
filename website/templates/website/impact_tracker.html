@@ -1,0 +1,172 @@
+{% extends "website/base.html" %}
+{% load static %}
+
+{% block title %}Impact Tracker - Call Soso{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/impact_tracker.css' %}">
+{% endblock %}
+
+{% block content %}
+<main class="impact-tracker-page">
+
+  <!-- HERO -->
+  <header class="tracker-hero text-center">
+    <h1>Call Soso Forest 🌱</h1>
+    <p class="lead">Each collaboration plants a new seed. Track our growth and impact!</p>
+    <p class="subtext">Hover over a seed to watch it flourish and see details.</p>
+
+    <!-- Filter / Sort Controls -->
+    <div class="tracker-controls">
+      <select id="filter-stage">
+        <option value="all">All Growth Stages</option>
+        <option value="1">Stage 1 - Seedling</option>
+        <option value="2">Stage 2 - Sprout</option>
+        <option value="3">Stage 3 - Young Plant</option>
+        <option value="4">Stage 4 - Mature Plant</option>
+        <option value="5">Stage 5 - Blooming Tree</option>
+      </select>
+
+      <select id="sort-seeds">
+        <option value="date-desc">Newest First</option>
+        <option value="date-asc">Oldest First</option>
+        <option value="name-asc">Name A → Z</option>
+        <option value="name-desc">Name Z → A</option>
+      </select>
+
+      <button id="reset-filters" class="btn-secondary">Reset</button>
+    </div>
+  </header>
+
+  <!-- Forest Summary Panel -->
+  <section class="forest-summary text-center">
+    <h4>🌳 Forest Growth Summary</h4>
+    <div class="summary-bars">
+      <div class="summary-bar stage-1">
+        <span>Seedlings</span>
+        <div class="bar" data-count="{{ summary.stage_1 }}">0</div>
+      </div>
+      <div class="summary-bar stage-2">
+        <span>Sprouts</span>
+        <div class="bar" data-count="{{ summary.stage_2 }}">0</div>
+      </div>
+      <div class="summary-bar stage-3">
+        <span>Young Plants</span>
+        <div class="bar" data-count="{{ summary.stage_3 }}">0</div>
+      </div>
+      <div class="summary-bar stage-4">
+        <span>Mature Plants</span>
+        <div class="bar" data-count="{{ summary.stage_4 }}">0</div>
+      </div>
+      <div class="summary-bar stage-5">
+        <span>Blooming Trees</span>
+        <div class="bar" data-count="{{ summary.stage_5 }}">0</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Forest Grid -->
+  <section class="forest-grid">
+    {% for col in collaborations %}
+    <div class="seed-card stage-{{ col.growth_stage }}" 
+         data-stage="{{ col.growth_stage }}" 
+         data-name="{{ col.name }}" 
+         data-date="{{ col.planted_date }}">
+      <div class="seed-icon"></div>
+      <h4>{{ col.name }}</h4>
+      <p>{{ col.description|truncatechars:100 }}</p>
+      <span class="planted-date">Planted: {{ col.planted_date }}</span>
+      <div class="microcopy">Growth stage: {{ col.growth_stage }}</div>
+    </div>
+    {% empty %}
+    <p class="no-seeds">No collaborations yet. Be the first to plant a seed!</p>
+    {% endfor %}
+  </section>
+
+  <!-- Quick Actions -->
+  <section class="tracker-actions text-center">
+    <a href="#" class="btn btn-primary">➕ Plant a Seed</a>
+    <a href="#" class="btn btn-outline-primary">📄 Export Impact Data</a>
+  </section>
+
+</main>
+
+<!-- JS for interactivity -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const scaleMap = {1:0.8, 2:0.9, 3:1, 4:1.1, 5:1.2};
+  const cards = Array.from(document.querySelectorAll('.seed-card'));
+  const forestGrid = document.querySelector('.forest-grid');
+
+  // Hover animation
+  cards.forEach(card => {
+    card.addEventListener('mouseover', () => {
+      let stage = card.dataset.stage;
+      card.style.transform = `scale(${1 + stage*0.05})`;
+      card.style.boxShadow = '0 10px 25px rgba(0,0,0,0.2)';
+    });
+    card.addEventListener('mouseout', () => {
+      let stage = card.dataset.stage;
+      card.style.transform = `scale(${scaleMap[stage]})`;
+      card.style.boxShadow = 'var(--shadow-soft)';
+    });
+  });
+
+  // Filter & Sort
+  const filterSelect = document.getElementById('filter-stage');
+  const sortSelect = document.getElementById('sort-seeds');
+  const resetBtn = document.getElementById('reset-filters');
+
+  function renderCards(filtered) {
+    forestGrid.innerHTML = '';
+    filtered.forEach(card => forestGrid.appendChild(card));
+  }
+
+  function filterAndSort() {
+    let filtered = cards;
+
+    // Filter by stage
+    const stage = filterSelect.value;
+    if(stage !== 'all'){
+      filtered = filtered.filter(c => c.dataset.stage === stage);
+    }
+
+    // Sort
+    const sortVal = sortSelect.value;
+    filtered.sort((a,b) => {
+      if(sortVal.startsWith('date')){
+        let aDate = new Date(a.dataset.date);
+        let bDate = new Date(b.dataset.date);
+        return sortVal.endsWith('desc') ? bDate - aDate : aDate - bDate;
+      } else if(sortVal.startsWith('name')){
+        return sortVal.endsWith('asc') ? 
+          a.dataset.name.localeCompare(b.dataset.name) : 
+          b.dataset.name.localeCompare(a.dataset.name);
+      }
+    });
+
+    renderCards(filtered);
+  }
+
+  filterSelect.addEventListener('change', filterAndSort);
+  sortSelect.addEventListener('change', filterAndSort);
+  resetBtn.addEventListener('click', () => {
+    filterSelect.value = 'all';
+    sortSelect.value = 'date-desc';
+    renderCards(cards);
+  });
+
+  // Animate Forest Summary Bars
+  const bars = document.querySelectorAll('.summary-bar .bar');
+  bars.forEach(bar => {
+    let count = parseInt(bar.dataset.count);
+    bar.style.width = '0';
+    setTimeout(() => {
+      bar.style.width = `${count * 15}px`; // multiply for visual width
+      bar.innerText = count;
+    }, 100);
+  });
+
+});
+</script>
+{% endblock %}

@@ -1,0 +1,116 @@
+{% extends "website/base.html" %}
+{% load static %}
+
+{% block title %}Contact – Call Soso{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/contact.css' %}">
+{% endblock %}
+
+{% block content %}
+<main class="contact-page">
+
+  <!-- =========================
+       HERO
+  ========================= -->
+  <header class="contact-header">
+    <div class="hero-inner">
+      <span class="hero-eyebrow">Reach Out</span>
+      <h1>Let's Work in Resonance</h1>
+      <p>Reach out for partnerships, collaborations, commissions, or to join our circular movement.</p>
+    </div>
+  </header>
+
+  <!-- =========================
+       LAYOUT GRID
+  ========================= -->
+  <section class="contact-layout">
+
+    <!-- =========================
+         CONTACT FORM
+    ========================= -->
+    <div class="contact-form-section">
+      {% if success_message %}
+      <div class="form-success">
+        <p>{{ success_message }}</p>
+      </div>
+      {% endif %}
+
+      <form method="POST" novalidate class="contact-form">
+        {% csrf_token %}
+
+        <div class="form-group">
+          <label for="name">Name <span class="required">*</span></label>
+          <input type="text" name="name" id="name" required placeholder="Your full name">
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email <span class="required">*</span></label>
+          <input type="email" name="email" id="email" required placeholder="you@example.com">
+        </div>
+
+        <div class="form-group">
+          <label for="organization">Organization</label>
+          <input type="text" name="organization" id="organization" placeholder="Optional">
+        </div>
+
+        <div class="form-group">
+          <label for="inquiry_type">Inquiry Type <span class="required">*</span></label>
+          <select name="inquiry_type" id="inquiry_type" required>
+            <option value="General">General</option>
+            <option value="Virtual hub audit">Virtual hub audit</option>
+            <option value="Collaboration / Partnership">Collaboration / Partnership</option>
+            <option value="Commission / Project">Commission / Project</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="message">Message <span class="required">*</span></label>
+          <textarea name="message" id="message" rows="6" required placeholder="Write your message here..."></textarea>
+        </div>
+
+        <button type="submit" class="btn-primary">Send Message</button>
+      </form>
+    </div>
+
+    <!-- =========================
+         SIDEBAR / INFO
+    ========================= -->
+    <aside class="contact-aside">
+      <div class="aside-block contact-info">
+        <h5>Contact Details</h5>
+        <ul>
+          <li><strong>Email:</strong> <a href="mailto:hello@callsoso.com">hello@callsoso.com</a></li>
+          <li><strong>Phone:</strong> <a href="tel:+441234567890">+44 1234 567 890</a></li>
+          <li><strong>Address:</strong> Call Soso HQ, Milton Keynes, UK</li>
+        </ul>
+      </div>
+
+      <div class="aside-cta">
+        <h5>Stay Connected</h5>
+        <p>Sign up to receive updates, stories, and impact reports from Call Soso.</p>
+        <a href="{% url 'signup' %}" class="cta-btn">Join the list</a>
+      </div>
+
+      <div class="aside-socials">
+        <h5>Follow us</h5>
+        <ul>
+          <li><a href="https://www.instagram.com/callsoso" target="_blank">Instagram</a></li>
+          <li><a href="https://www.linkedin.com/company/callsoso" target="_blank">LinkedIn</a></li>
+        </ul>
+      </div>
+    </aside>
+
+  </section>
+
+  <!-- =========================
+       MICROCOPY / FOOTNOTES
+  ========================= -->
+  <section class="contact-microcopy">
+    <p><em>Virtual hub? Book an audit via our form above.</em></p>
+    <p>Interested in volunteering or joining an open call? <a href="{% url 'signup' %}">Sign up</a> to our community.</p>
+  </section>
+
+</main>
+{% endblock %}

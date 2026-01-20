@@ -1,0 +1,351 @@
+/* ================================
+   Directory Page – Soso Design
+   ================================ */
+
+/* ================================
+   Root Colors & Variables
+   ================================ */
+   :root {
+    --green-dark: #0d4d40;
+    --green-accent: #12b981;
+    --earth-brown: #8b5a3c;
+    --clay-orange: #c56a3d;
+    --cream-light: #f2f6f1;
+    --white-soft: #ffffff;
+    --grey-muted: #9aa59d;
+  
+    --radius-lg: 18px;
+    --radius-md: 12px;
+  
+    --shadow-soft: 0 8px 18px rgba(0,0,0,0.05);
+    --shadow-hover: 0 14px 30px rgba(0,0,0,0.12);
+  }
+  
+  /* ================================
+     Page Container
+     ================================ */
+  .directory-page {
+    font-family: 'Open Sans', sans-serif;
+    color: var(--green-dark);
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+  }
+  
+  /* ================================
+     HERO / INTRO
+     ================================ */
+  .directory-hero {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+  
+  .directory-hero h1 {
+    font-size: 2.8rem;
+    font-weight: 700;
+    color: var(--earth-brown);
+    margin-bottom: 0.5rem;
+  }
+  
+  .directory-hero .lead {
+    font-size: 1.2rem;
+    color: #555;
+    margin-bottom: 0.5rem;
+  }
+  
+  .directory-hero .intro-text {
+    font-size: 1rem;
+    color: #555;
+    margin: 1rem 0;
+  }
+  
+  .directory-hero .directory-intro-list,
+  .directory-hero .directory-audience {
+    list-style: disc inside;
+    padding-left: 0;
+    margin: 0.75rem 0;
+    color: #555;
+    font-size: 0.95rem;
+  }
+  
+  .directory-hero .directory-intro-list li,
+  .directory-hero .directory-audience li {
+    margin-bottom: 0.25rem;
+  }
+  
+  .directory-hero .subtext {
+    font-size: 0.95rem;
+    color: #555;
+    margin-top: 1rem;
+  }
+  
+  .soft-motion-text {
+    margin-top: 1rem;
+    font-size: 0.9rem;
+    color: var(--green-accent);
+  }
+  
+  .soft-motion-text span {
+    display: block;
+    opacity: 0.6;
+    margin-bottom: 0.2rem;
+    font-style: italic;
+    animation: floatText 6s ease-in-out infinite alternate;
+  }
+  
+  @keyframes floatText {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-3px); }
+    100% { transform: translateY(0px); }
+  }
+  
+  /* ================================
+     Filters / Search
+     ================================ */
+  .directory-filters {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+  
+  .directory-filters input,
+  .directory-filters select {
+    padding: 0.6rem 1rem;
+    border-radius: var(--radius-md);
+    border: 1px solid #ccc;
+    font-size: 0.95rem;
+    min-width: 200px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .directory-filters input:focus,
+  .directory-filters select:focus {
+    border-color: var(--green-accent);
+    box-shadow: 0 0 0 3px rgba(18,185,129,0.2);
+    outline: none;
+  }
+  
+  /* ================================
+     Loops Grid
+     ================================ */
+  .loops-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    justify-content: center;
+    margin-top: 2rem;
+  }
+  
+  .loop-card {
+    background: var(--cream-light);
+    border-radius: var(--radius-lg);
+    padding: 2rem 1.5rem;
+    width: 320px;
+    text-align: center;
+    box-shadow: var(--shadow-soft);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .loop-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-hover);
+  }
+  
+  .loop-card h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 1rem 0 0.5rem 0;
+    color: var(--green-dark);
+  }
+  
+  .loop-card .loop-subtitle {
+    font-size: 0.95rem;
+    font-style: italic;
+    color: #555;
+    margin-bottom: 0.75rem;
+  }
+  
+  .loop-card .loop-intro {
+    font-size: 0.95rem;
+    color: #444;
+    margin-bottom: 1rem;
+  }
+  
+  .loop-card .loop-icon {
+    max-height: 60px;
+    margin-bottom: 1rem;
+  }
+  
+  .loop-card h4 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--green-dark);
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .loop-card ul {
+    list-style: disc inside;
+    padding-left: 0;
+    font-size: 0.9rem;
+    color: #555;
+    margin-bottom: 1rem;
+  }
+  
+  .loop-card ul li {
+    margin-bottom: 0.25rem;
+  }
+  
+  /* Loop buttons */
+  .loop-cta a {
+    margin: 0.25rem;
+    border-radius: var(--radius-md);
+    padding: 0.5rem 1.2rem;
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.3s ease;
+  }
+  
+  .loop-cta .btn-primary {
+    background-color: var(--green-accent);
+    color: var(--white-soft);
+    border: none;
+  }
+  
+  .loop-cta .btn-primary:hover {
+    background-color: #0fae73;
+  }
+  
+  .loop-cta .btn-outline-primary {
+    border: 1.5px solid var(--green-accent);
+    color: var(--green-accent);
+  }
+  
+  .loop-cta .btn-outline-primary:hover {
+    background-color: var(--green-accent);
+    color: var(--white-soft);
+  }
+  
+  .loop-cta .btn-outline-secondary {
+    border: 1.5px solid var(--green-dark);
+    color: var(--green-dark);
+  }
+  
+  .loop-cta .btn-outline-secondary:hover {
+    background-color: var(--green-dark);
+    color: var(--white-soft);
+  }
+  
+  /* Microcopy */
+  .loop-microcopy {
+    margin-top: 0.75rem;
+    font-size: 0.85rem;
+    color: var(--green-accent);
+  }
+  
+  .loop-microcopy span {
+    display: block;
+    opacity: 0.6;
+    margin-bottom: 0.15rem;
+    font-style: italic;
+  }
+  
+  /* ================================
+     Quick Actions
+     ================================ */
+  .directory-actions {
+    text-align: center;
+    margin-top: 3rem;
+  }
+  
+  .directory-actions h4 {
+    font-weight: 600;
+    color: var(--green-dark);
+    margin-bottom: 1rem;
+  }
+  
+  .actions-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+  }
+  
+  .actions-grid .btn-secondary {
+    background-color: var(--white-soft);
+    border: 1.5px solid var(--green-accent);
+    color: var(--green-dark);
+    border-radius: var(--radius-md);
+    padding: 0.45rem 1.2rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+  }
+  
+  .actions-grid .btn-secondary:hover {
+    background-color: var(--green-accent);
+    color: var(--white-soft);
+  }
+  
+  /* ================================
+     Role Info / Tips Section
+     ================================ */
+  .directory-info {
+    background: var(--cream-light);
+    border-left: 6px solid var(--green-accent);
+    border-radius: var(--radius-md);
+    max-width: 750px;
+    margin: 2rem auto 0 auto;
+    padding: 1.5rem;
+    box-shadow: var(--shadow-soft);
+  }
+  
+  .directory-info h4 {
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+    color: var(--green-dark);
+  }
+  
+  .directory-info .info-list {
+    list-style: disc inside;
+    padding-left: 0;
+  }
+  
+  .directory-info .info-list li {
+    margin-bottom: 0.5rem;
+    font-size: 0.95rem;
+    color: #444;
+  }
+  
+  .directory-info a {
+    color: var(--green-accent);
+    text-decoration: underline;
+  }
+  
+  .directory-info a:hover {
+    text-decoration: none;
+    color: var(--green-dark);
+  }
+  
+  /* ================================
+     Responsive
+     ================================ */
+  @media (max-width: 900px) {
+    .loops-grid {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .actions-grid {
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+  
+    .directory-filters {
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+  }
+  

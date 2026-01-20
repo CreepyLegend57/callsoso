@@ -1,0 +1,283 @@
+{% extends "website/base.html" %}
+{% load static %}
+{% block title %}Home - Call Soso{% endblock %}
+
+{% block content %}
+
+<!-- Link homepage-specific CSS -->
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
+
+<!-- HERO SECTION -->
+<header class="hero bg-earth-brown text-cream-light">
+    <div class="hero-overlay max-w-screen-xl mx-auto px-4 py-32 text-center">
+        <h1 class="hero-title text-5xl md:text-6xl font-bold">Call Soso</h1>
+        <p class="hero-subtitle text-xl md:text-2xl mt-4">Circularity in Resonance</p>
+        <p class="mt-6 text-green-accent font-semibold">
+            Transforming surplus into opportunity, creativity, and community impact.
+        </p>
+        <a href="#intro" class="scroll-down mt-12 inline-block text-2xl text-cream-light hover:text-green-accent transition">↓ Enter</a>
+    </div>
+</header>
+
+<!-- INTRO / ABSTRACT ECOLOGY SCROLL -->
+<section id="intro" class="abstract-ecology bg-cream-light py-16">
+    <div class="max-w-screen-xl mx-auto px-4 text-center text-green-dark">
+        <p class="intro-text text-xl md:text-2xl">
+            Textures shifting from material, food, color, earth, and pattern. A living world built from the overlooked.
+        </p>
+    </div>
+</section>
+
+<!-- SECTION 1: THE GARDENS / WOODLAND -->
+<section id="gardens" class="gardens bg-clay-orange py-20 text-cream-light">
+    <div class="max-w-screen-xl mx-auto px-4 text-center">
+        <h2 class="text-4xl font-bold mb-6">The Gardens / The Woodland</h2>
+        <p class="mb-6 text-lg md:text-xl">
+            An abstract creative ecology where materials and ideas grow into real-world impact.
+            Seeded business cards become a physical act of planting, while our online tracker shows projects thriving.
+        </p>
+        <a href="{% url 'impact_tracker' %}" class="btn-primary">Track Your Impact</a>
+    </div>
+</section>
+
+<!-- SECTION 2: THE INVITATION -->
+<section id="invitation" class="invitation bg-earth-brown py-16 text-cream-light">
+    <div class="max-w-screen-xl mx-auto px-4 text-center">
+        <h2 class="text-3xl md:text-4xl font-bold mb-4">Step Inside the CallSoso Ecosystem</h2>
+        <p class="text-lg md:text-xl">
+            A space where circularity becomes movement, meaning, and momentum.
+        </p>
+    </div>
+</section>
+
+<!-- SECTION 3: PATHWAYS -->
+<section id="pathways" class="pathways bg-cream-light py-20 text-green-dark">
+    <div class="max-w-screen-xl mx-auto px-4">
+        <h2 class="text-4xl font-bold mb-10 text-center">Explore Our Pathways</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <a href="{% url 'about' %}" class="tile bg-earth-brown text-cream-light p-6 rounded-lg shadow hover:shadow-lg transition">
+                About CallSoso<br><small>Our ethos, foundations, and cultural logic.</small>
+            </a>
+            <a href="{% url 'directory_home' %}" class="tile bg-earth-brown text-cream-light p-6 rounded-lg shadow hover:shadow-lg transition">
+                Creative Exchange Directory<br><small>Matching surplus to makers, ideas, and value.</small>
+            </a>
+            <a href="#services" class="tile bg-earth-brown text-cream-light p-6 rounded-lg shadow hover:shadow-lg transition">
+                Creative Systems for Change<br><small>Consultancy, activations, and learning.</small>
+            </a>
+            <a href="{% url 'insights' %}" class="tile bg-earth-brown text-cream-light p-6 rounded-lg shadow hover:shadow-lg transition">
+                The Narrative / Stories
+            </a>
+            <a href="#living-system" class="tile bg-earth-brown text-cream-light p-6 rounded-lg shadow hover:shadow-lg transition">
+                The Living System<br><small>Call Soso in Action</small>
+            </a>
+            <a href="#gardens" class="tile bg-earth-brown text-cream-light p-6 rounded-lg shadow hover:shadow-lg transition">
+                The Garden / Woodland & Impact Tracker
+            </a>
+            <a href="#support" class="tile bg-earth-brown text-cream-light p-6 rounded-lg shadow hover:shadow-lg transition">
+                Support Us / Kickstarter Portal
+            </a>
+            <a href="{% url 'contact' %}" class="tile bg-earth-brown text-cream-light p-6 rounded-lg shadow hover:shadow-lg transition">
+                Contact / Collaborate
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- SOFT CTA -->
+<section class="cta-section bg-green-accent py-16 text-center text-earth-brown">
+    <a href="{% url 'directory_home' %}" class="btn-secondary mr-4">Explore the Directory</a>
+    <a href="{% url 'about' %}" class="btn-secondary">Discover How We Work</a>
+</section>
+
+<!-- ===== UPDATED: LATEST STORIES ===== -->
+<style>
+    .latest-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit,minmax(260px,1fr));
+      gap: 24px;
+    }
+    .story-card {
+      background: #fffefb;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 8px 18px rgba(18,18,18,0.06);
+      display: flex;
+      flex-direction: column;
+      min-height: 320px;
+      border-left: 6px solid rgba(139,90,60,0.12);
+    }
+    .story-thumb { 
+      height: 170px; 
+      width:100%; 
+      object-fit:cover; 
+      display:block; 
+      background: linear-gradient(90deg,#dcd0c4,#eadfd3); 
+    }
+    .story-body { padding:16px; display:flex; flex-direction:column; gap:8px; flex:1; }
+    .story-meta { font-size:.85rem; color:#6f6f6f; }
+    .story-excerpt { color:#2b3b37; line-height:1.45; flex:1; }
+    .story-read { margin-top:12px; display:inline-block; padding:8px 14px; border-radius:999px; background:#8b5a3c; color:#fff7ef; text-decoration:none; font-weight:600; }
+    .story-read:hover { background:#c56a3d; transform:translateY(-2px); }
+    .no-articles { text-align:center; padding:28px; background:#fffefb; border-radius:12px; box-shadow:0 8px 18px rgba(18,18,18,0.04); color:#3b3b3b; }
+    @media (max-width:720px){ .story-thumb{ height:140px } }
+    </style>
+    
+    <section id="latest-articles" class="latest-articles bg-cream-light py-20 text-green-dark">
+      <div class="max-w-screen-xl mx-auto px-4">
+        <h2 class="text-4xl font-bold mb-8 text-center">Latest Stories</h2>
+    
+        {% if latest_articles %}
+          <div class="latest-grid" role="list">
+            {% for article in latest_articles %}
+              <article class="story-card" role="listitem" aria-labelledby="article-{{ forloop.counter }}">
+                <img src="{{ article.display_image }}" 
+                     alt="{{ article.title|default:'Story image' }}" 
+                     class="story-thumb">
+    
+                <div class="story-body">
+                  <div class="story-meta">
+                    {% if article.published_date %}
+                      <time datetime="{{ article.published_date }}">
+                        {{ article.published_date|date:"F j, Y" }}
+                      </time>
+                      &middot;
+                    {% endif %}
+                    {% if article.author %}
+                      <span>{{ article.author.username }}</span>
+                    {% endif %}
+                  </div>
+    
+                  <h3 id="article-{{ forloop.counter }}" class="text-xl font-semibold">
+                    {{ article.title|default:"Untitled" }}
+                  </h3>
+    
+                  <p class="story-excerpt">
+                    {% if article.excerpt %}
+                      {{ article.excerpt|truncatewords:22 }}
+                    {% elif article.summary %}
+                      {{ article.summary|truncatewords:22 }}
+                    {% elif article.body %}
+                      {{ article.body|striptags|truncatewords:22 }}
+                    {% else %}
+                      No description available.
+                    {% endif %}
+                  </p>
+    
+                  <a href="{{ article.get_absolute_url|default:'#' }}" 
+                     class="story-read"
+                     aria-label="Read more about {{ article.title|default:'this story' }}">
+                    Read more
+                  </a>
+                </div>
+              </article>
+            {% endfor %}
+          </div>
+    
+        {% else %}
+          <div class="no-articles">
+            <p>
+              No stories published yet — come back soon.
+              Explore our <a href="{% url 'about' %}">approach</a>
+              and <a href="{% url 'directory_home' %}">directory</a>.
+            </p>
+          </div>
+        {% endif %}
+      </div>
+    </section>    
+
+    
+    
+<!-- ABOUT CALLSOSO -->
+<section id="about-callsoso" class="about-callsoso bg-earth-brown py-20 text-cream-light">
+    <div class="max-w-screen-xl mx-auto px-4 text-center">
+        <h2 class="text-4xl font-bold mb-6">About CallSoso</h2>
+        <p class="text-lg md:text-xl mb-6">
+            CallSoso is a circular design studio building a new kind of local economy for Milton Keynes,
+            rooted in creativity, material intelligence, and dignified opportunity.
+        </p>
+        <h3 class="text-2xl font-semibold mt-6">The Edible Loop</h3>
+        <p class="mb-4">Food surplus becomes nourishment, skill-building, and civic creativity.</p>
+        <h3 class="text-2xl font-semibold mt-6">The Material Loop</h3>
+        <p>Corporate surplus is transformed into new forms, products, and cultural value.</p>
+    </div>
+</section>
+
+<!-- ROOTED MANIFESTO -->
+<section id="manifesto" class="manifesto bg-cream-light py-20 text-green-dark text-center">
+    <h2 class="text-4xl font-bold mb-6">The Rooted Manifesto</h2>
+    <p class="text-lg md:text-xl max-w-3xl mx-auto">
+        We honour materials, edible and otherwise. Everything has a second life. We treat surplus as intelligence,
+        culture, and possibility. Circularity isn’t compliance, it’s creativity. We build systems, not scraps.
+    </p>
+</section>
+
+<!-- FOUNDING STORIES -->
+<section id="founders" class="founders bg-earth-brown py-20 text-cream-light">
+    <div class="max-w-screen-xl mx-auto px-4">
+        <h2 class="text-4xl font-bold mb-10 text-center">Founding Stories</h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+            <div>
+                <h3 class="text-2xl font-semibold mb-2">Sybil – Founder & Creative Director</h3>
+                <p>Sybil built CallSoso from a clear instinct: everything we overlook—materials, food, ideas, people—can reshape a city...</p>
+            </div>
+            <div>
+                <h3 class="text-2xl font-semibold mb-2">Nyasha – Co-Founder</h3>
+                <p>Nyasha provides precision, structure, and operational flow to bring the ecosystem to life.</p>
+            </div>
+        </div>
+
+        <form method="POST" class="founders-form text-center">
+            {% csrf_token %}
+            <input type="email" name="email" placeholder="Enter your email" class="px-4 py-2 rounded-lg mb-4">
+            <button type="submit" class="btn-primary">Join the Founders List</button>
+        </form>
+    </div>
+</section>
+
+<!-- CREATIVE SYSTEMS / SERVICES -->
+<section id="services" class="services bg-cream-light py-20 text-green-dark">
+    <div class="max-w-screen-xl mx-auto px-4 text-center">
+        <h2 class="text-4xl font-bold mb-10">Creative Systems for Change</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 text-left">
+            <ul class="list-disc list-inside space-y-2">
+                <li>Circular Design Consulting</li>
+                <li>Gamified Tracking</li>
+                <li>Installations & Brand Activations</li>
+                <li>Data Storytelling</li>
+            </ul>
+            <ul class="list-disc list-inside space-y-2">
+                <li>Workshops & Team Development</li>
+                <li>Directory for Reuse</li>
+                <li>Impact Storytelling & Brand Resonance</li>
+                <li>Volunteering Hours & Partnerships</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<!-- THE LIVING SYSTEM -->
+<section id="living-system" class="living-system bg-earth-brown py-20 text-cream-light">
+    <div class="max-w-screen-xl mx-auto px-4 text-center">
+        <h2 class="text-4xl font-bold mb-6">The Living System</h2>
+        <p class="text-lg md:text-xl">
+            Portfolio of pilot projects, workshops, activations, and creative reuse builds.
+        </p>
+    </div>
+</section>
+
+<!-- SUPPORT / KICKSTARTER -->
+<section id="support" class="support bg-cream-light py-20 text-green-dark text-center">
+    <h2 class="text-4xl font-bold mb-6">Support Us / Kickstarter Portal</h2>
+    <p class="mb-6">Transparent funding channels enabling workshops, youth programs, and circular initiatives.</p>
+    <a href="#support" class="btn-primary">Support Our Work</a>
+</section>
+
+<!-- CONTACT / COLLABORATE -->
+<section id="contact" class="contact bg-earth-brown py-20 text-cream-light text-center">
+    <h2 class="text-4xl font-bold mb-6">Contact / Collaborate</h2>
+    <p>Let's work in resonance. Contact us via form, email, or social handles. Join mailing list or volunteer.</p>
+    <a href="{% url 'contact' %}" class="btn-primary mt-4 inline-block">Get in Touch</a>
+</section>
+
+{% endblock %}

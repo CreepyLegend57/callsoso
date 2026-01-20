@@ -1,0 +1,122 @@
+{% extends "website/base.html" %}
+{% load static %}
+
+{% block title %}About Us – Call Soso{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/about.css' %}">
+
+<!-- HERO -->
+<header class="about-hero">
+  <h1>About Call Soso</h1>
+  <p class="subtitle">
+    Turning surplus into value through circular systems, community creativity,
+    and responsible design.
+  </p>
+  <p class="microcopy">
+    “Waste is only waste when imagination stops.”
+  </p>
+</header>
+
+<div class="about-container">
+
+  <!-- MAIN CONTENT -->
+  <main class="about-main">
+
+    <!-- INTRO -->
+    <section class="about-section">
+      <h2>Who We Are</h2>
+      <p>
+        Call Soso is a Milton Keynes–based circular economy venture working at the
+        intersection of corporate surplus, creative reuse, and community impact.
+        We capture materials that would otherwise be discarded and redirect them
+        into meaningful second lives.
+      </p>
+      <p>
+        From cardboard and textiles to foam and product returns, we work with
+        businesses, upcyclers, designers, and educators to transform waste into
+        value — socially, environmentally, and economically.
+      </p>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section class="about-section">
+      <h2>How It Works</h2>
+
+      <div class="about-cards">
+        <div class="about-card">
+          <h3>Capture</h3>
+          <p>
+            We partner with organisations to identify surplus materials across
+            their operations — packaging, textiles, offcuts, returns, and more.
+          </p>
+        </div>
+
+        <div class="about-card">
+          <h3>Match</h3>
+          <p>
+            Materials are matched with internal teams, makers, creatives, and
+            community groups who can reuse them effectively.
+          </p>
+        </div>
+
+        <div class="about-card">
+          <h3>Transform</h3>
+          <p>
+            Surplus becomes new products, installations, learning tools, or
+            resources — extending material life and reducing waste.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- IMPACT -->
+    <section class="about-section highlight">
+      <h2>Our Impact</h2>
+
+      <div class="impact-grid">
+        <div class="impact-item">
+          <span class="impact-number">10%</span>
+          <p>of profits reinvested into community workshops</p>
+        </div>
+
+        <div class="impact-item">
+          <span class="impact-number">1000s</span>
+          <p>of materials diverted from landfill</p>
+        </div>
+
+        <div class="impact-item">
+          <span class="impact-number">∞</span>
+          <p>creative reuse possibilities unlocked</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOUNDATION -->
+    <section class="about-section">
+      <h2>The Call Soso Foundation</h2>
+      <p>
+        We reinvest 10% of our profits into the Call Soso Foundation, supporting
+        workshops, educational programmes, and hands-on learning experiences for
+        communities.
+      </p>
+      <p>
+        These initiatives empower people to understand materials, develop
+        creative confidence, and participate directly in the circular economy.
+      </p>
+    </section>
+
+    <!-- CTA -->
+    <section class="about-cta">
+      <h2>Work With Us</h2>
+      <p>
+        Whether you’re a business with surplus, a designer, educator, or
+        community group — we’d love to collaborate.
+      </p>
+      <a href="{% url 'contact' %}" class="cta-button">Get in Touch</a>
+    </section>
+
+  </main>
+
+</div>
+{% endblock %}

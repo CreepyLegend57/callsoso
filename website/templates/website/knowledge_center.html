@@ -1,0 +1,167 @@
+{% extends "website/base.html" %}
+{% load static %}
+
+{% block title %}Knowledge Center – Call Soso{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/knowledge_center.css' %}">
+
+<!-- HERO -->
+<header class="knowledge-hero">
+  <h1>Knowledge Center</h1>
+  <p class="subtitle">
+    Practical guidance, real-world case studies, and tools for teams and creators
+    working in the circular economy.
+  </p>
+  <p class="microcopy">
+    “Knowledge is the infrastructure of circularity.”
+  </p>
+</header>
+
+<div class="knowledge-container">
+
+  <!-- SIDEBAR -->
+  <aside class="knowledge-sidebar">
+
+    <section class="sidebar-section">
+      <h3>Browse by Topic</h3>
+      <ul id="filter-tabs">
+        <li class="active" data-filter="all">All Resources</li>
+        {% for category in categories %}
+          <li data-filter="{{ category.id }}">{{ category.name }}</li>
+        {% endfor %}
+        <li id="clear-filters">Clear filters</li>
+      </ul>
+    </section>
+
+    {% if popular %}
+    <section class="sidebar-section">
+      <h3>Popular This Week</h3>
+      <ul class="popular-list">
+        {% for item in popular %}
+        <li>
+          <strong>{{ item.title }}</strong>
+          {% if item.published_date %}
+          <span class="date">{{ item.published_date|date:"j M Y" }}</span>
+          {% endif %}
+        </li>
+        {% endfor %}
+      </ul>
+    </section>
+    {% endif %}
+
+  </aside>
+
+  <!-- MAIN -->
+  <main class="knowledge-main">
+
+    {% if highlights %}
+    <!-- HIGHLIGHTS -->
+    <section class="knowledge-section">
+      <h2 class="section-title">Highlights</h2>
+
+      <div class="resources-grid">
+        {% for resource in highlights %}
+        <article class="resource-card"
+                 data-category-ids="{{ resource.category_ids|join:',' }}">
+          <div class="resource-image">
+            <img src="{% if resource.display_image %}{{ resource.display_image }}{% else %}{% static 'images/placeholder.jpg' %}{% endif %}"
+                 alt="{{ resource.title }}">
+          </div>
+          <div class="resource-content">
+            <h4>{{ resource.title }}</h4>
+            {% if resource.published_date %}
+            <div class="date">{{ resource.published_date|date:"j M Y" }}</div>
+            {% endif %}
+            {% if resource.categories %}
+            <div class="categories">{{ resource.categories|join:" / " }}</div>
+            {% endif %}
+            {% if resource.description %}
+            <p>{{ resource.description|truncatewords:22 }}</p>
+            {% endif %}
+            {% if resource.link %}
+            <a href="{{ resource.link }}" class="read-more" target="_blank">
+              Explore →
+            </a>
+            {% endif %}
+          </div>
+        </article>
+        {% endfor %}
+      </div>
+    </section>
+    {% endif %}
+
+    <!-- ALL RESOURCES -->
+    <section class="knowledge-section">
+      <h2 class="section-title">All Resources</h2>
+
+      {% if resources %}
+      <div class="resources-grid">
+        {% for resource in resources %}
+        <article class="resource-card"
+                 data-category-ids="{{ resource.category_ids|join:',' }}">
+          <div class="resource-image">
+            <img src="{% if resource.display_image %}{{ resource.display_image }}{% else %}{% static 'images/placeholder.jpg' %}{% endif %}"
+                 alt="{{ resource.title }}">
+          </div>
+          <div class="resource-content">
+            <h4>{{ resource.title }}</h4>
+            {% if resource.published_date %}
+            <div class="date">{{ resource.published_date|date:"j M Y" }}</div>
+            {% endif %}
+            {% if resource.categories %}
+            <div class="categories">{{ resource.categories|join:" / " }}</div>
+            {% endif %}
+            {% if resource.description %}
+            <p>{{ resource.description|truncatewords:20 }}</p>
+            {% endif %}
+            {% if resource.link %}
+            <a href="{{ resource.link }}" class="read-more" target="_blank">
+              Read more →
+            </a>
+            {% endif %}
+          </div>
+        </article>
+        {% endfor %}
+      </div>
+      {% else %}
+      <p class="empty-state">No resources published yet.</p>
+      {% endif %}
+    </section>
+
+  </main>
+</div>
+
+<!-- FILTER SCRIPT -->
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  const tabs = document.querySelectorAll('#filter-tabs li[data-filter]');
+  const cards = document.querySelectorAll('.resource-card');
+
+  function filter(category) {
+    cards.forEach(card => {
+      const ids = card.dataset.categoryIds?.split(',') || [];
+      card.style.display =
+        category === 'all' || ids.includes(category)
+        ? 'flex'
+        : 'none';
+    });
+  }
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      tabs.forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      filter(tab.dataset.filter);
+    });
+  });
+
+  document.getElementById('clear-filters')?.addEventListener('click', () => {
+    tabs.forEach(t => t.classList.remove('active'));
+    tabs[0].classList.add('active');
+    filter('all');
+  });
+});
+</script>
+
+{% endblock %}

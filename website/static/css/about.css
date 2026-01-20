@@ -1,0 +1,165 @@
+:root {
+    --green-dark: #0d4d40;
+    --green-accent: #12b981;
+    --earth-brown: #8b5a3c;
+    --cream-light: #f2f6f1;
+    --white-soft: #ffffff;
+    --grey-muted: #9aa59d;
+    --shadow-soft: 0 8px 18px rgba(0,0,0,0.05);
+    --shadow-hover: 0 14px 30px rgba(0,0,0,0.12);
+  }
+  
+  /* HERO */
+  .about-hero {
+    text-align: center;
+    background: linear-gradient(135deg, var(--earth-brown), #6f4b33);
+    color: var(--white-soft);
+    padding: 56px 20px;
+    border-radius: 18px;
+    margin-bottom: 2.5rem;
+  }
+  
+  .about-hero h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0.4rem;
+    color: var(--cream-light);
+  }
+  
+  .about-hero .subtitle {
+    font-size: 1.1rem;
+    color: rgba(255,255,255,0.9);
+  }
+  
+  .about-hero .microcopy {
+    font-style: italic;
+    margin-top: 0.6rem;
+    color: rgba(255,255,255,0.85);
+  }
+  
+  /* LAYOUT */
+  .about-container {
+    max-width: 1100px;
+    margin: 0 auto 60px;
+    padding: 0 16px;
+  }
+  
+  .about-main {
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+  }
+  
+  /* SECTIONS */
+  .about-section {
+    background: var(--white-soft);
+    padding: 28px;
+    border-radius: 14px;
+    box-shadow: var(--shadow-soft);
+  }
+  
+  .about-section h2 {
+    margin-top: 0;
+    color: var(--earth-brown);
+    font-size: 1.6rem;
+    margin-bottom: 12px;
+  }
+  
+  .about-section p {
+    color: var(--green-dark);
+    line-height: 1.65;
+    margin-bottom: 12px;
+  }
+  
+  /* CARDS */
+  .about-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 18px;
+    margin-top: 12px;
+  }
+  
+  .about-card {
+    background: var(--cream-light);
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: var(--shadow-soft);
+  }
+  
+  .about-card h3 {
+    margin-top: 0;
+    color: var(--green-dark);
+  }
+  
+  .about-card p {
+    margin-bottom: 0;
+    color: #24423b;
+  }
+  
+  /* IMPACT */
+  .about-section.highlight {
+    background: var(--cream-light);
+  }
+  
+  .impact-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 18px;
+    margin-top: 12px;
+  }
+  
+  .impact-item {
+    background: var(--white-soft);
+    padding: 22px;
+    border-radius: 14px;
+    text-align: center;
+    box-shadow: var(--shadow-soft);
+  }
+  
+  .impact-number {
+    display: block;
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: var(--green-accent);
+    margin-bottom: 6px;
+  }
+  
+  /* CTA */
+  .about-cta {
+    text-align: center;
+    padding: 40px 20px;
+    background: var(--green-dark);
+    color: var(--white-soft);
+    border-radius: 16px;
+  }
+  
+  .about-cta h2 {
+    color: var(--cream-light);
+    margin-bottom: 8px;
+  }
+  
+  .about-cta p {
+    color: rgba(255,255,255,0.9);
+    margin-bottom: 18px;
+  }
+  
+  .cta-button {
+    display: inline-block;
+    padding: 10px 22px;
+    border-radius: 999px;
+    background: var(--green-accent);
+    color: #fff;
+    text-decoration: none;
+    font-weight: 600;
+  }
+  
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    .about-hero h1 {
+      font-size: 2rem;
+    }
+  
+    .about-section {
+      padding: 22px;
+    }
+  }
+  

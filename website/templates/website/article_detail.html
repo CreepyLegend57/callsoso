@@ -1,0 +1,67 @@
+{% extends "website/base.html" %}
+{% load static %}
+
+{% block title %}{{ article.title }} – Call Soso{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/article_detail.css' %}">
+
+<!-- HERO -->
+<header class="article-hero">
+    <h1>{{ article.title }}</h1>
+
+    {% if article.published_date %}
+    <p class="date">{{ article.published_date|date:"jS F, Y" }}</p>
+    {% endif %}
+
+    {% if article.categories %}
+    <p class="categories">
+        {% for category in article.categories %}
+            {{ category }}{% if not forloop.last %} / {% endif %}
+        {% endfor %}
+    </p>
+    {% endif %}
+</header>
+
+<!-- FEATURE IMAGE -->
+{% if article.display_image %}
+<div class="article-image">
+    <img src="{{ article.display_image }}" alt="{{ article.title }}" loading="lazy">
+</div>
+{% endif %}
+
+<!-- ARTICLE CONTENT -->
+<article class="article-body">
+    {% if article.excerpt %}
+    <p class="excerpt">{{ article.excerpt }}</p>
+    {% endif %}
+
+    {% if article.summary %}
+    <p class="summary">{{ article.summary|linebreaks }}</p>
+    {% endif %}
+
+    {% if article.body %}
+    <div class="body-content">{{ article.body|safe }}</div>
+    {% endif %}
+</article>
+
+<!-- RELATED ARTICLES -->
+{% if related_articles %}
+<section class="related-articles">
+    <h3>Related Articles</h3>
+    <ul>
+        {% for rel in related_articles %}
+        <li>
+            <a href="{{ rel.get_absolute_url }}">
+                {{ rel.title }}
+            </a>
+            {% if rel.published_date %}
+            <span class="date">{{ rel.published_date|date:"jS F, Y" }}</span>
+            {% endif %}
+        </li>
+        {% endfor %}
+    </ul>
+</section>
+{% endif %}
+
+{% endblock %}

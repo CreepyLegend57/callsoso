@@ -1,0 +1,162 @@
+{% extends "website/base.html" %}
+{% load static %}
+
+{% block title %}The CallSoso Exchange Directory{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/directory.css' %}">
+
+<div class="directory-container">
+
+    <!-- HERO / INTRO -->
+    <header class="directory-hero text-center">
+        <h1>📂 The CallSoso Exchange Directory</h1>
+        <p class="lead">
+            A circular ecosystem matching <strong>surplus</strong> with <strong>skill, creativity, and need</strong>.
+        </p>
+        <p class="intro-text">
+            Every material. Every ingredient. Every overlooked resource.<br>
+            A second life waiting for its match.<br>
+            CallSoso’s Exchange Directory connects:
+        </p>
+        <ul class="directory-intro-list">
+            <li>Businesses with dormant stock</li>
+            <li>Makers with imagination</li>
+            <li>Communities with value that already exists</li>
+        </ul>
+        <p class="subtext">
+            This is where circularity becomes infrastructure.
+        </p>
+        <div class="soft-motion-text">
+            <span>“Nothing is waste until someone decides it is.”</span>
+            <span>“Everything circulates.”</span>
+            <span>“Surplus becomes starting points.”</span>
+            <span>“Creativity is a form of logistics.”</span>
+        </div>
+    </header>
+
+    <!-- HOW THE DIRECTORY WORKS -->
+    <section class="directory-how mt-5">
+        <h2 class="text-center">How the Directory Works</h2>
+        <p class="text-center">Three simple actions:</p>
+        <ol class="directory-steps text-center">
+            <li>List surplus materials or food</li>
+            <li>Match with creators, chefs, makers, or businesses</li>
+            <li>Create new value: projects, culture, products, or meals</li>
+        </ol>
+        <p class="text-center">Open to:</p>
+        <ul class="directory-audience text-center">
+            <li>Businesses</li>
+            <li>Creators and Makers</li>
+            <li>Chefs & Food Innovators</li>
+            <li>Schools & Universities</li>
+            <li>Charities</li>
+            <li>Sponsors & Commissioners</li>
+            <li>Councils & Public Bodies</li>
+        </ul>
+    </section>
+
+    <!-- LOOPS GRID -->
+    <section class="loops-grid mt-5">
+        <!-- Material Loop -->
+        <div class="loop-card">
+            <img src="{% static 'images/material_icon.png' %}" alt="Material Loop Icon" class="loop-icon">
+            <h3>The Material Loop</h3>
+            <p class="loop-subtitle">Surplus becomes structure, substance, and new value.</p>
+            <p class="loop-intro">
+                The Material Loop transforms business surplus into creative potential, economic gain, and cultural intelligence.
+                Materials are treated as data, story, and infrastructure for an imaginative economy. Nothing is static. Everything circulates.
+            </p>
+            <h4>Pathways</h4>
+            <ul class="loop-pathways">
+                <li><strong>Creative Reuse & Fabrication:</strong> Installations, artworks, prototypes, exhibitions, furniture, spatial elements.</li>
+                <li><strong>Industrial Reprocessing & Return:</strong> Reprocessed materials, internal reuse streams, cost-saving alternatives.</li>
+                <li><strong>Education & Workshops:</strong> Youth programmes, corporate team days, skill-building sessions, innovation labs.</li>
+                <li><strong>Research & Material Intelligence:</strong> Universities, R&D teams, product designers, material prototyping.</li>
+            </ul>
+            <h4>Who It’s For</h4>
+            <ul class="loop-audience">
+                <li>Businesses: Reduce waste, recover value, improve sustainability metrics.</li>
+                <li>Creators, Designers & Makers: Source materials, prototype ideas, craft new work, collaborate.</li>
+                <li>Architects & Built Environment Teams: Access unique materials for builds, installations.</li>
+                <li>Researchers & Educators: Use surplus as input for studies and innovations.</li>
+                <li>Councils, Sponsors & Commissioners: Engage with measurable cultural and environmental impact.</li>
+            </ul>
+            <p class="loop-cta text-center">
+                <a href="{% url 'surplus_list' %}" class="btn btn-primary">Explore the Material Loop →</a>
+                <a href="{% url 'surplus_create' %}" class="btn btn-outline-primary">List Your Surplus →</a>
+                <a href="{% url 'demand_list' %}" class="btn btn-outline-secondary">See Creator Opportunities →</a>
+            </p>
+            <div class="loop-microcopy">
+                <span>“Every material carries a second life.”</span>
+                <span>“Surplus is future potential.”</span>
+                <span>“Nothing is waste until we waste it.”</span>
+                <span>“Circularity begins with imagination.”</span>
+                <span>“Materials make stories.”</span>
+            </div>
+        </div>
+
+        <!-- Edible Loop -->
+        <div class="loop-card">
+            <img src="{% static 'images/edible_icon.png' %}" alt="Edible Loop Icon" class="loop-icon">
+            <h3>The Edible Loop</h3>
+            <p class="loop-subtitle">Food becomes flavour, fuel, material, and future.</p>
+            <p class="loop-intro">
+                The Edible Loop treats food as material intelligence, capable of nourishment, creativity, production, research, and transformation. Nothing is “just waste.” Everything has a next life.
+            </p>
+            <h4>Pathways</h4>
+            <ul class="loop-pathways">
+                <li><strong>Edible Creativity & Culinary Play:</strong> Meals, menus, pop-ups, food art, edible installations.</li>
+                <li><strong>Community Nourishment & Access:</strong> Safe meals, cooking workshops, youth programmes, food literacy sessions.</li>
+                <li><strong>Material Transformation & Industrial Futures:</strong> Bioplastics, dyes, pigments, compost, fermentation substrates, craft materials.</li>
+                <li><strong>Research & Circular Innovation:</strong> Universities, labs, experimental kitchens prototyping new products and sustainable manufacturing.</li>
+            </ul>
+            <h4>Who It’s For</h4>
+            <ul class="loop-audience">
+                <li>Food Businesses: Reduce waste, save costs, support circular innovation.</li>
+                <li>Chefs & Food Creatives: Ingredients, commissions, R&D space, creative challenges.</li>
+                <li>Community Partners: Food for teaching, cooking, preserving, learning.</li>
+                <li>Researchers: Biomaterial experimentation, scientific-creative collaboration.</li>
+                <li>Sponsors & Councils: Support sustainable food systems.</li>
+            </ul>
+            <p class="loop-cta text-center">
+                <a href="{% url 'demand_list' %}" class="btn btn-primary">Explore the Edible Loop →</a>
+                <a href="{% url 'demand_create' %}" class="btn btn-outline-primary">List Surplus →</a>
+            </p>
+            <div class="loop-microcopy">
+                <span>“Every ingredient is a future.”</span>
+                <span>“Expired is not the end.”</span>
+                <span>“Food is material.”</span>
+                <span>“Circular nourishment is the new culture.”</span>
+                <span>“This is food beyond waste.”</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- QUICK ACTIONS -->
+    <section class="directory-actions mt-5 text-center">
+        <h4>Directory Quick Actions</h4>
+        <div class="actions-grid">
+            <a href="{% url 'surplus_create' %}" class="btn btn-secondary">➕ List Material</a>
+            <a href="{% url 'demand_create' %}" class="btn btn-secondary">➕ Submit Food Request</a>
+            <a href="{% url 'impact_tracker' %}" class="btn btn-secondary">🌱 Track Impact</a>
+            <a href="#" class="btn btn-secondary">View Tiers & Pricing →</a>
+        </div>
+    </section>
+
+    <!-- ROLE INFORMATION & TIPS -->
+    <section class="directory-info mt-5 p-4 text-center rounded shadow-sm">
+        <h4>💡 Who the Directory is For</h4>
+        <ul class="info-list text-start mx-auto" style="max-width:700px;">
+            <li><strong>Businesses:</strong> Turn surplus into ESG wins, reduce waste, commission meaningful work.</li>
+            <li><strong>Creators & Makers:</strong> Source materials, prototype ideas, craft new work, collaborate.</li>
+            <li><strong>Chefs & Food Innovators:</strong> Access surplus ingredients, circular culinary briefs, food system experiments.</li>
+            <li><strong>Schools & Universities:</strong> List or source surplus for creative and educational use.</li>
+            <li><strong>Charities:</strong> Limited access for sourcing or project support.</li>
+            <li><strong>Sponsors & Councils:</strong> Fund projects, support initiatives, and monitor measurable impact.</li>
+        </ul>
+        <p class="mt-3">Learn more about CallSoso’s impact <a href="{% url 'about' %}">here</a>.</p>
+    </section>
+
+</div>
+{% endblock %}

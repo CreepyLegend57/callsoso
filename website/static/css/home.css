@@ -1,0 +1,313 @@
+/* ===== ROOT COLORS ===== */
+:root {
+    --green-dark: #0d4d40;
+    --green-deep: #004d3d;
+    --green-accent: #12b981;
+    --cream-light: #f2f6f1;
+    --grey-muted: #9aa59d;
+    --white-soft: #ffffff;
+    --clay-orange: #c56a3d;
+    --light-pink: #ffe9e3;
+    --earth-brown: #8b5a3c;
+}
+
+/* ===== GLOBAL ===== */
+body {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    color: var(--green-dark);
+    line-height: 1.6;
+    background: var(--cream-light);
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+section {
+    margin: 60px auto;
+    padding: 50px 20px;
+    max-width: 1200px;
+    border-radius: 12px;
+}
+
+/* Section headings */
+section h2 {
+    font-size: 2.5em;
+    margin-bottom: 30px;
+    color: var(--green-deep);
+    text-align: center;
+}
+
+/* ===== HERO ===== */
+.hero {
+    text-align: center;
+    background: linear-gradient(135deg, var(--green-dark), var(--green-deep));
+    color: var(--white-soft);
+    padding: 100px 20px;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-title {
+    font-size: 4em;
+    font-weight: 800;
+    margin-bottom: 10px;
+    color: var(--green-accent);
+}
+
+.hero-subtitle {
+    font-size: 1.5em;
+    max-width: 800px;
+    margin: 0 auto 25px auto;
+    color: var(--cream-light);
+}
+
+.scroll-down {
+    display: inline-block;
+    margin-top: 50px;
+    font-size: 2.5em;
+    color: var(--green-accent);
+    animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+/* ===== ABSTRACT ECOLOGY ===== */
+.abstract-ecology {
+    text-align: center;
+    background: linear-gradient(120deg, var(--cream-light), var(--light-pink));
+    padding: 80px 20px;
+}
+
+.abstract-ecology .intro-text {
+    font-size: 1.25em;
+    max-width: 750px;
+    margin: 0 auto;
+    line-height: 1.7;
+}
+
+/* ===== GARDENS ===== */
+.gardens {
+    text-align: center;
+    background: var(--green-accent);
+    color: var(--white-soft);
+    padding: 80px 20px;
+    position: relative;
+}
+
+.gardens p {
+    max-width: 750px;
+    margin: 20px auto;
+    font-size: 1.1em;
+    line-height: 1.8;
+}
+
+.gardens .btn-primary {
+    margin-top: 30px;
+    padding: 15px 40px;
+    background: var(--green-dark);
+    color: var(--white-soft);
+    border-radius: 50px;
+    font-weight: 600;
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.gardens .btn-primary:hover {
+    background: var(--clay-orange);
+    transform: scale(1.05);
+}
+
+/* ===== INVITATION ===== */
+.invitation {
+    text-align: center;
+    background: var(--cream-light);
+    padding: 70px 20px;
+}
+
+.invitation p {
+    max-width: 700px;
+    margin: 0 auto;
+    font-size: 1.2em;
+    line-height: 1.8;
+}
+
+/* ===== PATHWAYS GRID ===== */
+.pathways-grid {
+    display: grid;
+    gap: 25px;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+}
+
+.pathways-grid .tile {
+    background: var(--white-soft);
+    padding: 30px 20px;
+    border-radius: 20px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    color: var(--green-dark);
+    font-weight: 600;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.pathways-grid .tile:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 28px rgba(0,0,0,0.15);
+}
+
+/* ===== SOFT CTA ===== */
+.cta-section {
+    text-align: center;
+    margin: 70px 0;
+}
+
+.cta-section .btn-secondary {
+    display: inline-block;
+    margin: 10px 15px;
+    padding: 15px 40px;
+    background: var(--green-dark);
+    color: var(--white-soft);
+    border-radius: 50px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.cta-section .btn-secondary:hover {
+    background: var(--clay-orange);
+    color: var(--green-dark);
+    transform: scale(1.05);
+}
+
+/* ===== LATEST ARTICLES ===== */
+.latest-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(260px,1fr));
+    gap: 24px;
+}
+
+.story-card {
+    background: var(--white-soft);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 8px 18px rgba(18,18,18,0.06);
+    display: flex;
+    flex-direction: column;
+    min-height: 320px;
+    border-left: 6px solid rgba(139,90,60,0.12);
+}
+
+.story-thumb {
+    height: 170px;
+    width:100%;
+    object-fit:cover;
+    display:block;
+    background: linear-gradient(90deg,#dcd0c4,#eadfd3);
+}
+
+.story-body {
+    padding: 16px;
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+    flex:1;
+}
+
+.story-meta { font-size: .85rem; color:#6f6f6f; }
+
+.story-excerpt { color:#2b3b37; line-height:1.45; flex:1; }
+
+.story-read {
+    margin-top:12px;
+    display:inline-block;
+    padding:8px 14px;
+    border-radius:999px;
+    background: var(--earth-brown);
+    color: var(--white-soft);
+    text-decoration:none;
+    font-weight:600;
+    transition: all 0.3s ease;
+}
+
+.story-read:hover { background: var(--clay-orange); transform:translateY(-2px); }
+
+.no-articles {
+    text-align:center;
+    padding:28px;
+    background: var(--white-soft);
+    border-radius:12px;
+    box-shadow:0 8px 18px rgba(18,18,18,0.04);
+    color:#3b3b3b;
+}
+
+/* ===== FOUNDERS FORM ===== */
+.founders-form {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin: 30px auto;
+}
+
+.founders-form input[type="email"] {
+    padding: 14px 20px;
+    border-radius: 50px;
+    border: 2px solid var(--green-dark);
+    outline: none;
+    min-width: 300px;
+    font-size: 1em;
+    transition: border 0.3s ease;
+}
+
+.founders-form input[type="email"]:focus {
+    border-color: var(--clay-orange);
+}
+
+.founders-form button {
+    padding: 14px 35px;
+    border-radius: 50px;
+    border: none;
+    background: var(--green-dark);
+    color: var(--white-soft);
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.founders-form button:hover {
+    background: var(--clay-orange);
+    transform: translateY(-2px);
+}
+
+/* ===== OTHER SECTIONS ===== */
+.founders, .manifesto, .about-callsoso, .services, .living-system, .support, .contact {
+    background: var(--white-soft);
+    border-radius: 20px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+    padding: 50px 30px;
+    margin: 60px auto;
+}
+
+.founders h3, .services h2, .living-system h2, .support h2, .contact h2, .about-callsoso h2 {
+    color: var(--green-deep);
+}
+
+.founders p, .manifesto p, .about-callsoso p, .services ul, .living-system p, .support p, .contact p {
+    max-width: 750px;
+    margin: 20px auto;
+    line-height: 1.8;
+}
+
+.services ul { list-style: disc; padding-left: 20px; }
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 900px) {
+    .hero-title { font-size: 2.5em; }
+    .hero-subtitle { font-size: 1.25em; }
+    .founders-form { flex-direction: column; }
+    section { padding: 40px 15px; }
+    .pathways-grid, .latest-grid { grid-template-columns: 1fr; }
+}

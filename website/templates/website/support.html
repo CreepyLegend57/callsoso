@@ -1,0 +1,48 @@
+{% extends "website/base.html" %}
+{% load static %}
+{% block title %}Support Call Soso{% endblock %}
+
+{% block content %}
+<h1>Support Call Soso 💚</h1>
+<p>Your contributions help us grow the circular economy community.</p>
+
+<!-- Funding options -->
+<div class="funding-options">
+    <a href="https://www.kickstarter.com" target="_blank" class="fund-btn">Kickstarter</a>
+    <a href="https://www.buymeacoffee.com" target="_blank" class="fund-btn">Buy Me a Coffee</a>
+</div>
+
+<h2>Recent Contributions</h2>
+<ul class="contrib-list">
+    {% for contrib in contributions %}
+    <li class="contrib-item" data-amount="{{ contrib.amount }}">
+        {{ contrib.user }} donated ${{ contrib.amount }} on {{ contrib.date }}
+    </li>
+    {% empty %}
+    <li>No contributions yet. Be the first to support us!</li>
+    {% endfor %}
+</ul>
+
+<!-- Inline JS for interactivity -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const items = document.querySelectorAll('.contrib-item');
+    items.forEach(item => {
+        item.addEventListener('mouseover', () => {
+            const amount = parseFloat(item.dataset.amount);
+            item.style.fontWeight = 'bold';
+            item.style.color = amount > 50 ? '#2e7d32' : '#1565c0'; // big donors green, smaller blue
+        });
+        item.addEventListener('mouseout', () => {
+            item.style.fontWeight = 'normal';
+            item.style.color = '#000';
+        });
+    });
+});
+</script>
+
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/support.css' %}">
+{% endblock %}

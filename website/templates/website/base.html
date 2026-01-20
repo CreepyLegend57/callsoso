@@ -1,0 +1,384 @@
+{% load static %}
+{% now "Y" as current_year %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Call Soso - Circularity in Resonance{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Lora&family=Montserrat:wght@700&family=Open+Sans:wght@300&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    <style>
+        /* ===== EARTHY COLOR PALETTE ===== */
+        :root {
+            --green-dark: #0d4d40;
+            --green-lime: #a6ff00;
+            --brown-dark: #4a2f1b;
+            --brown-muted: #7a5a42;
+            --orange-warm: #ff6f3c;
+            --orange-soft: #ff9f75;
+            --pink-cream: #fff0f5;
+            --cream-light: #fff5f2;
+            --white-soft: #ffffff;
+            --grey-muted: #6b6b6b;
+        }
+
+        html, body {
+            height: 100%;
+            margin: 0;
+            font-family: 'Open Sans', sans-serif;
+            background: var(--cream-light);
+            color: var(--brown-dark);
+        }
+
+        a {
+            text-decoration: none;
+            transition: color 0.3s ease, background 0.2s ease;
+        }
+
+        /* ===== PAGE WRAPPER ===== */
+        .page-wrapper {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            padding-top: 120px; /* space for fixed header */
+        }
+
+        /* ===== HEADER ===== */
+        .site-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 9999;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+        }
+
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            padding: 12px 30px;
+            background: var(--brown-dark);
+            color: var(--pink-cream);
+        }
+
+        .logo h1 {
+            margin: 0;
+            font-size: 1.9rem;
+            color: var(--orange-warm);
+            font-weight: 700;
+        }
+        .logo p {
+            margin: 0;
+            font-size: 0.9rem;
+            color: var(--pink-cream);
+        }
+
+        .search-box input {
+            padding: 8px 14px;
+            border-radius: 25px;
+            border: 1px solid var(--brown-muted);
+            outline: none;
+        }
+        .search-box button {
+            background: var(--green-dark);
+            color: var(--white-soft);
+            border: none;
+            padding: 8px 14px;
+            border-radius: 25px;
+            cursor: pointer;
+        }
+        .search-box button:hover {
+            background: var(--orange-warm);
+            color: var(--white-soft);
+        }
+
+        .auth-links a {
+            margin: 0 8px;
+            color: var(--white-soft);
+            font-weight: 600;
+        }
+        .auth-links a.signup {
+            background: var(--orange-soft);
+            color: var(--white-soft);
+            padding: 5px 12px;
+            border-radius: 25px;
+        }
+        .auth-links a:hover { color: var(--green-lime); }
+
+        .social-links a {
+            margin-left: 8px;
+            color: var(--white-soft);
+        }
+        .social-links a:hover { color: var(--orange-warm); }
+
+        /* ===== NAVIGATION ===== */
+        .main-nav ul {
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 18px;
+            padding: 10px 30px;
+            margin: 0;
+            background: var(--green-dark);
+        }
+
+        .main-nav a {
+            color: var(--white-soft);
+            font-weight: 600;
+            padding: 6px 14px;
+            border-radius: 8px;
+        }
+
+        .main-nav a.active,
+        .main-nav a:hover {
+            background: var(--orange-warm);
+            color: var(--white-soft);
+        }
+
+        /* ===== DROPDOWNS ===== */
+        .dropdown { position: relative; }
+        .dropdown-toggle::after { content: " ▾"; margin-left:6px; }
+        .dropdown-menu {
+            display: none !important;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: var(--pink-cream);
+            min-width: 260px;
+            padding: 8px;
+            border-radius: 6px;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+            grid-template-columns: repeat(2, 1fr);
+            gap: 5px;
+            z-index: 1100;
+        }
+        .dropdown-menu li { padding: 6px 10px; }
+        .dropdown-menu li a { color: var(--brown-dark); }
+        .dropdown-menu li a:hover { background: var(--orange-soft); color: var(--brown-dark); }
+        .dropdown:hover > .dropdown-menu { display: grid !important; }
+
+        /* ===== CTA SECTION ===== */
+        .directory-cta {
+            background: var(--cream-light);
+            color: var(--brown-dark);
+            padding: 24px;
+            text-align: center;
+            border-radius: 12px;
+            margin: 30px 20px;
+            box-shadow: 0 6px 18px rgba(74,47,27,0.08);
+        }
+
+        .directory-cta a.btn {
+            background: var(--green-dark);
+            color: var(--white-soft);
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-weight: 600;
+            margin: 5px;
+        }
+
+        .directory-cta a.btn:hover {
+            background: var(--orange-warm);
+            color: var(--white-soft);
+            transform: translateY(-2px);
+        }
+
+        /* ===== MAIN CONTENT ===== */
+        main.container {
+            flex: 1;
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        /* Messages */
+        .messages li.success { background: #e9f7ef; color: #0b6b3a; }
+        .messages li.error   { background: #fdecea; color: #7a1e2a; }
+        .messages li.warning { background: #fff5e6; color: #6b4a00; }
+
+        /* ===== HERO SECTION ===== */
+        .hero {
+            background: linear-gradient(180deg, var(--pink-cream), var(--cream-light));
+            padding: 60px 20px;
+            border-radius: 12px;
+            margin-bottom: 24px;
+            text-align: center;
+        }
+
+        .hero h1 { font-family: 'Lora', serif; color: var(--brown-dark); font-size: 2.6rem; margin-bottom: 16px; }
+        .hero p { font-size: 1.1rem; color: var(--brown-muted); margin-bottom: 24px; }
+        .hero .btn { background: var(--green-dark); color: var(--white-soft); padding: 12px 22px; border-radius: 25px; font-weight: 700; }
+        .hero .btn:hover { background: var(--orange-warm); }
+
+        /* ===== FOOTER ===== */
+        .site-footer {
+            background: var(--brown-dark);
+            color: var(--pink-cream);
+            padding: 40px 20px;
+        }
+        .site-footer a { color: var(--orange-soft); }
+        .site-footer a:hover { color: var(--orange-warm); }
+
+        .footer-top {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-bottom: 20px;
+        }
+        .footer-column { flex: 1 1 200px; }
+
+        .footer-bottom {
+            text-align: center;
+            border-top: 1px solid rgba(255,255,255,0.3);
+            padding-top: 15px;
+            font-size: 0.85rem;
+            color: var(--grey-muted);
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 900px) {
+            .main-nav ul { flex-direction: column; gap: 10px; }
+            .top-bar { flex-direction: column; gap: 10px; }
+            .search-box { margin-top: 10px; }
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="page-wrapper">
+
+    <!-- ===== HEADER ===== -->
+    <header class="site-header">
+
+        <!-- Top Bar -->
+        <div class="top-bar">
+            <div class="logo">
+                <a href="{% url 'home' %}" class="logo-link">
+                    <h1>Call Soso</h1>
+                    <p class="tagline">Circularity in Resonance</p>
+                </a>
+            </div>
+
+            <div class="search-box">
+                <form method="get" action="{% url 'home' %}">
+                    <input type="text" name="q" placeholder="Search...">
+                    <button type="submit"><i class="fas fa-search"></i></button>
+                </form>
+            </div>
+
+            <div class="auth-socials">
+                <div class="auth-links">
+                    {% if user.is_authenticated %}
+                        <a href="{% url 'directory_home' %}"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+                        <a href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                    {% else %}
+                        <a href="{% url 'login' %}"><i class="fas fa-sign-in-alt"></i> Login</a>
+                        <a href="{% url 'signup' %}"><i class="fas fa-user-plus"></i> Sign Up</a>
+                    {% endif %}
+                </div>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Navigation -->
+        <nav class="main-nav">
+            <ul>
+                <li><a href="{% url 'home' %}" class="{% if request.path == '/' %}active{% endif %}">Home</a></li>
+                <li><a href="{% url 'news' %}" class="{% if request.path == '/news/' %}active{% endif %}">News</a></li>
+                <li><a href="{% url 'insights' %}" class="{% if request.path == '/insights/' %}active{% endif %}">Stories</a></li>
+                <li><a href="{% url 'knowledge' %}" class="{% if request.path == '/knowledge/' %}active{% endif %}">Services</a></li>
+                <li class="dropdown">
+                    <a href="{% url 'categories' %}" class="dropdown-toggle {% if request.path == '/categories/' %}active{% endif %}">Categories</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Circular Economy</a></li>
+                        <li><a href="#">Corporate Surplus</a></li>
+                        <li><a href="#">Upcycling & Makers</a></li>
+                        <li><a href="#">Community Initiatives</a></li>
+                        <li><a href="#">Sustainability & Climate</a></li>
+                        <li><a href="#">Policy & Legislation</a></li>
+                        <li><a href="#">Training & Courses</a></li>
+                        <li><a href="#">Resource Management</a></li>
+                        <li><a href="#">Best Practices</a></li>
+                        <li><a href="#">Events & Webinars</a></li>
+                    </ul>
+                </li>
+                <li><a href="{% url 'magazine' %}" class="{% if request.path == '/magazine/' %}active{% endif %}">Magazine</a></li>
+                <li><a href="{% url 'about' %}" class="{% if request.path == '/about/' %}active{% endif %}">About Us</a></li>
+                <li><a href="{% url 'directory_home' %}" class="{% if request.path == '/directory/' %}active{% endif %}">Directory</a></li>
+                <li><a href="{% url 'contact' %}" class="{% if request.path == '/contact/' %}active{% endif %}">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    {% if not user.is_authenticated %}
+    <div class="directory-cta">
+        <p>Access our Exchange Directory by logging in or signing up. Explore corporate surplus, upcycling opportunities, and community resources.</p>
+        <a href="{% url 'login' %}" class="btn">Login</a>
+        <a href="{% url 'signup' %}" class="btn">Sign Up</a>
+    </div>
+    {% endif %}
+
+    <!-- ===== MAIN CONTENT ===== -->
+    <main class="container">
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                    <li class="{{ message.tags }}">{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        {% block hero %}{% endblock %}
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="site-footer">
+        <div class="footer-top">
+            <div class="footer-column">
+                <h4>About</h4>
+                <p>Call Soso: transforming surplus into culture, opportunity, and creative systems.</p>
+            </div>
+            <div class="footer-column">
+                <h4>Membership</h4>
+                <p>We empower professionals across the sustainability and resources sector to collaborate and innovate.</p>
+            </div>
+            <div class="footer-column">
+                <h4>Contact Us</h4>
+                <p>Have a story or a query? <a href="{% url 'contact' %}">Contact the Call Soso team</a></p>
+            </div>
+            <div class="footer-column">
+                <h4>Advertise</h4>
+                <p>Advertising with Call Soso helps you reach a sustainability-focused audience.</p>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; {{ current_year }} Call Soso. Privacy | Cookies | Terms | Copyright</p>
+            <p>Designed and built by CreepyLegend57</p>
+        </div>
+    </footer>
+
+</div> <!-- /.page-wrapper -->
+
+{% block modals %}{% endblock %}
+
+</body>
+</html>

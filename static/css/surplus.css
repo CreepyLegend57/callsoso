@@ -1,0 +1,134 @@
+/* ================================
+   Surplus Pages Styles
+   ================================ */
+
+/* Page container */
+.surplus-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+  font-family: "Inter", "Segoe UI", sans-serif;
+  color: #333;
+}
+
+/* Page header */
+.page-header h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #007a5a;
+  margin-bottom: 0.5rem;
+  text-align: center;
+}
+
+.page-header .intro-text {
+  font-size: 1rem;
+  color: #555;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+/* Search & Filters */
+.search-filters {
+  background: #f8fdfb;
+  padding: 1rem;
+  border-radius: 0.75rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+
+.search-filters input,
+.search-filters select {
+  min-width: 150px;
+  flex: 1 1 200px;
+}
+
+/* Form card */
+.form-card {
+  background: #fff;
+  border-radius: 1rem;
+  padding: 2rem;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 18px rgba(0,0,0,0.12);
+}
+
+.form-card button.btn-success {
+  background-color: #007a5a;
+  border: none;
+  color: #fff;
+  border-radius: 0.6rem;
+  padding: 0.5rem 1.2rem;
+  font-weight: 500;
+  transition: background 0.3s ease;
+}
+
+.form-card button.btn-success:hover {
+  background-color: #005e45;
+}
+
+/* Surplus listings */
+.surplus-list {
+  list-style: none;
+  padding-left: 0;
+}
+
+.surplus-list li {
+  background: #fff;
+  border-radius: 0.75rem;
+  padding: 1rem;
+  margin-bottom: 0.75rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.surplus-list li:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.08);
+}
+
+/* Links / navigation */
+a.btn-link {
+  color: #007a5a;
+  text-decoration: underline;
+  transition: color 0.3s ease;
+}
+
+a.btn-link:hover {
+  color: #005e45;
+  text-decoration: none;
+}
+
+/* Alerts */
+.alert {
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  font-size: 0.95rem;
+  text-align: center;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .form-card {
+      padding: 1.5rem;
+  }
+
+  .page-header h2 {
+      font-size: 1.75rem;
+  }
+
+  .surplus-list li {
+      padding: 0.85rem;
+  }
+
+  .search-filters {
+      flex-direction: column;
+      gap: 0.5rem;
+  }
+}
