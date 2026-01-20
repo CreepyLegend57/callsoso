@@ -22,7 +22,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'django-insecure-e9rbd-kyn054u61iq6*awpddr*znuq4pc0@eal&$61hth@==73'
 DEBUG = True
-ALLOWED_HOSTS = []  # Add ['*'] or your domain for production
+ALLOWED_HOSTS = ['callsoso.wasmer.app', '127.0.0.1', 'localhost']  # Add ['*'] or your domain for production
 
 
 # Application definition
