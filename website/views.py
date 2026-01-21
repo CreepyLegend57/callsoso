@@ -52,7 +52,7 @@ POPULAR_ARTICLES = [
 # ---------------------------
 # Home View
 # ---------------------------
-
+@login_required(login_url=settings.LOGIN_URL)
 def home(request):
     hero_microcopy = [
         "Every material has a second life.",
