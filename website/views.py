@@ -54,7 +54,6 @@ POPULAR_ARTICLES = [
 # ---------------------------
 @login_required(login_url='login')
 def home(request):
-    # --- Microcopy arrays ---
     hero_microcopy = [
         "Every material has a second life.",
         "Surplus isn’t waste, it’s unrealised potential.",
@@ -62,28 +61,15 @@ def home(request):
         "Circularity begins with attention.",
         "Creativity is a form of infrastructure.",
     ]
-
     gardens_microcopy = [
         "Ideas grow wherever they’re planted.",
         "Every material carries a history.",
         "Circularity begins with attention.",
     ]
 
-    # --- Latest articles (News) ---
-    latest_articles = (
-        Article.objects
-        .filter(is_published=True)
-        .order_by("-published_date", "-created_at")[:3]
-    )
+    latest_articles = Article.objects.filter(is_published=True).order_by("-published_date", "-created_at")[:3]
+    featured_resources = Resource.objects.filter(published=True, is_featured=True).order_by("-created_at")[:3]
 
-    # --- Featured resources (from Knowledge Center system) ---
-    featured_resources = (
-        Resource.objects
-        .filter(published=True, is_featured=True)
-        .order_by("-created_at")[:3]
-    )
-
-    # --- Handle FoundersList form submission ---
     if request.method == "POST":
         email = request.POST.get("email")
         if email:
@@ -95,10 +81,11 @@ def home(request):
         "hero_microcopy": hero_microcopy,
         "gardens_microcopy": gardens_microcopy,
         "latest_articles": latest_articles,
-        "featured_resources": featured_resources,  # ✅ THIS WAS MISSING
+        "featured_resources": featured_resources,
     }
 
     return render(request, "website/home.html", context)
+
 
 
 
@@ -141,19 +128,14 @@ def contact(request):
 # ---------------------------
 @login_required(login_url='login')
 def news(request):
-    # Fetch all published articles
     articles_qs = Article.objects.filter(is_published=True).order_by("-published_date", "-created_at")
-
-    # Featured and popular
     featured_articles = articles_qs.filter(is_featured=True)[:3]
     popular_articles = articles_qs[:4]
 
-    # Pagination
     paginator = Paginator(articles_qs, 5)
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
 
-    # All categories for filter UI
     all_categories = Category.objects.all()
 
     context = {
@@ -164,8 +146,8 @@ def news(request):
         "is_paginated": page_obj.has_other_pages(),
         "all_categories": all_categories,
     }
-
     return render(request, "website/news.html", context)
+
 
 
 # ---------------------------
@@ -367,20 +349,21 @@ def signup_view(request):
     return render(request, 'website/signup.html', {'form': form})
 
 def login_view(request):
-    next_page = request.GET.get('next', 'directory_home')  # Get the 'next' parameter or default to 'directory_home'
-    
+    next_page = request.GET.get('next') or 'directory_home'
+
     if request.method == "POST":
         form = AuthenticationForm(request, data=request.POST)
         if form.is_valid():
             user = form.get_user()
             login(request, user)
             messages.success(request, f"Welcome back, {user.username}!")
-            return redirect(next_page)  # Redirect to the 'next' page
+            return redirect(next_page)
         else:
             messages.error(request, "Invalid username or password.")
     else:
         form = AuthenticationForm()
     return render(request, 'website/login.html', {'form': form})
+
 
 
 def logout_view(request):
