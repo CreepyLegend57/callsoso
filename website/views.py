@@ -93,14 +93,14 @@ def home(request):
 # ---------------------------
 # About
 # ---------------------------
-@login_required(login_url='login')
+@login_required(login_url=settings.LOGIN_URL)
 def about(request):
     return render(request, 'website/about.html')
 
 # ---------------------------
 # Contact
 # ---------------------------
-@login_required(login_url='login')
+@login_required(login_url=settings.LOGIN_URL)
 def contact(request):
     if request.method == "POST":
         name = request.POST.get('name')
@@ -126,7 +126,7 @@ def contact(request):
 # ---------------------------
 # News View
 # ---------------------------
-@login_required(login_url='login')
+@login_required(login_url=settings.LOGIN_URL)
 def news(request):
     # Fetch all published articles
     articles_qs = Article.objects.filter(is_published=True).order_by("-published_date", "-created_at")
@@ -158,7 +158,7 @@ def news(request):
 # ---------------------------
 # Article Detail View
 # ---------------------------
-@login_required(login_url='login')
+@login_required(login_url=settings.LOGIN_URL)
 def article_detail(request, slug):
     # Fetch the requested article
     article = get_object_or_404(Article, slug=slug, is_published=True)
@@ -179,14 +179,14 @@ def article_detail(request, slug):
 # ---------------------------
 # Directory Home (private)
 # ---------------------------
-@login_required
+@login_required(login_url=settings.LOGIN_URL)
 def directory_home(request):
     return render(request, 'directory/index.html')
 
 # ---------------------------
 # Insights
 # ---------------------------
-@login_required(login_url='login')
+@login_required(login_url=settings.LOGIN_URL)
 def insights(request):
     """
     Insights page:
@@ -232,7 +232,7 @@ def insights(request):
 # ---------------------------
 # Knowledge Center
 # ---------------------------
-@login_required(login_url='login')
+@login_required(login_url=settings.LOGIN_URL)
 def knowledge_center(request):
     """
     Knowledge Center:
@@ -291,14 +291,14 @@ def knowledge_center(request):
 # ---------------------------
 # Categories
 # ---------------------------
-@login_required(login_url='login')
+@login_required(login_url=settings.LOGIN_URL)
 def categories(request):
     return render(request, 'website/categories.html')
 
 # ---------------------------
 # Magazine
 # ---------------------------
-@login_required(login_url='login')
+@login_required(login_url=settings.LOGIN_URL)
 def magazine(request):
     query = request.GET.get("q", "").strip()
     category_slug = request.GET.get("category", "").strip()
@@ -379,21 +379,21 @@ def logout_view(request):
 # ---------------------------
 # Impact Tracker / Support / Loops / Tiers
 # ---------------------------
-@login_required(login_url='login')
+@login_required(login_url=settings.LOGIN_URL)
 def impact_tracker(request):
     collaborations = Collaboration.objects.all().order_by('-planted_date')
     return render(request, 'website/impact_tracker.html', {'collaborations': collaborations})
 
-@login_required(login_url='login')
+@login_required(login_url=settings.LOGIN_URL)
 def support(request):
     contributions = Contribution.objects.all().order_by('-date')
     return render(request, 'website/support.html', {'contributions': contributions})
 
-@login_required(login_url='login')
+@login_required(login_url=settings.LOGIN_URL)
 def loops_detail(request):
     return render(request, 'website/loops.html')
 
-@login_required(login_url='login')
+@login_required(login_url=settings.LOGIN_URL)
 def tiers(request):
     tiers_info = [
         {"title": "Creator", "description": "Access to circular community resources.", "price": "Free / $10"},
