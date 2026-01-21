@@ -9,6 +9,7 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib import messages
 from django.utils import timezone
 from collections import OrderedDict
+from django.urls import reverse
 
 from .models import (
     Collaboration,
@@ -346,15 +347,16 @@ def signup_view(request):
             user = form.save()
             login(request, user)
             messages.success(request, "Welcome! Your account has been created.")
-            return redirect('directory_home')
+            return redirect('directory:directory_home')  # ✅ namespace added
         else:
             messages.error(request, "Please correct the errors below.")
     else:
         form = UserCreationForm()
     return render(request, 'website/signup.html', {'form': form})
 
+
 def login_view(request):
-    next_page = request.GET.get('next') or 'directory_home'
+    next_page = request.GET.get('next') or reverse('directory:directory_home')  # ✅ safe default with namespace
 
     if request.method == "POST":
         form = AuthenticationForm(request, data=request.POST)
@@ -370,11 +372,10 @@ def login_view(request):
     return render(request, 'website/login.html', {'form': form})
 
 
-
 def logout_view(request):
     logout(request)
     messages.info(request, "You have been logged out.")
-    return redirect('home')
+    return redirect('website:home')  # ✅ namespace added
 
 # ---------------------------
 # Impact Tracker / Support / Loops / Tiers
