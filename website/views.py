@@ -1,14 +1,14 @@
 from datetime import date
-from django.shortcuts import render, redirect, get_object_or_404
+from collections import OrderedDict
+
+from django.shortcuts import render, redirect, get_object_or_404, resolve_url
 from django.core.mail import send_mail
 from django.conf import settings
-from django.contrib.auth import login, authenticate, logout
+from django.contrib.auth import login, logout
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib import messages
-from django.utils import timezone
-from collections import OrderedDict
 
 from .models import (
     Collaboration,
@@ -17,10 +17,9 @@ from .models import (
     Article,
     Resource,
     Category,
-    MagazineIssue, 
-    PopularArticle
+    MagazineIssue,
+    PopularArticle,
 )
-
 
 # ---------------------------
 # Magazine / Popular Data
@@ -52,7 +51,6 @@ POPULAR_ARTICLES = [
 # ---------------------------
 # Home View
 # ---------------------------
-@login_required(login_url=settings.LOGIN_URL)
 def home(request):
     hero_microcopy = [
         "Every material has a second life.",
@@ -93,14 +91,12 @@ def home(request):
 # ---------------------------
 # About
 # ---------------------------
-@login_required(login_url=settings.LOGIN_URL)
 def about(request):
     return render(request, 'website/about.html')
 
 # ---------------------------
 # Contact
 # ---------------------------
-@login_required(login_url=settings.LOGIN_URL)
 def contact(request):
     if request.method == "POST":
         name = request.POST.get('name')
@@ -126,7 +122,6 @@ def contact(request):
 # ---------------------------
 # News View
 # ---------------------------
-@login_required(login_url=settings.LOGIN_URL)
 def news(request):
     # Fetch all published articles
     articles_qs = Article.objects.filter(is_published=True).order_by("-published_date", "-created_at")
@@ -158,7 +153,6 @@ def news(request):
 # ---------------------------
 # Article Detail View
 # ---------------------------
-@login_required(login_url=settings.LOGIN_URL)
 def article_detail(request, slug):
     # Fetch the requested article
     article = get_object_or_404(Article, slug=slug, is_published=True)
@@ -186,7 +180,6 @@ def directory_home(request):
 # ---------------------------
 # Insights
 # ---------------------------
-@login_required(login_url=settings.LOGIN_URL)
 def insights(request):
     """
     Insights page:
@@ -232,7 +225,6 @@ def insights(request):
 # ---------------------------
 # Knowledge Center
 # ---------------------------
-@login_required(login_url=settings.LOGIN_URL)
 def knowledge_center(request):
     """
     Knowledge Center:
@@ -291,14 +283,12 @@ def knowledge_center(request):
 # ---------------------------
 # Categories
 # ---------------------------
-@login_required(login_url=settings.LOGIN_URL)
 def categories(request):
     return render(request, 'website/categories.html')
 
 # ---------------------------
 # Magazine
 # ---------------------------
-@login_required(login_url=settings.LOGIN_URL)
 def magazine(request):
     query = request.GET.get("q", "").strip()
     category_slug = request.GET.get("category", "").strip()
@@ -354,7 +344,7 @@ def signup_view(request):
     return render(request, 'website/signup.html', {'form': form})
 
 def login_view(request):
-    next_page = request.GET.get('next') or 'directory_home'
+    next_page = request.GET.get('next') or 'directory:directory_home'
 
     if request.method == "POST":
         form = AuthenticationForm(request, data=request.POST)
