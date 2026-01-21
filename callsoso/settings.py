@@ -27,6 +27,14 @@ ALLOWED_HOSTS = os.getenv(
     "localhost,127.0.0.1"
 ).split(",")
 
+# ✅ CSRF trusted origins (Render / production safe)
+CSRF_TRUSTED_ORIGINS = [
+    origin for origin in os.getenv(
+        "DJANGO_CSRF_TRUSTED_ORIGINS", ""
+    ).split(",") if origin
+]
+
+
 # ======================================================
 # APPLICATION DEFINITION
 # ======================================================
@@ -62,7 +70,7 @@ ROOT_URLCONF = "callsoso.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [BASE_DIR / "templates"],  # global templates
+        "DIRS": [BASE_DIR / "templates"],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -78,7 +86,7 @@ TEMPLATES = [
 WSGI_APPLICATION = "callsoso.wsgi.application"
 
 # ======================================================
-# DATABASE (SQLite local, Postgres ready)
+# DATABASE
 # ======================================================
 DATABASES = {
     "default": {
@@ -138,7 +146,7 @@ MEDIA_ROOT = BASE_DIR / "media"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # ======================================================
-# EMAIL (safe defaults)
+# EMAIL
 # ======================================================
 EMAIL_BACKEND = os.getenv(
     "DJANGO_EMAIL_BACKEND",
