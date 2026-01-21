@@ -128,14 +128,19 @@ def contact(request):
 # ---------------------------
 @login_required(login_url='login')
 def news(request):
+    # Fetch all published articles
     articles_qs = Article.objects.filter(is_published=True).order_by("-published_date", "-created_at")
+
+    # Featured and popular
     featured_articles = articles_qs.filter(is_featured=True)[:3]
     popular_articles = articles_qs[:4]
 
+    # Pagination
     paginator = Paginator(articles_qs, 5)
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
 
+    # All categories for filter UI
     all_categories = Category.objects.all()
 
     context = {
@@ -146,8 +151,8 @@ def news(request):
         "is_paginated": page_obj.has_other_pages(),
         "all_categories": all_categories,
     }
-    return render(request, "website/news.html", context)
 
+    return render(request, "website/news.html", context)
 
 
 # ---------------------------

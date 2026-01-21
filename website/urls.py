@@ -1,8 +1,7 @@
-# website/urls.py
 from django.urls import path
 from . import views
 
-app_name = "website"   # ✅ ADD THIS (does NOT break anything)
+app_name = "website"  # ✅ Keeps your templates working
 
 urlpatterns = [
     # Core pages
@@ -14,7 +13,7 @@ urlpatterns = [
     path('news/', views.news, name='news'),
     path('news/<slug:slug>/', views.article_detail, name='article_detail'),
 
-    # Content
+    # Content / Knowledge
     path('insights/', views.insights, name='insights'),
     path('knowledge/', views.knowledge_center, name='knowledge'),
     path('categories/', views.categories, name='categories'),
@@ -25,7 +24,7 @@ urlpatterns = [
     path('login/', views.login_view, name='login'),
     path('logout/', views.logout_view, name='logout'),
 
-    # Features
+    # Features (some render templates in directory app, but routed via website)
     path('impact-tracker/', views.impact_tracker, name='impact_tracker'),
     path('support/', views.support, name='support'),
     path('loops/', views.loops_detail, name='loops_detail'),

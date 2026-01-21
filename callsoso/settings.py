@@ -14,7 +14,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # ======================================================
 # ENVIRONMENT VARIABLES
 # ======================================================
-# Defaults are SAFE for local dev
 SECRET_KEY = os.getenv(
     "DJANGO_SECRET_KEY",
     "django-insecure-local-dev-only-change-in-production"
@@ -45,10 +44,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
-
-    # Whitenoise (static files in production)
     "whitenoise.middleware.WhiteNoiseMiddleware",
-
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -62,7 +58,7 @@ ROOT_URLCONF = "callsoso.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [BASE_DIR / "templates"],  # global templates
+        "DIRS": [BASE_DIR / "templates"],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -78,18 +74,12 @@ TEMPLATES = [
 WSGI_APPLICATION = "callsoso.wsgi.application"
 
 # ======================================================
-# DATABASE (SQLite local, Postgres ready)
+# DATABASE
 # ======================================================
 DATABASES = {
     "default": {
-        "ENGINE": os.getenv(
-            "DJANGO_DB_ENGINE",
-            "django.db.backends.sqlite3"
-        ),
-        "NAME": os.getenv(
-            "DJANGO_DB_NAME",
-            BASE_DIR / "db.sqlite3"
-        ),
+        "ENGINE": os.getenv("DJANGO_DB_ENGINE", "django.db.backends.sqlite3"),
+        "NAME": os.getenv("DJANGO_DB_NAME", BASE_DIR / "db.sqlite3"),
         "USER": os.getenv("DJANGO_DB_USER", ""),
         "PASSWORD": os.getenv("DJANGO_DB_PASSWORD", ""),
         "HOST": os.getenv("DJANGO_DB_HOST", ""),
@@ -116,19 +106,13 @@ USE_I18N = True
 USE_TZ = True
 
 # ======================================================
-# STATIC FILES
+# STATIC & MEDIA FILES
 # ======================================================
 STATIC_URL = "/static/"
 STATICFILES_DIRS = [BASE_DIR / "static"]
 STATIC_ROOT = BASE_DIR / "staticfiles"
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
-STATICFILES_STORAGE = (
-    "whitenoise.storage.CompressedManifestStaticFilesStorage"
-)
-
-# ======================================================
-# MEDIA FILES
-# ======================================================
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
 
@@ -138,53 +122,41 @@ MEDIA_ROOT = BASE_DIR / "media"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # ======================================================
-# EMAIL (safe defaults)
+# EMAIL
 # ======================================================
-EMAIL_BACKEND = os.getenv(
-    "DJANGO_EMAIL_BACKEND",
-    "django.core.mail.backends.console.EmailBackend"
-)
-
+EMAIL_BACKEND = os.getenv("DJANGO_EMAIL_BACKEND", "django.core.mail.backends.console.EmailBackend")
 EMAIL_HOST = os.getenv("DJANGO_EMAIL_HOST", "")
-EMAIL_PORT = int(os.getenv("DJANGO_EMAIL_PORT", "587"))
+EMAIL_PORT = int(os.getenv("DJANGO_EMAIL_PORT", 587))
 EMAIL_USE_TLS = os.getenv("DJANGO_EMAIL_USE_TLS", "True") == "True"
 EMAIL_HOST_USER = os.getenv("DJANGO_EMAIL_USER", "")
 EMAIL_HOST_PASSWORD = os.getenv("DJANGO_EMAIL_PASSWORD", "")
 
-DEFAULT_FROM_EMAIL = os.getenv(
-    "DJANGO_DEFAULT_FROM_EMAIL",
-    "Call Soso <noreply@callsoso.org>"
-)
-CONTACT_EMAIL = os.getenv(
-    "DJANGO_CONTACT_EMAIL",
-    "info@callsoso.org"
-)
+DEFAULT_FROM_EMAIL = os.getenv("DJANGO_DEFAULT_FROM_EMAIL", "Call Soso <noreply@callsoso.org>")
+CONTACT_EMAIL = os.getenv("DJANGO_CONTACT_EMAIL", "info@callsoso.org")
 
 # ======================================================
-# AUTHENTICATION (NAMESPACE-SAFE)
+# AUTHENTICATION (Namespace-safe)
 # ======================================================
-LOGIN_URL = "website:login"
-LOGIN_REDIRECT_URL = "directory:directory_home"
-LOGOUT_REDIRECT_URL = "website:home"
+LOGIN_URL = os.getenv("DJANGO_LOGIN_URL", "website:login")
+LOGIN_REDIRECT_URL = os.getenv("DJANGO_LOGIN_REDIRECT_URL", "directory:directory_home")
+LOGOUT_REDIRECT_URL = os.getenv("DJANGO_LOGOUT_REDIRECT_URL", "website:home")
 
 # ======================================================
-# SECURITY (ONLY WHEN DEBUG = FALSE)
+# SECURITY SETTINGS
 # ======================================================
 if not DEBUG:
-    SECURE_SSL_REDIRECT = True
-    SESSION_COOKIE_SECURE = True
-    CSRF_COOKIE_SECURE = True
-
-    SECURE_HSTS_SECONDS = 3600
-    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
-    SECURE_HSTS_PRELOAD = True
-
-    SECURE_BROWSER_XSS_FILTER = True
-    SECURE_CONTENT_TYPE_NOSNIFF = True
-
-    X_FRAME_OPTIONS = "DENY"
+    # Production-level security
+    SECURE_SSL_REDIRECT = os.getenv("DJANGO_SECURE_SSL_REDIRECT", "True") == "True"
+    SESSION_COOKIE_SECURE = os.getenv("DJANGO_SESSION_COOKIE_SECURE", "True") == "True"
+    CSRF_COOKIE_SECURE = os.getenv("DJANGO_CSRF_COOKIE_SECURE", "True") == "True"
+    SECURE_HSTS_SECONDS = int(os.getenv("DJANGO_SECURE_HSTS_SECONDS", 3600))
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = os.getenv("DJANGO_SECURE_HSTS_INCLUDE_SUBDOMAINS", "True") == "True"
+    SECURE_HSTS_PRELOAD = os.getenv("DJANGO_SECURE_HSTS_PRELOAD", "True") == "True"
+    SECURE_BROWSER_XSS_FILTER = os.getenv("DJANGO_SECURE_BROWSER_XSS_FILTER", "True") == "True"
+    SECURE_CONTENT_TYPE_NOSNIFF = os.getenv("DJANGO_SECURE_CONTENT_TYPE_NOSNIFF", "True") == "True"
+    X_FRAME_OPTIONS = os.getenv("DJANGO_X_FRAME_OPTIONS", "DENY")
 else:
-    # Local dev MUST disable HTTPS enforcement
+    # Local development: disable HTTPS enforcement
     SECURE_SSL_REDIRECT = False
     SESSION_COOKIE_SECURE = False
     CSRF_COOKIE_SECURE = False
