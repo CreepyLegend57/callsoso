@@ -16,18 +16,19 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-
-# Add these two imports
 from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('website.urls')),       # Homepage: /, /about/, /contact/
-    path('directory/', include('directory.urls')),  # /directory/
+
+    # Website (public)
+    path('', include('website.urls')),
+
+    # Directory (private)
+    path('directory/', include('directory.urls')),
 ]
 
-# ✅ Add this block to serve static/media in development
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

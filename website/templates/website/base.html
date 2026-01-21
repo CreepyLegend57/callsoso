@@ -266,14 +266,14 @@
         <!-- Top Bar -->
         <div class="top-bar">
             <div class="logo">
-                <a href="{% url 'home' %}" class="logo-link">
+                <a href="{% url 'website:home' %}" class="logo-link">
                     <h1>Call Soso</h1>
                     <p class="tagline">Circularity in Resonance</p>
                 </a>
             </div>
 
             <div class="search-box">
-                <form method="get" action="{% url 'home' %}">
+                <form method="get" action="{% url 'website:home' %}">
                     <input type="text" name="q" placeholder="Search...">
                     <button type="submit"><i class="fas fa-search"></i></button>
                 </form>
@@ -282,11 +282,11 @@
             <div class="auth-socials">
                 <div class="auth-links">
                     {% if user.is_authenticated %}
-                        <a href="{% url 'directory_home' %}"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
-                        <a href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                        <a href="{% url 'directory:directory_home' %}"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+                        <a href="{% url 'website:logout' %}"><i class="fas fa-sign-out-alt"></i> Logout</a>
                     {% else %}
-                        <a href="{% url 'login' %}"><i class="fas fa-sign-in-alt"></i> Login</a>
-                        <a href="{% url 'signup' %}"><i class="fas fa-user-plus"></i> Sign Up</a>
+                        <a href="{% url 'website:login' %}"><i class="fas fa-sign-in-alt"></i> Login</a>
+                        <a href="{% url 'website:signup' %}"><i class="fas fa-user-plus"></i> Sign Up</a>
                     {% endif %}
                 </div>
                 <div class="social-links">
@@ -300,12 +300,12 @@
         <!-- Main Navigation -->
         <nav class="main-nav">
             <ul>
-                <li><a href="{% url 'home' %}" class="{% if request.path == '/' %}active{% endif %}">Home</a></li>
-                <li><a href="{% url 'news' %}" class="{% if request.path == '/news/' %}active{% endif %}">News</a></li>
-                <li><a href="{% url 'insights' %}" class="{% if request.path == '/insights/' %}active{% endif %}">Stories</a></li>
-                <li><a href="{% url 'knowledge' %}" class="{% if request.path == '/knowledge/' %}active{% endif %}">Services</a></li>
+                <li><a href="{% url 'website:home' %}" class="{% if request.path == '/' %}active{% endif %}">Home</a></li>
+                <li><a href="{% url 'website:news' %}" class="{% if request.path == '/news/' %}active{% endif %}">News</a></li>
+                <li><a href="{% url 'website:insights' %}" class="{% if request.path == '/insights/' %}active{% endif %}">Stories</a></li>
+                <li><a href="{% url 'website:knowledge' %}" class="{% if request.path == '/knowledge/' %}active{% endif %}">Services</a></li>
                 <li class="dropdown">
-                    <a href="{% url 'categories' %}" class="dropdown-toggle {% if request.path == '/categories/' %}active{% endif %}">Categories</a>
+                    <a href="{% url 'website:categories' %}" class="dropdown-toggle {% if request.path == '/categories/' %}active{% endif %}">Categories</a>
                     <ul class="dropdown-menu">
                         <li><a href="#">Circular Economy</a></li>
                         <li><a href="#">Corporate Surplus</a></li>
@@ -319,10 +319,10 @@
                         <li><a href="#">Events & Webinars</a></li>
                     </ul>
                 </li>
-                <li><a href="{% url 'magazine' %}" class="{% if request.path == '/magazine/' %}active{% endif %}">Magazine</a></li>
-                <li><a href="{% url 'about' %}" class="{% if request.path == '/about/' %}active{% endif %}">About Us</a></li>
-                <li><a href="{% url 'directory_home' %}" class="{% if request.path == '/directory/' %}active{% endif %}">Directory</a></li>
-                <li><a href="{% url 'contact' %}" class="{% if request.path == '/contact/' %}active{% endif %}">Contact</a></li>
+                <li><a href="{% url 'website:magazine' %}" class="{% if request.path == '/magazine/' %}active{% endif %}">Magazine</a></li>
+                <li><a href="{% url 'website:about' %}" class="{% if request.path == '/about/' %}active{% endif %}">About Us</a></li>
+                <li><a href="{% url 'directory:directory_home' %}" class="{% if request.path == '/directory/' %}active{% endif %}">Directory</a></li>
+                <li><a href="{% url 'website:contact' %}" class="{% if request.path == '/contact/' %}active{% endif %}">Contact</a></li>
             </ul>
         </nav>
     </header>
@@ -330,8 +330,8 @@
     {% if not user.is_authenticated %}
     <div class="directory-cta">
         <p>Access our Exchange Directory by logging in or signing up. Explore corporate surplus, upcycling opportunities, and community resources.</p>
-        <a href="{% url 'login' %}" class="btn">Login</a>
-        <a href="{% url 'signup' %}" class="btn">Sign Up</a>
+        <a href="{% url 'website:login' %}" class="btn">Login</a>
+        <a href="{% url 'website:signup' %}" class="btn">Sign Up</a>
     </div>
     {% endif %}
 
@@ -362,7 +362,7 @@
             </div>
             <div class="footer-column">
                 <h4>Contact Us</h4>
-                <p>Have a story or a query? <a href="{% url 'contact' %}">Contact the Call Soso team</a></p>
+                <p>Have a story or a query? <a href="{% url 'website:contact' %}">Contact the Call Soso team</a></p>
             </div>
             <div class="footer-column">
                 <h4>Advertise</h4>

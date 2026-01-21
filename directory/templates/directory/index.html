@@ -83,9 +83,9 @@
                 <li>Councils, Sponsors & Commissioners: Engage with measurable cultural and environmental impact.</li>
             </ul>
             <p class="loop-cta text-center">
-                <a href="{% url 'surplus_list' %}" class="btn btn-primary">Explore the Material Loop →</a>
-                <a href="{% url 'surplus_create' %}" class="btn btn-outline-primary">List Your Surplus →</a>
-                <a href="{% url 'demand_list' %}" class="btn btn-outline-secondary">See Creator Opportunities →</a>
+                <a href="{% url 'directory:surplus_list' %}" class="btn btn-primary">Explore the Material Loop →</a>
+                <a href="{% url 'directory:surplus_create' %}" class="btn btn-outline-primary">List Your Surplus →</a>
+                <a href="{% url 'directory:demand_list' %}" class="btn btn-outline-secondary">See Creator Opportunities →</a>
             </p>
             <div class="loop-microcopy">
                 <span>“Every material carries a second life.”</span>
@@ -120,8 +120,8 @@
                 <li>Sponsors & Councils: Support sustainable food systems.</li>
             </ul>
             <p class="loop-cta text-center">
-                <a href="{% url 'demand_list' %}" class="btn btn-primary">Explore the Edible Loop →</a>
-                <a href="{% url 'demand_create' %}" class="btn btn-outline-primary">List Surplus →</a>
+                <a href="{% url 'directory:demand_list' %}" class="btn btn-primary">Explore the Edible Loop →</a>
+                <a href="{% url 'directory:demand_create' %}" class="btn btn-outline-primary">List Surplus →</a>
             </p>
             <div class="loop-microcopy">
                 <span>“Every ingredient is a future.”</span>
@@ -137,9 +137,9 @@
     <section class="directory-actions mt-5 text-center">
         <h4>Directory Quick Actions</h4>
         <div class="actions-grid">
-            <a href="{% url 'surplus_create' %}" class="btn btn-secondary">➕ List Material</a>
-            <a href="{% url 'demand_create' %}" class="btn btn-secondary">➕ Submit Food Request</a>
-            <a href="{% url 'impact_tracker' %}" class="btn btn-secondary">🌱 Track Impact</a>
+            <a href="{% url 'directory:surplus_create' %}" class="btn btn-secondary">➕ List Material</a>
+            <a href="{% url 'directory:demand_create' %}" class="btn btn-secondary">➕ Submit Food Request</a>
+            <a href="{% url 'website:impact_tracker' %}" class="btn btn-secondary">🌱 Track Impact</a>
             <a href="#" class="btn btn-secondary">View Tiers & Pricing →</a>
         </div>
     </section>
@@ -155,7 +155,7 @@
             <li><strong>Charities:</strong> Limited access for sourcing or project support.</li>
             <li><strong>Sponsors & Councils:</strong> Fund projects, support initiatives, and monitor measurable impact.</li>
         </ul>
-        <p class="mt-3">Learn more about CallSoso’s impact <a href="{% url 'about' %}">here</a>.</p>
+        <p class="mt-3">Learn more about CallSoso’s impact <a href="{% url 'website:about' %}">here</a>.</p>
     </section>
 
 </div>

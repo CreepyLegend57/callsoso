@@ -36,7 +36,7 @@
             An abstract creative ecology where materials and ideas grow into real-world impact.
             Seeded business cards become a physical act of planting, while our online tracker shows projects thriving.
         </p>
-        <a href="{% url 'impact_tracker' %}" class="btn-primary">Track Your Impact</a>
+        <a href="{% url 'website:impact_tracker' %}" class="btn-primary">Track Your Impact</a>
     </div>
 </section>
 
@@ -55,16 +55,16 @@
     <div class="max-w-screen-xl mx-auto px-4">
         <h2 class="text-4xl font-bold mb-10 text-center">Explore Our Pathways</h2>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <a href="{% url 'about' %}" class="tile bg-earth-brown text-cream-light p-6 rounded-lg shadow hover:shadow-lg transition">
+            <a href="{% url 'website:about' %}" class="tile bg-earth-brown text-cream-light p-6 rounded-lg shadow hover:shadow-lg transition">
                 About CallSoso<br><small>Our ethos, foundations, and cultural logic.</small>
             </a>
-            <a href="{% url 'directory_home' %}" class="tile bg-earth-brown text-cream-light p-6 rounded-lg shadow hover:shadow-lg transition">
+            <a href="{% url 'directory:directory_home' %}" class="tile bg-earth-brown text-cream-light p-6 rounded-lg shadow hover:shadow-lg transition">
                 Creative Exchange Directory<br><small>Matching surplus to makers, ideas, and value.</small>
             </a>
             <a href="#services" class="tile bg-earth-brown text-cream-light p-6 rounded-lg shadow hover:shadow-lg transition">
                 Creative Systems for Change<br><small>Consultancy, activations, and learning.</small>
             </a>
-            <a href="{% url 'insights' %}" class="tile bg-earth-brown text-cream-light p-6 rounded-lg shadow hover:shadow-lg transition">
+            <a href="{% url 'website:insights' %}" class="tile bg-earth-brown text-cream-light p-6 rounded-lg shadow hover:shadow-lg transition">
                 The Narrative / Stories
             </a>
             <a href="#living-system" class="tile bg-earth-brown text-cream-light p-6 rounded-lg shadow hover:shadow-lg transition">
@@ -76,7 +76,7 @@
             <a href="#support" class="tile bg-earth-brown text-cream-light p-6 rounded-lg shadow hover:shadow-lg transition">
                 Support Us / Kickstarter Portal
             </a>
-            <a href="{% url 'contact' %}" class="tile bg-earth-brown text-cream-light p-6 rounded-lg shadow hover:shadow-lg transition">
+            <a href="{% url 'website:contact' %}" class="tile bg-earth-brown text-cream-light p-6 rounded-lg shadow hover:shadow-lg transition">
                 Contact / Collaborate
             </a>
         </div>
@@ -85,8 +85,8 @@
 
 <!-- SOFT CTA -->
 <section class="cta-section bg-green-accent py-16 text-center text-earth-brown">
-    <a href="{% url 'directory_home' %}" class="btn-secondary mr-4">Explore the Directory</a>
-    <a href="{% url 'about' %}" class="btn-secondary">Discover How We Work</a>
+    <a href="{% url 'directory:directory_home' %}" class="btn-secondary mr-4">Explore the Directory</a>
+    <a href="{% url 'website:about' %}" class="btn-secondary">Discover How We Work</a>
 </section>
 
 <!-- ===== UPDATED: LATEST STORIES ===== -->
@@ -177,8 +177,8 @@
           <div class="no-articles">
             <p>
               No stories published yet — come back soon.
-              Explore our <a href="{% url 'about' %}">approach</a>
-              and <a href="{% url 'directory_home' %}">directory</a>.
+              Explore our <a href="{% url 'website:about' %}">approach</a>
+              and <a href="{% url 'directory:directory_home' %}">directory</a>.
             </p>
           </div>
         {% endif %}
@@ -277,7 +277,7 @@
 <section id="contact" class="contact bg-earth-brown py-20 text-cream-light text-center">
     <h2 class="text-4xl font-bold mb-6">Contact / Collaborate</h2>
     <p>Let's work in resonance. Contact us via form, email, or social handles. Join mailing list or volunteer.</p>
-    <a href="{% url 'contact' %}" class="btn-primary mt-4 inline-block">Get in Touch</a>
+    <a href="{% url 'website:contact' %}" class="btn-primary mt-4 inline-block">Get in Touch</a>
 </section>
 
 {% endblock %}

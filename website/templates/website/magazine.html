@@ -19,7 +19,7 @@
 
   <!-- Top search bar -->
   <div class="magazine-top-bar" style="margin-bottom:30px;">
-    <form method="get" action="{% url 'magazine' %}" class="magazine-search enhanced-search" style="flex:1; max-width:600px;">
+    <form method="get" action="{% url 'website:magazine' %}" class="magazine-search enhanced-search" style="flex:1; max-width:600px;">
       <input type="text" name="q" placeholder="Search issues by title or topic..." value="{{ search_query|default:'' }}">
       {% if selected_category %}
         <input type="hidden" name="category" value="{{ selected_category }}">
@@ -37,7 +37,7 @@
         <h4 style="margin-top:0; margin-bottom:16px; font-size:1.1rem; color:#0d4d40; border-bottom:1px solid #f3f4f6; padding-bottom:10px;">Categories</h4>
         <ul class="filter-tabs" style="list-style:none; padding:0; margin:0;">
           <li style="margin-bottom:8px;">
-            <a href="{% url 'magazine' %}{% if search_query %}?q={{ search_query|urlencode }}{% endif %}"
+            <a href="{% url 'website:magazine' %}{% if search_query %}?q={{ search_query|urlencode }}{% endif %}"
                class="{% if not selected_category %}active{% endif %}"
                style="text-decoration:none; display:flex; justify-content:space-between; align-items:center; padding:8px 12px; border-radius:8px; font-size:0.95rem; {% if not selected_category %} background:#f0fdf4; color:#12b981; font-weight:600; {% else %} color:#4b5563; {% endif %}">
               <span>All Issues</span>
@@ -83,7 +83,7 @@
       <div class="sidebar-section" style="padding:20px; background: linear-gradient(135deg, #f0fdf4, #dcfce7); border-radius:12px; text-align:center; border: 1px solid #86efac;">
         <strong style="font-size: 1rem; color: #166534; display: block; margin-bottom: 8px;">Become a Member</strong>
         <p style="margin:0 0 12px; color: #166534; font-size:0.85rem;">Unlock full magazine access.</p>
-        <a href="{% url 'signup' %}" style="display:inline-block; padding:8px 16px; background:#12b981; color:#fff; border-radius:6px; text-decoration:none; font-size:0.9rem; font-weight:500;">Join Now</a>
+        <a href="{% url 'website:signup' %}" style="display:inline-block; padding:8px 16px; background:#12b981; color:#fff; border-radius:6px; text-decoration:none; font-size:0.9rem; font-weight:500;">Join Now</a>
       </div>
     </aside>
 

@@ -10,7 +10,7 @@
     <h2 class="mb-4">📋 My Demand Listings</h2>
 
     <div class="mb-3 text-center">
-        <a href="{% url 'demand_create' %}" class="btn btn-success">➕ Add New Demand</a>
+        <a href="{% url 'directory:demand_create' %}" class="btn btn-success">➕ Add New Demand</a>
     </div>
 
     <!-- SEARCH & FILTERS -->
@@ -53,7 +53,7 @@
     {% endif %}
 
     <div class="mt-4 text-center">
-        <a href="{% url 'directory_home' %}" class="btn btn-secondary">🔙 Back to Directory Home</a>
+        <a href="{% url 'directory:directory_home' %}" class="btn btn-secondary">🔙 Back to Directory Home</a>
     </div>
 </div>
 {% endblock %}

@@ -2,6 +2,8 @@
 from django.urls import path
 from . import views
 
+app_name = "website"   # ✅ ADD THIS (does NOT break anything)
+
 urlpatterns = [
     # Core pages
     path('', views.home, name='home'),
@@ -10,10 +12,9 @@ urlpatterns = [
 
     # News / Articles
     path('news/', views.news, name='news'),
-    path('news/<slug:slug>/', views.article_detail, name='article_detail'),  # Article detail page
+    path('news/<slug:slug>/', views.article_detail, name='article_detail'),
 
-    # Private / Directory
-    path('directory/', views.directory_home, name='directory_home'),
+    # Content
     path('insights/', views.insights, name='insights'),
     path('knowledge/', views.knowledge_center, name='knowledge'),
     path('categories/', views.categories, name='categories'),
@@ -24,7 +25,7 @@ urlpatterns = [
     path('login/', views.login_view, name='login'),
     path('logout/', views.logout_view, name='logout'),
 
-    # Impact Tracker / Support / Loops / Tiers
+    # Features
     path('impact-tracker/', views.impact_tracker, name='impact_tracker'),
     path('support/', views.support, name='support'),
     path('loops/', views.loops_detail, name='loops_detail'),
