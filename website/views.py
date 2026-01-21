@@ -73,7 +73,7 @@ def home(request):
         if email:
             FoundersList.objects.get_or_create(email=email)
             messages.success(request, "Thanks for joining the Call Soso founders list.")
-            return redirect("home")
+            return redirect("website:home")
 
     context = {
         "hero_microcopy": hero_microcopy,
@@ -83,9 +83,6 @@ def home(request):
     }
 
     return render(request, "website/home.html", context)
-
-
-
 
 
 # ---------------------------
@@ -114,7 +111,7 @@ def contact(request):
                 fail_silently=False,
             )
             messages.success(request, "Your message has been sent successfully.")
-            return redirect('contact')
+            return redirect('website:contact')
         else:
             messages.error(request, "Please provide both your email and a message.")
     return render(request, 'website/contact.html')
@@ -160,8 +157,8 @@ def article_detail(request, slug):
     # Fetch related articles: same categories, exclude current article
     related_articles = Article.objects.filter(
         is_published=True,
-        categories__overlap=article.categories
-    ).exclude(pk=article.pk).order_by('-published_date')[:4]
+        categories__in=article.categories.all()
+    ).exclude(pk=article.pk).distinct().order_by('-published_date')[:4]
 
     context = {
         'article': article,
@@ -336,7 +333,7 @@ def signup_view(request):
             user = form.save()
             login(request, user)
             messages.success(request, "Welcome! Your account has been created.")
-            return redirect('directory_home')
+            return redirect('directory:directory_home')
         else:
             messages.error(request, "Please correct the errors below.")
     else:
@@ -352,7 +349,7 @@ def login_view(request):
             user = form.get_user()
             login(request, user)
             messages.success(request, f"Welcome back, {user.username}!")
-            return redirect(next_page)
+            return redirect(resolve_url(next_page))
         else:
             messages.error(request, "Invalid username or password.")
     else:
@@ -364,7 +361,7 @@ def login_view(request):
 def logout_view(request):
     logout(request)
     messages.info(request, "You have been logged out.")
-    return redirect('home')
+    return redirect('website:home')
 
 # ---------------------------
 # Impact Tracker / Support / Loops / Tiers
