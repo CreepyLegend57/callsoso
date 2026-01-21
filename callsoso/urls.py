@@ -25,13 +25,17 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from website import urls as website_urls
 
 urlpatterns = [
     # Admin
     path('admin/', admin.site.urls),
 
-    # Public website (core pages, news, knowledge center, auth, features)
-    path('', include(('website.urls', 'website'), namespace='website')),
+    # Auth URLs (no namespace)
+    path('', include(website_urls.auth_urlpatterns)),
+
+    # Public website pages (namespaced)
+    path('', include((website_urls.urlpatterns, 'website'), namespace='website')),
 
     # Directory (private dashboard, surplus/demand/matches)
     path('directory/', include(('directory.urls', 'directory'), namespace='directory')),
