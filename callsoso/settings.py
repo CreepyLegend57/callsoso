@@ -161,11 +161,11 @@ CONTACT_EMAIL = os.getenv(
 )
 
 # ======================================================
-# AUTHENTICATION
+# AUTHENTICATION (NAMESPACE-SAFE)
 # ======================================================
-LOGIN_URL = "login"
-LOGIN_REDIRECT_URL = "directory_home"
-LOGOUT_REDIRECT_URL = "home"
+LOGIN_URL = "website:login"
+LOGIN_REDIRECT_URL = "directory:directory_home"
+LOGOUT_REDIRECT_URL = "website:home"
 
 # ======================================================
 # SECURITY (ONLY WHEN DEBUG = FALSE)
