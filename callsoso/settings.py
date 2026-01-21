@@ -14,7 +14,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # ======================================================
 # ENVIRONMENT VARIABLES
 # ======================================================
-# Defaults are SAFE for local dev
 SECRET_KEY = os.getenv(
     "DJANGO_SECRET_KEY",
     "django-insecure-local-dev-only-change-in-production"
@@ -25,16 +24,15 @@ DEBUG = os.getenv("DJANGO_DEBUG", "True") == "True"
 ALLOWED_HOSTS = os.getenv(
     "DJANGO_ALLOWED_HOSTS",
     "localhost,127.0.0.1"
-    "callsoso.onrender.com"
 ).split(",")
 
-# ✅ CSRF trusted origins (Render / production safe)
+# ✅ CSRF trusted origins (must include scheme: https://)
 CSRF_TRUSTED_ORIGINS = [
     origin for origin in os.getenv(
-        "DJANGO_CSRF_TRUSTED_ORIGINS", ""
+        "DJANGO_CSRF_TRUSTED_ORIGINS",
+        f"https://{ALLOWED_HOSTS[0]}"
     ).split(",") if origin
 ]
-
 
 # ======================================================
 # APPLICATION DEFINITION
@@ -102,7 +100,7 @@ DATABASES = {
         "USER": os.getenv("DJANGO_DB_USER", ""),
         "PASSWORD": os.getenv("DJANGO_DB_PASSWORD", ""),
         "HOST": os.getenv("DJANGO_DB_HOST", ""),
-        "PORT": os.getenv("DJANGO_DB_PORT", ""),
+        "PORT": os.getenv("DJANGO_DB_PORT", "5432"),
     }
 }
 
@@ -131,9 +129,7 @@ STATIC_URL = "/static/"
 STATICFILES_DIRS = [BASE_DIR / "static"]
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
-STATICFILES_STORAGE = (
-    "whitenoise.storage.CompressedManifestStaticFilesStorage"
-)
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 # ======================================================
 # MEDIA FILES
@@ -197,3 +193,9 @@ else:
     SECURE_SSL_REDIRECT = False
     SESSION_COOKIE_SECURE = False
     CSRF_COOKIE_SECURE = False
+
+# ======================================================
+# RENDER / STATIC SITE NOTES
+# ======================================================
+# Render will run collectstatic during the build step, so STATIC_ROOT must exist.
+# Media files should be served via S3 or similar in production if needed.
