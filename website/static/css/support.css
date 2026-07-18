@@ -1,31 +1,78 @@
+/* =========================================================
+   CALL SOSO — SUPPORT
+========================================================= */
+:root {
+    --black:     #0a0a0a;
+    --white:     #ffffff;
+    --off-white: #f5f4f1;
+    --orange:    #ff5a1f;
+    --grey:      #6b6b6b;
+    --grey-line: rgba(10,10,10,0.1);
+
+    --font-display: 'Cormorant Garamond', Georgia, serif;
+    --font-sans:    'Inter', -apple-system, sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+.support-page { font-family: var(--font-sans); color: var(--black); max-width: 900px; margin: 0 auto; padding: 90px 40px 100px; }
+
+.eyebrow { font-size: 0.72rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--grey); display: block; margin-bottom: 14px; }
+.eyebrow.center { text-align: center; }
+.section-title { font-family: var(--font-display); font-weight: 500; font-size: clamp(1.9rem, 3.6vw, 2.6rem); text-align: center; margin: 0 0 14px; }
+.lede { font-size: 1rem; color: var(--grey); }
+.lede.center { text-align: center; max-width: 560px; margin: 0 auto; }
+
+.support-hero { margin-bottom: 60px; }
+
+/* FUNDING OPTIONS */
 .funding-options {
-    margin: 20px 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--grey-line);
+    border: 1px solid var(--grey-line);
+    margin-bottom: 80px;
 }
+.fund-card { background: var(--black); color: var(--white); padding: 44px; text-align: center; }
+.fund-card .eyebrow { color: rgba(255,255,255,0.65); }
+.fund-card h3 { font-family: var(--font-display); font-weight: 500; font-size: 1.5rem; margin: 0 0 20px; }
+.fund-card:hover { background: var(--orange); }
 
-.fund-btn {
+.panel-link.small {
     display: inline-block;
-    margin-right: 15px;
-    padding: 10px 20px;
-    background: #43a047;
-    color: white;
-    text-decoration: none;
-    border-radius: 6px;
-    transition: transform 0.2s, background 0.2s;
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--white);
+    padding-bottom: 2px;
+    color: var(--white);
 }
 
-.fund-btn:hover {
-    background: #2e7d32;
-    transform: scale(1.05);
-}
+/* CONTRIBUTIONS */
+.contributions { margin-bottom: 40px; }
 
-.contrib-list {
-    list-style: none;
-    padding-left: 0;
-}
-
+.contrib-list { list-style: none; padding: 0; margin: 40px 0 0; }
 .contrib-item {
-    margin: 8px 0;
-    padding: 5px 10px;
-    border-radius: 4px;
-    transition: all 0.2s;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 16px 4px;
+    border-bottom: 1px solid var(--grey-line);
+    transition: color 0.15s ease, padding-left 0.15s ease;
+}
+.contrib-item.empty { color: var(--grey); justify-content: center; }
+
+.contrib-name { font-family: var(--font-display); font-size: 1.05rem; }
+.contrib-detail { font-size: 0.88rem; color: var(--grey); }
+
+.contrib-item.is-hovered { padding-left: 10px; }
+.contrib-item.is-hovered .contrib-name { color: var(--black); font-weight: 600; }
+.contrib-item.is-hovered.major-gift .contrib-name { color: var(--orange); }
+
+/* RESPONSIVE */
+@media (max-width: 700px) {
+    .funding-options { grid-template-columns: 1fr; }
+    .contrib-item { flex-direction: column; }
 }

@@ -1,145 +1,147 @@
-/* ================================
-   Demand Forms & Listings
-   ================================ */
+/* =========================================================
+   CALL SOSO — DEMAND (FORMS & LISTINGS)
+========================================================= */
+:root {
+    --black:     #0a0a0a;
+    --white:     #ffffff;
+    --off-white: #f5f4f1;
+    --orange:    #ff5a1f;
+    --grey:      #6b6b6b;
+    --grey-line: rgba(10,10,10,0.1);
 
-/* Container */
-.demand-form-container,
-.demand-list-container {
-    font-family: "Inter", "Segoe UI", sans-serif;
-    color: #333;
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 2rem 1rem;
+    --font-display: 'Cormorant Garamond', Georgia, serif;
+    --font-sans:    'Inter', -apple-system, sans-serif;
 }
 
-/* Headings */
-.demand-form-container h2,
-.demand-list-container h2 {
-    font-weight: 700;
-    color: #007a5a;
-    font-size: 2rem;
-    text-align: center;
-    margin-bottom: 1.5rem;
-}
+* { box-sizing: border-box; }
 
-/* Forms */
-.demand-form-container form {
-    background: #fff;
-    border-radius: 1rem;
-    padding: 2rem;
-    box-shadow: 0 4px 14px rgba(0,0,0,0.08);
-}
+.form-page { font-family: var(--font-sans); color: var(--black); max-width: 760px; margin: 0 auto; padding: 100px 20px; }
 
-.demand-form-container .form-label {
-    font-weight: 600;
-    color: #222;
-}
+.center { text-align: center; }
 
-.demand-form-container input,
-.demand-form-container select,
-.demand-form-container textarea {
-    width: 100%;
-    padding: 0.45rem 0.75rem;
-    border-radius: 0.5rem;
-    border: 1px solid #ccc;
-    font-size: 0.95rem;
-    margin-top: 0.25rem;
+.eyebrow {
+    font-size: 0.72rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--grey);
+    display: block;
+    margin-bottom: 14px;
 }
+.eyebrow.center { text-align: center; }
 
-.demand-form-container .form-text {
-    font-size: 0.85rem;
-    color: #666;
-}
-
-.demand-form-container .text-danger {
-    font-size: 0.85rem;
-}
-
-/* Buttons */
-.demand-form-container .btn {
-    border-radius: 0.6rem;
-    padding: 0.45rem 1.2rem;
+.section-title {
+    font-family: var(--font-display);
     font-weight: 500;
-    transition: all 0.3s ease;
+    font-size: clamp(1.8rem, 3.6vw, 2.4rem);
+    text-align: center;
+    margin: 0 0 16px;
 }
 
-.demand-form-container .btn-primary {
-    background-color: #007a5a;
-    color: #fff;
-    border: none;
-}
+.lede { font-size: 1rem; color: var(--grey); }
+.lede.center { text-align: center; margin: 0 auto 30px; max-width: 560px; }
 
-.demand-form-container .btn-primary:hover {
-    background-color: #005e45;
-}
+.form-header { margin-bottom: 50px; }
 
-.demand-form-container .btn-secondary {
-    background-color: #f8fdfb;
-    border: 1.5px solid #007a5a;
-    color: #007a5a;
+.btn-outline {
+    display: inline-block;
+    border: 1px solid var(--black);
+    color: var(--black);
+    background: transparent;
+    padding: 12px 26px;
+    font-family: var(--font-sans);
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    cursor: pointer;
 }
+.btn-outline:hover { background: var(--orange); border-color: var(--orange); color: var(--white); }
+.btn-outline.muted { border-color: var(--grey-line); color: var(--grey); }
+.btn-outline.muted:hover { background: var(--orange); border-color: var(--orange); color: var(--white); }
 
-.demand-form-container .btn-secondary:hover {
-    background-color: #007a5a;
-    color: #fff;
+/* =========================================================
+   FORM
+========================================================= */
+.site-form { border: 1px solid var(--grey-line); padding: 40px; }
+
+.form-row { margin-bottom: 22px; }
+.form-row label {
+    display: block;
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--grey);
+    margin-bottom: 8px;
 }
+.site-form input,
+.site-form select,
+.site-form textarea {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid var(--grey-line);
+    background: var(--white);
+    font-family: var(--font-sans);
+    font-size: 0.95rem;
+    color: var(--black);
+    outline: none;
+}
+.site-form input:focus,
+.site-form select:focus,
+.site-form textarea:focus { border-color: var(--orange); }
 
-/* Search & Filters */
-.search-filters {
-    background: #f8fdfb;
-    padding: 1rem;
-    border-radius: 0.75rem;
+.form-help { font-size: 0.8rem; color: var(--grey); margin: 6px 0 0; }
+.form-error { font-size: 0.8rem; color: var(--orange); margin: 6px 0 0; }
+
+.form-actions { display: flex; gap: 14px; margin-top: 30px; }
+.form-actions.center { justify-content: center; }
+
+/* =========================================================
+   SEARCH & FILTERS
+========================================================= */
+.search-filters { margin: 40px 0; }
+.filter-form {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.5rem;
+    gap: 12px;
     justify-content: center;
-    margin-bottom: 1.5rem;
 }
-
-.search-filters input,
-.search-filters select {
-    min-width: 150px;
+.filter-form input,
+.filter-form select {
+    padding: 11px 14px;
+    border: 1px solid var(--grey-line);
+    font-family: var(--font-sans);
+    font-size: 0.9rem;
+    min-width: 180px;
     flex: 1 1 200px;
+    outline: none;
 }
+.filter-form input:focus,
+.filter-form select:focus { border-color: var(--orange); }
 
-/* Listings */
-.demand-list {
-    list-style: none;
-    padding-left: 0;
+/* =========================================================
+   LISTINGS
+========================================================= */
+.listing-rows { list-style: none; padding: 0; margin: 30px 0; }
+.listing-rows li {
+    padding: 18px 0;
+    border-bottom: 1px solid var(--grey-line);
+    font-size: 0.95rem;
+    color: var(--grey);
 }
+.listing-rows li strong { color: var(--black); }
+.listing-rows li .muted { color: var(--grey); }
 
-.demand-list li {
-    background: #fff;
-    padding: 1rem;
-    border-radius: 0.75rem;
-    margin-bottom: 0.75rem;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.demand-list li:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 4px 14px rgba(0,0,0,0.1);
-}
-
-/* Alerts */
-.alert-info {
-    background-color: #f0f8f5;
-    color: #007a5a;
-    border-radius: 0.75rem;
-    padding: 1rem;
+.empty-state {
     text-align: center;
+    padding: 50px 20px;
+    border: 1px solid var(--grey-line);
+    color: var(--grey);
+    margin: 30px 0;
 }
 
-/* Responsive */
-@media (max-width: 768px) {
-    .demand-form-container,
-    .demand-list-container {
-        padding: 1rem;
-    }
-
-    .search-filters {
-        flex-direction: column;
-        gap: 0.5rem;
-    }
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+@media (max-width: 600px) {
+    .site-form { padding: 26px; }
+    .form-actions { flex-direction: column; }
 }

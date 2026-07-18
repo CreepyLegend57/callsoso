@@ -1,351 +1,243 @@
-/* ================================
-   Directory Page – Soso Design
-   ================================ */
+/* =========================================================
+   CALL SOSO — DIRECTORY
+   Shares the token system used across the site.
+========================================================= */
+:root {
+  --black:        #0a0a0a;
+  --white:        #ffffff;
+  --off-white:    #f5f4f1;
+  --orange:       #ff5a1f;
+  --grey:         #6b6b6b;
+  --grey-line:    rgba(10,10,10,0.1);
 
-/* ================================
-   Root Colors & Variables
-   ================================ */
-   :root {
-    --green-dark: #0d4d40;
-    --green-accent: #12b981;
-    --earth-brown: #8b5a3c;
-    --clay-orange: #c56a3d;
-    --cream-light: #f2f6f1;
-    --white-soft: #ffffff;
-    --grey-muted: #9aa59d;
-  
-    --radius-lg: 18px;
-    --radius-md: 12px;
-  
-    --shadow-soft: 0 8px 18px rgba(0,0,0,0.05);
-    --shadow-hover: 0 14px 30px rgba(0,0,0,0.12);
-  }
-  
-  /* ================================
-     Page Container
-     ================================ */
-  .directory-page {
-    font-family: 'Open Sans', sans-serif;
-    color: var(--green-dark);
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 2rem 1rem;
-  }
-  
-  /* ================================
-     HERO / INTRO
-     ================================ */
-  .directory-hero {
-    text-align: center;
-    margin-bottom: 3rem;
-  }
-  
-  .directory-hero h1 {
-    font-size: 2.8rem;
-    font-weight: 700;
-    color: var(--earth-brown);
-    margin-bottom: 0.5rem;
-  }
-  
-  .directory-hero .lead {
-    font-size: 1.2rem;
-    color: #555;
-    margin-bottom: 0.5rem;
-  }
-  
-  .directory-hero .intro-text {
-    font-size: 1rem;
-    color: #555;
-    margin: 1rem 0;
-  }
-  
-  .directory-hero .directory-intro-list,
-  .directory-hero .directory-audience {
-    list-style: disc inside;
-    padding-left: 0;
-    margin: 0.75rem 0;
-    color: #555;
-    font-size: 0.95rem;
-  }
-  
-  .directory-hero .directory-intro-list li,
-  .directory-hero .directory-audience li {
-    margin-bottom: 0.25rem;
-  }
-  
-  .directory-hero .subtext {
-    font-size: 0.95rem;
-    color: #555;
-    margin-top: 1rem;
-  }
-  
-  .soft-motion-text {
-    margin-top: 1rem;
-    font-size: 0.9rem;
-    color: var(--green-accent);
-  }
-  
-  .soft-motion-text span {
-    display: block;
-    opacity: 0.6;
-    margin-bottom: 0.2rem;
-    font-style: italic;
-    animation: floatText 6s ease-in-out infinite alternate;
-  }
-  
-  @keyframes floatText {
-    0% { transform: translateY(0px); }
-    50% { transform: translateY(-3px); }
-    100% { transform: translateY(0px); }
-  }
-  
-  /* ================================
-     Filters / Search
-     ================================ */
-  .directory-filters {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 1rem;
-    margin-bottom: 2rem;
-  }
-  
-  .directory-filters input,
-  .directory-filters select {
-    padding: 0.6rem 1rem;
-    border-radius: var(--radius-md);
-    border: 1px solid #ccc;
-    font-size: 0.95rem;
-    min-width: 200px;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
-  }
-  
-  .directory-filters input:focus,
-  .directory-filters select:focus {
-    border-color: var(--green-accent);
-    box-shadow: 0 0 0 3px rgba(18,185,129,0.2);
-    outline: none;
-  }
-  
-  /* ================================
-     Loops Grid
-     ================================ */
-  .loops-grid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 2rem;
-    justify-content: center;
-    margin-top: 2rem;
-  }
-  
-  .loop-card {
-    background: var(--cream-light);
-    border-radius: var(--radius-lg);
-    padding: 2rem 1.5rem;
-    width: 320px;
-    text-align: center;
-    box-shadow: var(--shadow-soft);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-  }
-  
-  .loop-card:hover {
-    transform: translateY(-5px);
-    box-shadow: var(--shadow-hover);
-  }
-  
-  .loop-card h3 {
-    font-size: 1.5rem;
-    font-weight: 600;
-    margin: 1rem 0 0.5rem 0;
-    color: var(--green-dark);
-  }
-  
-  .loop-card .loop-subtitle {
-    font-size: 0.95rem;
-    font-style: italic;
-    color: #555;
-    margin-bottom: 0.75rem;
-  }
-  
-  .loop-card .loop-intro {
-    font-size: 0.95rem;
-    color: #444;
-    margin-bottom: 1rem;
-  }
-  
-  .loop-card .loop-icon {
-    max-height: 60px;
-    margin-bottom: 1rem;
-  }
-  
-  .loop-card h4 {
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: var(--green-dark);
-    margin-top: 1rem;
-    margin-bottom: 0.5rem;
-  }
-  
-  .loop-card ul {
-    list-style: disc inside;
-    padding-left: 0;
-    font-size: 0.9rem;
-    color: #555;
-    margin-bottom: 1rem;
-  }
-  
-  .loop-card ul li {
-    margin-bottom: 0.25rem;
-  }
-  
-  /* Loop buttons */
-  .loop-cta a {
-    margin: 0.25rem;
-    border-radius: var(--radius-md);
-    padding: 0.5rem 1.2rem;
-    font-weight: 600;
-    text-decoration: none;
-    display: inline-block;
-    transition: all 0.3s ease;
-  }
-  
-  .loop-cta .btn-primary {
-    background-color: var(--green-accent);
-    color: var(--white-soft);
-    border: none;
-  }
-  
-  .loop-cta .btn-primary:hover {
-    background-color: #0fae73;
-  }
-  
-  .loop-cta .btn-outline-primary {
-    border: 1.5px solid var(--green-accent);
-    color: var(--green-accent);
-  }
-  
-  .loop-cta .btn-outline-primary:hover {
-    background-color: var(--green-accent);
-    color: var(--white-soft);
-  }
-  
-  .loop-cta .btn-outline-secondary {
-    border: 1.5px solid var(--green-dark);
-    color: var(--green-dark);
-  }
-  
-  .loop-cta .btn-outline-secondary:hover {
-    background-color: var(--green-dark);
-    color: var(--white-soft);
-  }
-  
-  /* Microcopy */
-  .loop-microcopy {
-    margin-top: 0.75rem;
-    font-size: 0.85rem;
-    color: var(--green-accent);
-  }
-  
-  .loop-microcopy span {
-    display: block;
-    opacity: 0.6;
-    margin-bottom: 0.15rem;
-    font-style: italic;
-  }
-  
-  /* ================================
-     Quick Actions
-     ================================ */
-  .directory-actions {
-    text-align: center;
-    margin-top: 3rem;
-  }
-  
-  .directory-actions h4 {
-    font-weight: 600;
-    color: var(--green-dark);
-    margin-bottom: 1rem;
-  }
-  
-  .actions-grid {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 1rem;
-  }
-  
-  .actions-grid .btn-secondary {
-    background-color: var(--white-soft);
-    border: 1.5px solid var(--green-accent);
-    color: var(--green-dark);
-    border-radius: var(--radius-md);
-    padding: 0.45rem 1.2rem;
-    font-weight: 600;
-    transition: all 0.3s ease;
-  }
-  
-  .actions-grid .btn-secondary:hover {
-    background-color: var(--green-accent);
-    color: var(--white-soft);
-  }
-  
-  /* ================================
-     Role Info / Tips Section
-     ================================ */
-  .directory-info {
-    background: var(--cream-light);
-    border-left: 6px solid var(--green-accent);
-    border-radius: var(--radius-md);
-    max-width: 750px;
-    margin: 2rem auto 0 auto;
-    padding: 1.5rem;
-    box-shadow: var(--shadow-soft);
-  }
-  
-  .directory-info h4 {
-    font-weight: 600;
-    margin-bottom: 0.75rem;
-    color: var(--green-dark);
-  }
-  
-  .directory-info .info-list {
-    list-style: disc inside;
-    padding-left: 0;
-  }
-  
-  .directory-info .info-list li {
-    margin-bottom: 0.5rem;
-    font-size: 0.95rem;
-    color: #444;
-  }
-  
-  .directory-info a {
-    color: var(--green-accent);
-    text-decoration: underline;
-  }
-  
-  .directory-info a:hover {
-    text-decoration: none;
-    color: var(--green-dark);
-  }
-  
-  /* ================================
-     Responsive
-     ================================ */
-  @media (max-width: 900px) {
-    .loops-grid {
-      flex-direction: column;
-      align-items: center;
-    }
-  
-    .actions-grid {
-      flex-direction: column;
-      gap: 0.75rem;
-    }
-  
-    .directory-filters {
-      flex-direction: column;
-      gap: 0.75rem;
-    }
-  }
-  
+  --font-display: 'Cormorant Garamond', Georgia, serif;
+  --font-sans:    'Inter', -apple-system, sans-serif;
+
+  --material-a: #1c2b45;
+  --material-b: #3f5c8a;
+  --edible-a:   #1f3a2a;
+  --edible-b:   #4f7a52;
+}
+
+* { box-sizing: border-box; }
+
+.directory-page { font-family: var(--font-sans); color: var(--black); }
+
+.eyebrow {
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--grey);
+  display: block;
+  margin-bottom: 14px;
+}
+.eyebrow.center { text-align: center; }
+
+.section-title {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(1.8rem, 3.6vw, 2.6rem);
+  text-align: center;
+  margin: 0 0 26px;
+}
+
+.lede {
+  font-size: 1rem;
+  color: var(--grey);
+  max-width: 760px;
+  line-height: 1.65;
+}
+.lede.center { margin: 0 auto; text-align: center; }
+
+.btn-outline {
+  display: inline-block;
+  border: 1px solid var(--black);
+  color: var(--black);
+  background: transparent;
+  padding: 12px 26px;
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+.btn-outline:hover { background: var(--orange); border-color: var(--orange); color: var(--white); }
+
+.ambient-microcopy {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 30px;
+}
+.ambient-microcopy.center { align-items: center; text-align: center; }
+.ambient-microcopy span {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 0.9rem;
+  color: var(--grey);
+}
+
+.hairline-list { list-style: none; padding: 0; margin: 0; }
+.hairline-list li {
+  padding: 14px 0;
+  border-bottom: 1px solid var(--grey-line);
+  font-size: 0.92rem;
+  line-height: 1.55;
+  color: var(--grey);
+}
+.hairline-list li strong { color: var(--black); }
+
+.two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 50px;
+  margin: 34px 0;
+}
+.two-col h4 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 1.2rem;
+  margin: 0 0 8px;
+}
+
+/* =========================================================
+ INTRO
+========================================================= */
+.directory-intro { padding: 100px 40px 70px; max-width: 900px; margin: 0 auto; }
+
+.stats-row {
+  display: flex;
+  justify-content: center;
+  gap: 60px;
+  margin-top: 40px;
+}
+.stat { text-align: center; }
+.stat-num {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 2.4rem;
+  color: var(--orange);
+  line-height: 1;
+}
+.stat-label {
+  display: block;
+  margin-top: 6px;
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--grey);
+}
+
+.latest-preview { margin: 10px 0 30px; max-width: 700px; margin-left: auto; margin-right: auto; }
+.latest-preview h4 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 1.05rem;
+  text-align: center;
+  margin: 0 0 6px;
+  color: var(--grey);
+}
+.latest-preview .hairline-list li { text-align: center; font-size: 0.85rem; padding: 10px 0; }
+
+/* =========================================================
+ HOW IT WORKS
+========================================================= */
+.how-it-works { padding: 60px 40px 100px; max-width: 1100px; margin: 0 auto; }
+
+.steps-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--grey-line);
+  border: 1px solid var(--grey-line);
+  margin-bottom: 60px;
+}
+.step { background: var(--white); padding: 34px; text-align: center; }
+.step-num {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  color: var(--orange);
+  margin-bottom: 10px;
+}
+.step p { margin: 0; color: var(--grey); font-size: 0.95rem; }
+
+.audience-label { margin-top: 40px; }
+.audience-tags {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+}
+.audience-tags li {
+  border: 1px solid var(--grey-line);
+  padding: 8px 18px;
+  font-size: 0.82rem;
+  color: var(--grey);
+}
+
+/* =========================================================
+ LOOPS DETAIL
+========================================================= */
+.loops-detail { display: flex; flex-direction: column; }
+
+.loop-detail { border-top: 1px solid var(--grey-line); }
+
+.loop-banner {
+  padding: 70px 40px;
+  text-align: center;
+  color: var(--white);
+}
+.loop-detail.material .loop-banner { background: linear-gradient(160deg, var(--material-a), var(--material-b)); }
+.loop-detail.edible .loop-banner   { background: linear-gradient(160deg, var(--edible-a), var(--edible-b)); }
+.loop-banner .eyebrow { color: rgba(255,255,255,0.75); }
+.loop-banner h2 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.loop-body { padding: 60px 40px; max-width: 1100px; margin: 0 auto; }
+.loop-body .lede { margin: 0 auto 10px; text-align: center; max-width: 800px; }
+
+.loop-cta {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 14px;
+  margin: 30px 0 10px;
+}
+
+/* =========================================================
+ QUICK ACTIONS
+========================================================= */
+.directory-actions { padding: 80px 40px; text-align: center; background: var(--black); }
+.directory-actions .eyebrow { color: rgba(255,255,255,0.6); }
+.actions-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16px;
+}
+.directory-actions .btn-outline { border-color: rgba(255,255,255,0.5); color: var(--white); }
+.directory-actions .btn-outline:hover { background: var(--orange); border-color: var(--orange); }
+
+/* =========================================================
+ ROLE INFO
+========================================================= */
+.directory-info { padding: 90px 40px; max-width: 800px; margin: 0 auto; }
+.info-more { color: var(--grey); margin-top: 24px; }
+.info-more a { color: var(--orange); }
+
+/* =========================================================
+ RESPONSIVE
+========================================================= */
+@media (max-width: 900px) {
+  .two-col { grid-template-columns: 1fr; gap: 30px; }
+  .steps-row { grid-template-columns: 1fr; }
+}

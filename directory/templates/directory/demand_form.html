@@ -1,30 +1,35 @@
 {% extends "website/base.html" %}
 {% load static %}
 
-{% block title %}Add Demand Listing{% endblock %}
+{% block title %}Add Demand Listing — Call Soso{% endblock %}
 
 {% block content %}
 <link rel="stylesheet" href="{% static 'css/demand.css' %}">
 
-<div class="container mt-4 demand-form-container">
-    <h2 class="mb-4">➕ Add New Demand</h2>
+<div class="form-page">
 
-    <form method="POST" novalidate class="card p-4 shadow-sm">
+    <section class="form-header">
+        <p class="eyebrow center">The Edible Loop</p>
+        <h1 class="section-title">Add New Demand</h1>
+        <p class="lede center">Tell us what you need — we'll match it with surplus already circulating.</p>
+    </section>
+
+    <form method="POST" enctype="multipart/form-data" novalidate class="site-form">
         {% csrf_token %}
         {% for field in form %}
-            <div class="mb-3">
-                <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+            <div class="form-row">
+                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
                 {{ field }}
-                {% if field.help_text %}
-                    <div class="form-text">{{ field.help_text }}</div>
-                {% endif %}
-                {% if field.errors %}
-                    <div class="text-danger">{{ field.errors }}</div>
-                {% endif %}
+                {% if field.help_text %}<p class="form-help">{{ field.help_text }}</p>{% endif %}
+                {% if field.errors %}<p class="form-error">{{ field.errors }}</p>{% endif %}
             </div>
         {% endfor %}
-        <button type="submit" class="btn btn-primary mt-2">💾 Save</button>
-        <a href="{% url 'directory:demand_list' %}" class="btn btn-secondary mt-2 ms-2">🔙 Back to List</a>
+
+        <div class="form-actions">
+            <button type="submit" class="btn-outline">Save</button>
+            <a href="{% url 'directory:demand_list' %}" class="btn-outline muted">Back to List</a>
+        </div>
     </form>
+
 </div>
 {% endblock %}

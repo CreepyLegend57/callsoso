@@ -1,240 +1,451 @@
-/* ================================
-   Impact Tracker - Soso Style (With Forest Dashboard)
-   ================================ */
+/* =========================================================
+   CALL SOSO — IMPACT TRACKER (THE GARDEN)
+   Editorial high-contrast design, centered body/text,
+   1px grid borders, and forest green duotone accents.
+========================================================= */
+:root {
+  --black:        #0a0a0a;
+  --white:        #ffffff;
+  --off-white:    #f5f4f1;
+  --orange:       #ff5a1f;
+  --grey:         #6b6b6b;
+  --grey-line:    rgba(10, 10, 10, 0.1);
+  
+  /* Garden thematic duotone tokens */
+  --forest-dark:  #1f3a2a;
+  --forest-light: #4f7a52;
 
-   :root {
-    --green-dark: #0d4d40;
-    --green-accent: #12b981;
-    --earth-brown: #8b5a3c;
-    --clay-orange: #c56a3d;
-    --cream-light: #f2f6f1;
-    --white-soft: #ffffff;
-    --grey-muted: #9aa59d;
-  
-    --radius-lg: 18px;
-    --radius-md: 12px;
-  
-    --shadow-soft: 0 8px 18px rgba(0,0,0,0.05);
-    --shadow-hover: 0 14px 30px rgba(0,0,0,0.12);
+  --font-display: 'Cormorant Garamond', Georgia, serif;
+  --font-sans:    'Inter', -apple-system, sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  background: var(--white);
+  color: var(--black);
+  font-family: var(--font-sans);
+  margin: 0;
+  padding: 0;
+}
+
+/* =========================================================
+ PAGE WRAPPER & CENTERED UTILITIES
+========================================================= */
+.tracker-page {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 60px 40px 120px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.eyebrow {
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--grey);
+  display: block;
+  margin-bottom: 14px;
+}
+.eyebrow.center { text-align: center; }
+
+.section-title {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(2.4rem, 5vw, 3.8rem);
+  line-height: 1.15;
+  margin: 0 0 18px;
+  color: var(--black);
+  text-align: center;
+}
+
+.lede {
+  font-family: var(--font-sans);
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: var(--grey);
+}
+.lede.center {
+  text-align: center;
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+/* Buttons & Interactive Elements */
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--black);
+  color: var(--black);
+  background: transparent;
+  padding: 13px 30px;
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  text-decoration: none;
+}
+.btn-outline:hover {
+  background: var(--orange);
+  border-color: var(--orange);
+  color: var(--white);
+}
+.btn-outline.muted {
+  border-color: var(--grey-line);
+  color: var(--grey);
+}
+.btn-outline.muted:hover {
+  border-color: var(--black);
+  color: var(--black);
+  background: transparent;
+}
+
+/* =========================================================
+ HERO & CONTROLS
+========================================================= */
+.tracker-hero {
+  width: 100%;
+  max-width: 860px;
+  margin-bottom: 70px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.hero-microcopy {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1.05rem;
+  color: var(--grey);
+  margin: 12px 0 36px;
+}
+
+.tracker-controls {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+}
+
+.select-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.tracker-controls select {
+  appearance: none;
+  -webkit-appearance: none;
+  padding: 13px 38px 13px 20px;
+  border: 1px solid var(--grey-line);
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  background: var(--white);
+  color: var(--black);
+  outline: none;
+  cursor: pointer;
+  border-radius: 0;
+  transition: border-color 0.25s ease, color 0.25s ease;
+}
+
+.select-wrapper::after {
+  content: "▾";
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.65rem;
+  pointer-events: none;
+  color: var(--grey);
+}
+
+.tracker-controls select:focus,
+.tracker-controls select:hover {
+  border-color: var(--orange);
+  color: var(--orange);
+}
+
+/* =========================================================
+ FOREST SUMMARY (GARDEN DUOTONE 1PX GRID)
+========================================================= */
+.forest-summary {
+  width: 100%;
+  background: var(--forest-dark);
+  color: var(--white);
+  border: 1px solid var(--forest-dark);
+  margin-bottom: 80px;
+  display: flex;
+  flex-direction: column;
+}
+
+.summary-header {
+  padding: 44px 40px 30px;
+  background: linear-gradient(160deg, rgba(31,58,42,0.9), rgba(79,122,82,0.7));
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+.summary-header .eyebrow {
+  color: rgba(255, 255, 255, 0.65);
+  margin-bottom: 8px;
+}
+.summary-header h2 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 2.2rem;
+  margin: 0;
+  color: var(--white);
+}
+
+.summary-bars {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1px;
+  background: rgba(255, 255, 255, 0.1);
+  width: 100%;
+}
+
+.summary-bar {
+  background: var(--forest-dark);
+  padding: 32px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.summary-bar .bar-label {
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.75);
+  margin-bottom: 16px;
+}
+
+.summary-bar .bar-track {
+  position: relative;
+  width: 100%;
+  max-width: 120px;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.15);
+  margin: 0 auto 16px;
+  overflow: hidden;
+}
+
+.summary-bar .bar-fill {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 0;
+  background: var(--orange);
+  transition: width 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.summary-bar .bar-count {
+  font-family: var(--font-display);
+  font-style: normal;
+  font-weight: 500;
+  font-size: 1.8rem;
+  color: var(--white);
+  line-height: 1;
+}
+
+/* =========================================================
+ FOREST GRID (CENTERED TEXT & 1PX BORDER GAP)
+========================================================= */
+.forest-grid {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1px;
+  background: var(--grey-line);
+  border: 1px solid var(--grey-line);
+  margin-bottom: 70px;
+}
+
+.seed-card {
+  position: relative;
+  background: var(--white);
+  padding: 44px 34px;
+  min-height: 320px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+  transition: background 0.3s ease, transform 0.3s ease;
+  border-top: 3px solid transparent;
+}
+
+.seed-card:hover {
+  background: var(--off-white);
+  border-top-color: var(--orange);
+  transform: translateY(-4px);
+  z-index: 2;
+}
+
+.card-top {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.stage-num {
+  font-family: var(--font-sans);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--orange);
+  margin-bottom: 12px;
+}
+
+.seed-card h4 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 1.5rem;
+  line-height: 1.25;
+  margin: 0 0 14px;
+  color: var(--black);
+}
+
+.seed-card p {
+  font-family: var(--font-sans);
+  font-size: 0.88rem;
+  color: var(--grey);
+  line-height: 1.6;
+  margin: 0;
+}
+
+.card-bottom {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  margin-top: 28px;
+  padding-top: 20px;
+  border-top: 1px solid var(--grey-line);
+}
+
+.planted-date {
+  font-family: var(--font-sans);
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--grey);
+  margin-bottom: 12px;
+}
+
+.stage-dots {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
+
+.stage-dots .dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--grey-line);
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.stage-dots .dot.filled {
+  background: var(--orange);
+  transform: scale(1.2);
+}
+
+/* Empty State / No Seeds */
+.no-seeds {
+  grid-column: 1 / -1;
+  background: var(--white);
+  padding: 80px 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 20px;
+}
+.no-seeds p {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  color: var(--grey);
+  max-width: 500px;
+  margin: 0;
+}
+
+/* =========================================================
+ QUICK ACTIONS
+========================================================= */
+.tracker-actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  width: 100%;
+}
+
+/* =========================================================
+ RESPONSIVE BREAKPOINTS
+========================================================= */
+@media (max-width: 1024px) {
+  .summary-bars {
+      grid-template-columns: repeat(3, 1fr);
   }
-  
-  /* Page Container */
-  .impact-tracker-page {
-    font-family: 'Open Sans', sans-serif;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 2rem 1rem;
-    color: var(--green-dark);
-  }
-  
-  /* HERO */
-  .tracker-hero {
-    text-align: center;
-    margin-bottom: 2rem;
-  }
-  
-  .tracker-hero h1 {
-    font-size: 2.6rem;
-    font-weight: 700;
-    color: var(--earth-brown);
-    margin-bottom: 0.5rem;
-  }
-  
-  .tracker-hero .lead {
-    font-size: 1.2rem;
-    color: #444;
-  }
-  
-  .tracker-hero .subtext {
-    font-size: 0.95rem;
-    color: #555;
-    margin-top: 0.5rem;
-  }
-  
-  /* Controls */
-  .tracker-controls {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 1rem;
-    margin-top: 1rem;
-  }
-  
-  .tracker-controls select,
-  .tracker-controls .btn-secondary {
-    padding: 0.5rem 1rem;
-    border-radius: var(--radius-md);
-    font-size: 0.95rem;
-    border: 1px solid var(--green-accent);
-  }
-  
-  .tracker-controls select:focus {
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(18,185,129,0.2);
-  }
-  
-  .tracker-controls .btn-secondary {
-    background: var(--white-soft);
-    color: var(--green-dark);
-    border: 1.5px solid var(--green-accent);
-    font-weight: 600;
-    transition: all 0.25s ease;
-  }
-  
-  .tracker-controls .btn-secondary:hover {
-    background-color: var(--green-accent);
-    color: var(--white-soft);
-  }
-  
-  /* Forest Summary Panel */
-  .forest-summary {
-    margin: 2rem auto;
-    text-align: center;
-  }
-  
-  .forest-summary h4 {
-    font-weight: 600;
-    color: var(--green-dark);
-    margin-bottom: 1rem;
+}
+
+@media (max-width: 768px) {
+  .tracker-page {
+      padding: 40px 20px 80px;
   }
   
   .summary-bars {
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
-    flex-wrap: wrap;
+      grid-template-columns: repeat(2, 1fr);
   }
   
-  .summary-bar {
-    text-align: center;
+  .summary-bar:last-child {
+      grid-column: 1 / -1;
   }
   
-  .summary-bar span {
-    display: block;
-    font-size: 0.85rem;
-    color: var(--green-dark);
-    margin-bottom: 0.3rem;
-  }
-  
-  .summary-bar .bar {
-    height: 18px;
-    background-color: var(--green-accent);
-    border-radius: var(--radius-md);
-    transition: width 1s ease-in-out;
-    color: var(--white-soft);
-    font-size: 0.8rem;
-    line-height: 18px;
-    font-weight: 600;
-  }
-  
-  /* Forest Grid */
   .forest-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-    gap: 1.5rem;
-    margin-top: 1.5rem;
+      grid-template-columns: 1fr;
   }
   
-  /* Seed Cards */
-  .seed-card {
-    background: var(--cream-light);
-    border-radius: var(--radius-lg);
-    padding: 1.5rem;
-    text-align: center;
-    box-shadow: var(--shadow-soft);
-    cursor: pointer;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-  }
-  
-  .seed-card h4 {
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: var(--green-dark);
-    margin: 0.5rem 0;
-  }
-  
-  .seed-card p {
-    font-size: 0.9rem;
-    color: #444;
-    margin: 0.5rem 0;
-  }
-  
-  .seed-card .planted-date {
-    font-size: 0.85rem;
-    color: var(--grey-muted);
-  }
-  
-  .seed-card .microcopy {
-    font-size: 0.8rem;
-    color: var(--green-accent);
-    margin-top: 0.5rem;
-    font-style: italic;
-  }
-  
-  .seed-icon {
-    width: 50px;
-    height: 50px;
-    margin: 0 auto 10px;
-    background: url('../images/seed.png') no-repeat center center;
-    background-size: contain;
-  }
-  
-  /* Growth Stage Colors */
-  .seed-card.stage-1 { border-top: 4px solid #a5d6a7; transform: scale(0.8); }
-  .seed-card.stage-2 { border-top: 4px solid #81c784; transform: scale(0.9); }
-  .seed-card.stage-3 { border-top: 4px solid #4caf50; transform: scale(1); }
-  .seed-card.stage-4 { border-top: 4px solid #388e3c; transform: scale(1.1); }
-  .seed-card.stage-5 { border-top: 4px solid #1b5e20; transform: scale(1.2); }
-  
-  /* Quick Actions */
-  .tracker-actions {
-    margin-top: 2rem;
-    text-align: center;
-  }
-  
-  .tracker-actions .btn-primary {
-    background-color: var(--green-accent);
-    color: var(--white-soft);
-    border-radius: var(--radius-md);
-    padding: 0.5rem 1.2rem;
-    font-weight: 600;
-    margin: 0.25rem;
-    text-decoration: none;
-    display: inline-block;
-    transition: all 0.25s ease;
-  }
-  
-  .tracker-actions .btn-primary:hover {
-    background-color: #0fae73;
-  }
-  
-  .tracker-actions .btn-outline-primary {
-    border: 1.5px solid var(--green-accent);
-    color: var(--green-dark);
-    border-radius: var(--radius-md);
-    padding: 0.5rem 1.2rem;
-    font-weight: 600;
-    margin: 0.25rem;
-    transition: all 0.25s ease;
-  }
-  
-  .tracker-actions .btn-outline-primary:hover {
-    background-color: var(--green-accent);
-    color: var(--white-soft);
-  }
-  
-  /* Responsive */
-  @media (max-width: 768px) {
-    .tracker-controls {
+  .tracker-controls {
       flex-direction: column;
-      gap: 0.5rem;
-    }
-    .forest-grid {
-      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-    }
-    .summary-bars {
-      flex-direction: column;
-      align-items: center;
-    }
+      align-items: stretch;
   }
   
+  .select-wrapper,
+  .tracker-controls select,
+  .tracker-controls .btn-outline {
+      width: 100%;
+      text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .summary-bars {
+      grid-template-columns: 1fr;
+  }
+  .summary-bar:last-child {
+      grid-column: auto;
+  }
+}

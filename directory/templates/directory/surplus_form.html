@@ -1,26 +1,30 @@
 {% extends "website/base.html" %}
 {% load static %}
 
-{% block title %}Add Surplus Listing{% endblock %}
+{% block title %}Add Surplus Listing — Call Soso{% endblock %}
 
 {% block content %}
 <link rel="stylesheet" href="{% static 'css/surplus.css' %}">
 
-<div class="surplus-container mt-4">
+<div class="form-page">
 
-    <header class="page-header mb-4 text-center">
-        <h2>➕ Add Surplus Listing</h2>
-        <p class="intro-text">List surplus materials from your business to connect with creators, makers, and innovators.</p>
-    </header>
+    <section class="form-header">
+        <p class="eyebrow center">The Material Loop</p>
+        <h1 class="section-title">Add Surplus Listing</h1>
+        <p class="lede center">List surplus materials from your business to connect with creators, makers, and innovators.</p>
+    </section>
 
-    <form method="POST" novalidate class="card form-card p-4 shadow-sm">
+    <form method="POST" enctype="multipart/form-data" novalidate class="site-form">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit" class="btn btn-success mt-3">💾 Save Listing</button>
+        <div class="form-actions">
+            <button type="submit" class="btn-outline">Save Listing</button>
+        </div>
     </form>
 
-    <div class="mt-3 text-center">
-        <a href="{% url 'surplus_list' %}" class="btn btn-link">← Back to Surplus Listings</a>
+    <div class="form-actions center">
+        <a href="{% url 'directory:surplus_list' %}" class="btn-outline muted">Back to Surplus Listings</a>
     </div>
+
 </div>
 {% endblock %}

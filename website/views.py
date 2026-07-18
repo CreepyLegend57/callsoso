@@ -1,6 +1,5 @@
 from datetime import date
 from collections import OrderedDict
-
 from django.shortcuts import render, redirect, get_object_or_404, resolve_url
 from django.core.mail import send_mail
 from django.conf import settings
@@ -9,6 +8,7 @@ from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib import messages
+from django.db.models import Count
 
 from .models import (
     Collaboration,
@@ -123,6 +123,13 @@ def news(request):
     # Fetch all published articles
     articles_qs = Article.objects.filter(is_published=True).order_by("-published_date", "-created_at")
 
+    # FIXED: the category filter pills in the template built a
+    # ?category=<slug> URL, but this view never read or applied it —
+    # clicking a category silently did nothing.
+    category_slug = request.GET.get("category", "").strip()
+    if category_slug:
+        articles_qs = articles_qs.filter(categories__slug=category_slug)
+
     # Featured and popular
     featured_articles = articles_qs.filter(is_featured=True)[:3]
     popular_articles = articles_qs[:4]
@@ -142,6 +149,7 @@ def news(request):
         "page_obj": page_obj,
         "is_paginated": page_obj.has_other_pages(),
         "all_categories": all_categories,
+        "selected_category": category_slug,  # FIXED: template needs this to highlight the active pill
     }
 
     return render(request, "website/news.html", context)
@@ -286,39 +294,65 @@ def categories(request):
 # ---------------------------
 # Magazine
 # ---------------------------
+
 def magazine(request):
     query = request.GET.get("q", "").strip()
     category_slug = request.GET.get("category", "").strip()
 
-    # Base queryset
-    issues = MagazineIssue.objects.filter(is_published=True)
+    # 1. Base queryset with optimization
+    issues = (
+        MagazineIssue.objects.filter(is_published=True)
+        .prefetch_related("categories")
+        .order_by("-published_date", "-created_at")
+    )
 
-    # Filter by search
+    # 2. Apply search filter if present
     if query:
         issues = issues.filter(title__icontains=query)
 
-    # Filter by category
-    if category_slug:
-        issues = issues.filter(categories__slug=category_slug)
-
-    # Featured vs regular
+    # 3. Separate Featured Issues
     featured_issues = issues.filter(is_featured=True)[:4]
-    regular_issues = issues.exclude(id__in=[issue.id for issue in featured_issues])
+    regular_issues = issues.exclude(
+        id__in=[issue.id for issue in featured_issues]
+    )
 
-    # Popular articles for sidebar
+    # 4. Determine which categories to display
+    if category_slug:
+        active_categories = Category.objects.filter(slug=category_slug)
+    else:
+        active_categories = Category.objects.all().order_by("name")
+
+    # 5. Group regular issues into sections by Category
+    issues_by_category = OrderedDict()
+    for cat in active_categories:
+        cat_issues = regular_issues.filter(categories=cat).distinct()
+        # Display section if it has issues OR if the user explicitly clicked its filter
+        if cat_issues.exists() or category_slug:
+            issues_by_category[cat] = cat_issues
+
+    # Handle uncategorized issues when viewing "All Issues"
+    if not category_slug:
+        uncategorized = regular_issues.filter(categories__isnull=True)
+        if uncategorized.exists():
+            issues_by_category["Uncategorized"] = uncategorized
+
+    # 6. Sidebar data & metadata
+    all_categories = Category.objects.all().order_by("name")
+    selected_category_obj = active_categories.first() if category_slug else None
     popular_articles = PopularArticle.objects.all()[:5]
 
-    # Categories for filter bar
-    all_categories = Category.objects.all()
-
     context = {
-        "issues": issues,
         "featured_issues": featured_issues,
-        "regular_issues": regular_issues,
+        "issues_by_category": (
+            issues_by_category
+        ),  # <-- Grouped sections dictionary
         "popular_articles": popular_articles,
         "search_query": query,
         "all_categories": all_categories,
         "selected_category": category_slug,
+        "selected_category_name": (
+            selected_category_obj.name if selected_category_obj else "All"
+        ),
     }
 
     return render(request, "website/magazine.html", context)
@@ -366,10 +400,23 @@ def logout_view(request):
 # ---------------------------
 # Impact Tracker / Support / Loops / Tiers
 # ---------------------------
+
 @login_required(login_url=settings.LOGIN_URL)
 def impact_tracker(request):
     collaborations = Collaboration.objects.all().order_by('-planted_date')
-    return render(request, 'website/impact_tracker.html', {'collaborations': collaborations})
+
+    # FIXED: the template needs summary.stage_1..stage_5 for the Forest Growth
+    # Summary bars, but the original view never computed or passed this —
+    # the bars were rendering with data-count="" (undefined), which the JS
+    # parsed as NaN and multiplied into "NaNpx" widths.
+    stage_counts = {row['growth_stage']: row['count'] for row in
+                    Collaboration.objects.values('growth_stage').annotate(count=Count('id'))}
+    summary = {f'stage_{i}': stage_counts.get(i, 0) for i in range(1, 6)}
+
+    return render(request, 'website/impact_tracker.html', {
+        'collaborations': collaborations,
+        'summary': summary,
+    })
 
 @login_required(login_url=settings.LOGIN_URL)
 def support(request):

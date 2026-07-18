@@ -1,216 +1,143 @@
 {% extends "website/base.html" %}
 {% load static %}
 
-{% block title %}News – Call Soso{% endblock %}
+{% block title %}News & Perspectives — Call Soso{% endblock %}
 
 {% block content %}
 <link rel="stylesheet" href="{% static 'css/news.css' %}">
 
 <main class="news-page">
 
-  <!-- =========================
-       HERO
-  ========================= -->
-  <header class="news-hero">
-    <div class="hero-inner">
-      <span class="hero-eyebrow">Insights & Updates</span>
-      <h1>News & Perspectives</h1>
-      <p>
-        Stories, research, and reflections from Call Soso and collaborators
-        shaping circular systems, material futures, and community impact.
-      </p>
-    </div>
-  </header>
-
-  <!-- =========================
-       FEATURED STORIES
-  ========================= -->
-  {% if featured_articles %}
-  {% with featured_articles.0 as feature %}
-  <section class="news-feature">
-
-    <!-- Primary Feature -->
-    <article class="feature-card">
-      {% if feature.display_image %}
-      <div class="feature-media">
-        <img src="{{ feature.display_image }}" alt="{{ feature.title }}">
-      </div>
-      {% endif %}
-
-      <div class="feature-content">
-        <span class="eyebrow">Featured</span>
-
-        <h2>
-          <a href="{{ feature.get_absolute_url }}">
-            {{ feature.title }}
-          </a>
-        </h2>
-
-        <div class="feature-meta">
-          {% if feature.published_date %}
-          <time>{{ feature.published_date|date:"jS F Y" }}</time>
-          {% endif %}
+    <!-- HERO -->
+    <header class="news-hero">
+        <div class="hero-inner">
+            <p class="eyebrow center">Insights &amp; Updates</p>
+            <h1 class="section-title">News &amp; Perspectives</h1>
+            <p class="lede center">
+                Stories, research, and reflections from Call Soso and collaborators shaping circular
+                systems, material futures, and community impact.
+            </p>
         </div>
+    </header>
 
-        <p class="excerpt">
-          {% if feature.excerpt %}
-            {{ feature.excerpt|truncatewords:34 }}
-          {% else %}
-            {{ feature.body|striptags|truncatewords:34 }}
-          {% endif %}
-        </p>
+    <!-- FEATURED -->
+    {% if featured_articles %}
+    {% with featured_articles.0 as feature %}
+    <section class="news-feature">
 
-        <a href="{{ feature.get_absolute_url }}" class="feature-link">
-          Read full article →
-        </a>
-      </div>
-    </article>
+        <article class="feature-card" {% if feature.display_image %}style="background-image: url('{{ feature.display_image }}');"{% endif %}>
+            <div class="feature-content">
+                <span class="eyebrow">Featured</span>
+                <h2><a href="{{ feature.get_absolute_url }}">{{ feature.title }}</a></h2>
+                {% if feature.published_date %}
+                    <div class="feature-meta"><time>{{ feature.published_date|date:"jS F Y" }}</time></div>
+                {% endif %}
+                <p class="excerpt">
+                    {% if feature.excerpt %}{{ feature.excerpt|truncatewords:34 }}
+                    {% else %}{{ feature.body|striptags|truncatewords:34 }}{% endif %}
+                </p>
+                <a href="{{ feature.get_absolute_url }}" class="panel-link small">Read full article <span class="arrow">&rarr;</span></a>
+            </div>
+        </article>
 
-    <!-- Secondary Featured -->
-    {% if featured_articles|length > 1 %}
-    <aside class="feature-secondary">
-      <h3 class="secondary-title">More highlights</h3>
-
-      {% for article in featured_articles|slice:"1:4" %}
-      <a href="{{ article.get_absolute_url }}" class="secondary-item">
-        {% if article.display_image %}
-        <img src="{{ article.display_image }}" alt="{{ article.title }}">
+        {% if featured_articles|length > 1 %}
+        <aside class="feature-secondary">
+            <h3 class="secondary-title">More Highlights</h3>
+            {% for article in featured_articles|slice:"1:4" %}
+            <a href="{{ article.get_absolute_url }}" class="secondary-item" {% if article.display_image %}style="background-image: url('{{ article.display_image }}');"{% endif %}>
+                <div class="secondary-text">
+                    <h4>{{ article.title|truncatewords:9 }}</h4>
+                    <span>{{ article.published_date|date:"j M Y" }}</span>
+                </div>
+            </a>
+            {% endfor %}
+        </aside>
         {% endif %}
-        <div class="secondary-text">
-          <h4>{{ article.title|truncatewords:9 }}</h4>
-          <span>{{ article.published_date|date:"j M Y" }}</span>
-        </div>
-      </a>
-      {% endfor %}
-    </aside>
+
+    </section>
+    {% endwith %}
     {% endif %}
 
-  </section>
-  {% endwith %}
-  {% endif %}
+    <!-- FILTER BAR -->
+    <section class="news-toolbar">
+        <h3>All Articles</h3>
+        {% if all_categories %}
+        <nav class="category-filters">
+            <a href="?" class="filter-tab {% if not selected_category %}active{% endif %}">All</a>
+            {% for category in all_categories %}
+                <a href="?category={{ category.slug }}" class="filter-tab {% if category.slug == selected_category %}active{% endif %}">
+                    {{ category.name }}
+                </a>
+            {% endfor %}
+        </nav>
+        {% endif %}
+    </section>
 
-  <!-- =========================
-       FILTER BAR
-  ========================= -->
-  <section class="news-toolbar">
-    <h3>All articles</h3>
+    <!-- MAIN LAYOUT -->
+    <section class="news-layout">
 
-    {% if all_categories %}
-    <nav class="category-filters">
-      <a href="?" class="filter-pill {% if not selected_category %}active{% endif %}">
-        All
-      </a>
-      {% for category in all_categories %}
-      <a
-        href="?category={{ category.slug }}"
-        class="filter-pill {% if category.slug == selected_category %}active{% endif %}">
-        {{ category.name }}
-      </a>
-      {% endfor %}
+        <div class="news-stream">
+            {% for article in articles %}
+            <article class="news-row">
+                {% if article.display_image %}
+                <a href="{{ article.get_absolute_url }}" class="news-thumb" style="background-image: url('{{ article.display_image }}');"></a>
+                {% endif %}
+                <div class="news-body">
+                    <h4><a href="{{ article.get_absolute_url }}">{{ article.title }}</a></h4>
+                    <div class="meta">
+                        {% if article.published_date %}<span>{{ article.published_date|date:"j M Y" }}</span>{% endif %}
+                        {% if article.categories.exists %}
+                            <span class="dot">&middot;</span>
+                            <span class="category">{{ article.categories.first.name }}</span>
+                        {% endif %}
+                    </div>
+                    <p>
+                        {% if article.excerpt %}{{ article.excerpt|truncatewords:24 }}
+                        {% else %}{{ article.body|striptags|truncatewords:24 }}{% endif %}
+                    </p>
+                </div>
+            </article>
+            {% empty %}
+            <p class="empty">No articles published yet.</p>
+            {% endfor %}
+        </div>
+
+        <aside class="news-aside">
+            {% if popular_articles %}
+            <div class="aside-block">
+                <h5>Popular Reads</h5>
+                <ul class="hairline-list">
+                    {% for article in popular_articles %}
+                    <li>
+                        <a href="{{ article.get_absolute_url }}">{{ article.title|truncatewords:10 }}</a>
+                        <span>{{ article.published_date|date:"j M" }}</span>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+
+            <div class="aside-cta">
+                <h5>Stay Connected</h5>
+                <p>Get essays, updates, and circular economy insights delivered to your inbox.</p>
+                <a href="{% url 'signup' %}" class="btn-outline light">Join the List</a>
+            </div>
+        </aside>
+
+    </section>
+
+    <!-- PAGINATION -->
+    {% if is_paginated %}
+    <nav class="pagination">
+        {% if page_obj.has_previous %}
+            <a href="?page={{ page_obj.previous_page_number }}">&larr; Prev</a>
+        {% endif %}
+        <span class="current">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">Next &rarr;</a>
+        {% endif %}
     </nav>
     {% endif %}
-  </section>
-
-  <!-- =========================
-       MAIN CONTENT
-  ========================= -->
-  <section class="news-layout">
-
-    <!-- ARTICLE STREAM -->
-    <div class="news-stream">
-      {% for article in articles %}
-      <article class="news-card">
-
-        {% if article.display_image %}
-        <a href="{{ article.get_absolute_url }}" class="news-thumb">
-          <img src="{{ article.display_image }}" alt="{{ article.title }}">
-        </a>
-        {% endif %}
-
-        <div class="news-body">
-          <h4>
-            <a href="{{ article.get_absolute_url }}">
-              {{ article.title }}
-            </a>
-          </h4>
-
-          <div class="meta">
-            {% if article.published_date %}
-            <span>{{ article.published_date|date:"j M Y" }}</span>
-            {% endif %}
-            {% if article.categories.exists %}
-            <span class="dot">•</span>
-            <span class="category">
-              {{ article.categories.first.name }}
-            </span>
-            {% endif %}
-          </div>
-
-          <p>
-            {% if article.excerpt %}
-              {{ article.excerpt|truncatewords:24 }}
-            {% else %}
-              {{ article.body|striptags|truncatewords:24 }}
-            {% endif %}
-          </p>
-        </div>
-
-      </article>
-      {% empty %}
-      <p class="empty">No articles published yet.</p>
-      {% endfor %}
-    </div>
-
-    <!-- SIDEBAR -->
-    <aside class="news-aside">
-
-      {% if popular_articles %}
-      <div class="aside-block">
-        <h5>Popular reads</h5>
-        <ul>
-          {% for article in popular_articles %}
-          <li>
-            <a href="{{ article.get_absolute_url }}">
-              {{ article.title|truncatewords:10 }}
-            </a>
-            <span>{{ article.published_date|date:"j M" }}</span>
-          </li>
-          {% endfor %}
-        </ul>
-      </div>
-      {% endif %}
-
-      <div class="aside-cta">
-        <h5>Stay connected</h5>
-        <p>
-          Get essays, updates, and circular economy insights
-          delivered to your inbox.
-        </p>
-        <a href="{% url 'signup' %}" class="cta-btn">
-          Join the list
-        </a>
-      </div>
-
-    </aside>
-
-  </section>
-
-  <!-- =========================
-       PAGINATION
-  ========================= -->
-  {% if is_paginated %}
-  <nav class="pagination">
-    {% if page_obj.has_previous %}
-      <a href="?page={{ page_obj.previous_page_number }}">← Prev</a>
-    {% endif %}
-    <span class="current">
-      Page {{ page_obj.number }} of {{ paginator.num_pages }}
-    </span>
-    {% if page_obj.has_next %}
-      <a href="?page={{ page_obj.next_page_number }}">Next →</a>
-    {% endif %}
-  </nav>
-  {% endif %}
 
 </main>
 {% endblock %}

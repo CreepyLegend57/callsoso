@@ -72,7 +72,7 @@ def surplus_create(request):
             listing = form.save(commit=False)
             listing.user = request.user
             listing.save()
-            return redirect('surplus_list')
+            return redirect('directory:surplus_list')  # FIXED: was missing the 'directory:' namespace
     else:
         form = SurplusListingForm()
     return render(request, 'directory/surplus_form.html', {'form': form})
@@ -94,7 +94,7 @@ def demand_list(request):
 
     if query:
         listings = listings.filter(
-            Q(org__icontains=query) |
+            Q(organisation__icontains=query) |  # FIXED: model field is 'organisation', not 'org'
             Q(material_wanted__icontains=query)
         )
     if material_wanted:
@@ -121,7 +121,7 @@ def demand_create(request):
             listing = form.save(commit=False)
             listing.user = request.user
             listing.save()
-            return redirect('demand_list')
+            return redirect('directory:demand_list')  # FIXED: was missing the 'directory:' namespace
     else:
         form = DemandListingForm()
     return render(request, 'directory/demand_form.html', {'form': form})
@@ -143,12 +143,12 @@ def suggest_match(request, surplus_id, demand_id):
     # Send notification emails (silent fail)
     send_mail(
         subject="Call Soso: Potential Match Found!",
-        message=f"A match has been suggested between surplus from {surplus.company} and demand from {demand.org}.",
+        message=f"A match has been suggested between surplus from {surplus.company} and demand from {demand.organisation}.",  # FIXED: was demand.org
         from_email=settings.DEFAULT_FROM_EMAIL,
         recipient_list=[surplus.contact_email, demand.user.email],
         fail_silently=True,
     )
-    return redirect('match_list')
+    return redirect('directory:match_list')  # FIXED: was missing the 'directory:' namespace
 
 
 @login_required

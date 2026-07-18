@@ -1,59 +1,58 @@
 {% extends "website/base.html" %}
 {% load static %}
 
-{% block title %}Demand Listings{% endblock %}
+{% block title %}Demand Listings — Call Soso{% endblock %}
 
 {% block content %}
 <link rel="stylesheet" href="{% static 'css/demand.css' %}">
 
-<div class="container mt-4 demand-list-container">
-    <h2 class="mb-4">📋 My Demand Listings</h2>
+<div class="form-page">
 
-    <div class="mb-3 text-center">
-        <a href="{% url 'directory:demand_create' %}" class="btn btn-success">➕ Add New Demand</a>
-    </div>
+    <section class="form-header">
+        <p class="eyebrow center">The Edible Loop</p>
+        <h1 class="section-title">My Demand Listings</h1>
+        <div class="center">
+            <a href="{% url 'directory:demand_create' %}" class="btn-outline">Add New Demand</a>
+        </div>
+    </section>
 
-    <!-- SEARCH & FILTERS -->
-    <section class="search-filters mb-4">
-        <form method="GET" class="d-flex flex-wrap gap-2 justify-content-center">
-            <input type="text" name="q" class="form-control" placeholder="Search requests..." value="{{ request.GET.q|default:'' }}">
-            
-            <select name="material_wanted" class="form-select">
+    <section class="search-filters">
+        <form method="GET" class="filter-form">
+            <input type="text" name="q" placeholder="Search requests..." value="{{ query|default:'' }}">
+
+            <select name="material_wanted">
                 <option value="">All Materials</option>
-                <option value="wood" {% if request.GET.material_wanted == 'wood' %}selected{% endif %}>Wood</option>
-                <option value="metal" {% if request.GET.material_wanted == 'metal' %}selected{% endif %}>Metal</option>
-                <option value="textiles" {% if request.GET.material_wanted == 'textiles' %}selected{% endif %}>Textiles</option>
+                <option value="wood" {% if material_wanted == 'wood' %}selected{% endif %}>Wood</option>
+                <option value="metal" {% if material_wanted == 'metal' %}selected{% endif %}>Metal</option>
+                <option value="textiles" {% if material_wanted == 'textiles' %}selected{% endif %}>Textiles</option>
             </select>
 
-            <select name="location" class="form-select">
+            <select name="location">
                 <option value="">All Locations</option>
-                <option value="Milton Keynes" {% if request.GET.location == 'Milton Keynes' %}selected{% endif %}>Milton Keynes</option>
-                <option value="London" {% if request.GET.location == 'London' %}selected{% endif %}>London</option>
+                <option value="Milton Keynes" {% if location == 'Milton Keynes' %}selected{% endif %}>Milton Keynes</option>
+                <option value="London" {% if location == 'London' %}selected{% endif %}>London</option>
             </select>
 
-            <button type="submit" class="btn btn-secondary">🔍 Search</button>
+            <button type="submit" class="btn-outline">Search</button>
         </form>
     </section>
 
-    {% if listings %}
-        <ul class="list-group demand-list">
-            {% for demand in listings %}
-                <li class="list-group-item">
-                    <strong>{{ demand.org }}</strong> is looking for 
-                    <em>{{ demand.material_wanted }}</em> — 
-                    <span class="text-muted">{{ demand.quantity_needed }} units</span> 
-                    in <strong>{{ demand.location }}</strong>
+    {% if demands %}
+        <ul class="listing-rows">
+            {% for demand in demands %}
+                <li>
+                    <strong>{{ demand.organisation|default:"Anonymous" }}</strong> is looking for <em>{{ demand.get_material_wanted_display }}</em>
+                    — <span class="muted">{{ demand.quantity_needed }} units</span> in <strong>{{ demand.location }}</strong>
                 </li>
             {% endfor %}
         </ul>
     {% else %}
-        <div class="alert alert-info mt-3 text-center">
-            No demand listings found.
-        </div>
+        <div class="empty-state">No demand listings found.</div>
     {% endif %}
 
-    <div class="mt-4 text-center">
-        <a href="{% url 'directory:directory_home' %}" class="btn btn-secondary">🔙 Back to Directory Home</a>
+    <div class="form-actions center">
+        <a href="{% url 'directory:directory_home' %}" class="btn-outline">Back to Directory Home</a>
     </div>
+
 </div>
 {% endblock %}

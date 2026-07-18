@@ -1,72 +1,68 @@
 {% extends "website/base.html" %}
 {% load static %}
-{% block title %}Material & Edible Loops{% endblock %}
+{% block title %}Material & Edible Loops — Call Soso{% endblock %}
 
 {% block content %}
-<h1>Material & Edible Loops 🌱</h1>
-<p>Learn how resources are circulated and reused in our community.</p>
+<link rel="stylesheet" href="{% static 'css/loops.css' %}">
 
-<div class="loops-container">
+<div class="loops-page">
 
-    <!-- Material Loop -->
-    <div class="loop-card" id="material-loop">
-        <h2>Material Loop ♻️</h2>
-        <p>Track the flow of materials from production to reuse and recycling.</p>
-        <img src="{% static 'images/material-loop.png' %}" alt="Material Loop Diagram" class="loop-img">
-        <ul class="loop-steps">
-            <li data-step="1">Collection of used materials</li>
-            <li data-step="2">Sorting & processing</li>
-            <li data-step="3">Manufacturing into new products</li>
-            <li data-step="4">Distribution & use</li>
-            <li data-step="5">Return for reuse or recycling</li>
-        </ul>
+    <header class="loops-header">
+        <p class="eyebrow center">How It Flows</p>
+        <h1 class="section-title">Material &amp; Edible Loops</h1>
+        <p class="lede center">How resources are collected, processed, and circulated back into our community, step by step.</p>
+    </header>
+
+    <div class="loops-container">
+
+        <!-- Material Loop -->
+        <article class="loop-card material" id="material-loop">
+            <div class="loop-card-header">
+                <span class="eyebrow">The Material Loop</span>
+                <h2>From production to reuse and recycling.</h2>
+            </div>
+            <img src="{% static 'images/material-loop.png' %}" alt="Material Loop Diagram" class="loop-img">
+            <ol class="loop-steps">
+                <li data-step="1"><span class="step-num">01</span>Collection of used materials</li>
+                <li data-step="2"><span class="step-num">02</span>Sorting &amp; processing</li>
+                <li data-step="3"><span class="step-num">03</span>Manufacturing into new products</li>
+                <li data-step="4"><span class="step-num">04</span>Distribution &amp; use</li>
+                <li data-step="5"><span class="step-num">05</span>Return for reuse or recycling</li>
+            </ol>
+        </article>
+
+        <!-- Edible Loop -->
+        <article class="loop-card edible" id="edible-loop">
+            <div class="loop-card-header">
+                <span class="eyebrow">The Edible Loop</span>
+                <h2>Reducing food waste through community circulation.</h2>
+            </div>
+            <img src="{% static 'images/edible-loop.png' %}" alt="Edible Loop Diagram" class="loop-img">
+            <ol class="loop-steps">
+                <li data-step="1"><span class="step-num">01</span>Surplus food collection</li>
+                <li data-step="2"><span class="step-num">02</span>Inspection &amp; sorting</li>
+                <li data-step="3"><span class="step-num">03</span>Redistribution to communities</li>
+                <li data-step="4"><span class="step-num">04</span>Consumption &amp; feedback</li>
+                <li data-step="5"><span class="step-num">05</span>Composting for remaining waste</li>
+            </ol>
+        </article>
+
     </div>
-
-    <!-- Edible Loop -->
-    <div class="loop-card" id="edible-loop">
-        <h2>Edible Loop 🍎</h2>
-        <p>Reduce food waste by circulating edible resources back to the community.</p>
-        <img src="{% static 'images/edible-loop.png' %}" alt="Edible Loop Diagram" class="loop-img">
-        <ul class="loop-steps">
-            <li data-step="1">Surplus food collection</li>
-            <li data-step="2">Inspection & sorting</li>
-            <li data-step="3">Redistribution to communities</li>
-            <li data-step="4">Consumption & feedback</li>
-            <li data-step="5">Composting for remaining waste</li>
-        </ul>
-    </div>
-
 </div>
 
-<!-- Inline JS for interactivity -->
 <script>
 document.addEventListener('DOMContentLoaded', () => {
     const loopCards = document.querySelectorAll('.loop-card');
 
     loopCards.forEach(card => {
-        const steps = card.querySelectorAll('.loop-steps li');
-
-        steps.forEach(step => {
-            step.addEventListener('mouseover', () => {
-                step.style.backgroundColor = '#ffecb3';
-                step.style.transform = 'scale(1.05)';
-            });
-            step.addEventListener('mouseout', () => {
-                step.style.backgroundColor = '#fff';
-                step.style.transform = 'scale(1)';
-            });
+        card.querySelectorAll('.loop-steps li').forEach(step => {
+            step.addEventListener('mouseenter', () => step.classList.add('active-step'));
+            step.addEventListener('mouseleave', () => step.classList.remove('active-step'));
         });
 
         const img = card.querySelector('.loop-img');
-        img.addEventListener('click', () => {
-            img.classList.toggle('enlarge');
-        });
+        img.addEventListener('click', () => img.classList.toggle('enlarge'));
     });
 });
 </script>
-
-{% endblock %}
-
-{% block extra_css %}
-<link rel="stylesheet" href="{% static 'css/loops.css' %}">
 {% endblock %}

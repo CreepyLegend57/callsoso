@@ -1,161 +1,720 @@
 {% extends "website/base.html" %}
 {% load static %}
 
-{% block title %}The CallSoso Exchange Directory{% endblock %}
+{% block title %}The Exchange Directory — Call Soso{% endblock %}
 
 {% block content %}
+<!-- Optional external link if you move styles back to disk later -->
 <link rel="stylesheet" href="{% static 'css/directory.css' %}">
 
-<div class="directory-container">
+<!-- =========================================================
+     EMBEDDED ARCHITECTURAL STYLES
+========================================================= -->
+<style>
+    :root {
+        --black:        #0a0a0a;
+        --white:        #ffffff;
+        --off-white:    #f5f4f1;
+        --orange:       #ff5a1f;
+        --grey:         #6b6b6b;
+        --grey-line:    rgba(10, 10, 10, 0.1);
 
-    <!-- HERO / INTRO -->
-    <header class="directory-hero text-center">
-        <h1>📂 The CallSoso Exchange Directory</h1>
-        <p class="lead">
-            A circular ecosystem matching <strong>surplus</strong> with <strong>skill, creativity, and need</strong>.
+        --font-display: 'Cormorant Garamond', Georgia, serif;
+        --font-sans:    'Inter', -apple-system, sans-serif;
+
+        /* Thematic Duotones */
+        --material-a:   #1c2b45;
+        --material-b:   #3f5c8a;
+        --edible-a:     #1f3a2a;
+        --edible-b:     #4f7a52;
+    }
+
+    * { box-sizing: border-box; }
+
+    .directory-page {
+        font-family: var(--font-sans);
+        color: var(--black);
+        background: var(--white);
+    }
+
+    /* Shared Typography & Utilities */
+    .eyebrow {
+        font-size: 0.72rem;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--grey);
+        display: block;
+        margin-bottom: 14px;
+    }
+    .eyebrow.center { text-align: center; }
+
+    .section-title {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: clamp(2.2rem, 4.5vw, 3.4rem);
+        line-height: 1.15;
+        text-align: center;
+        margin: 0 0 24px;
+        color: var(--black);
+    }
+
+    .lede {
+        font-size: 1.05rem;
+        color: var(--grey);
+        max-width: 760px;
+        line-height: 1.65;
+    }
+    .lede.center { margin: 0 auto; text-align: center; }
+
+    .btn-outline {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid var(--black);
+        color: var(--black);
+        background: transparent;
+        padding: 12px 26px;
+        font-family: var(--font-sans);
+        font-size: 0.72rem;
+        font-weight: 600;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        cursor: pointer;
+        transition: all 0.25s ease;
+        text-decoration: none;
+    }
+    .btn-outline:hover {
+        background: var(--orange);
+        border-color: var(--orange);
+        color: var(--white);
+    }
+
+    .ambient-microcopy {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        margin-top: 36px;
+    }
+    .ambient-microcopy.center { align-items: center; text-align: center; }
+    .ambient-microcopy span {
+        font-family: var(--font-display);
+        font-style: italic;
+        font-size: 0.95rem;
+        color: var(--grey);
+    }
+
+    /* =========================================================
+       1. INTRO SECTION
+    ========================================================= */
+    .directory-intro {
+        padding: 90px 40px 70px;
+        max-width: 1000px;
+        margin: 0 auto;
+        border-bottom: 1px solid var(--grey-line);
+    }
+
+    .stats-row {
+        display: flex;
+        justify-content: center;
+        gap: 80px;
+        margin-top: 50px;
+        padding-top: 40px;
+        border-top: 1px solid var(--grey-line);
+    }
+    .stat { text-align: center; }
+    .stat-num {
+        display: block;
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 3rem;
+        color: var(--orange);
+        line-height: 1;
+    }
+    .stat-label {
+        display: block;
+        margin-top: 8px;
+        font-size: 0.72rem;
+        font-weight: 600;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--black);
+    }
+
+    /* =========================================================
+       2. HOW IT WORKS
+    ========================================================= */
+    .how-it-works {
+        padding: 80px 40px 90px;
+        max-width: 1280px;
+        margin: 0 auto;
+    }
+
+    .steps-row {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1px;
+        background: var(--grey-line);
+        border: 1px solid var(--grey-line);
+        margin-bottom: 50px;
+    }
+    .step {
+        background: var(--white);
+        padding: 44px 34px;
+        text-align: center;
+        transition: background 0.25s ease;
+    }
+    .step:hover { background: var(--off-white); }
+    .step-num {
+        display: block;
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 2rem;
+        color: var(--orange);
+        margin-bottom: 12px;
+    }
+    .step p { margin: 0; color: var(--grey); font-size: 0.95rem; line-height: 1.5; }
+
+    .audience-label { margin-top: 40px; }
+    .audience-tags {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+    }
+    .audience-tags li {
+        border: 1px solid var(--grey-line);
+        background: var(--off-white);
+        padding: 8px 18px;
+        font-size: 0.78rem;
+        font-weight: 500;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--black);
+    }
+
+    /* =========================================================
+       3. UPGRADED LOOPS DETAIL (DASHBOARD MODULES)
+    ========================================================= */
+    .loops-detail {
+        padding: 40px 40px 100px;
+        max-width: 1280px;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        gap: 80px;
+    }
+
+    .loop-module {
+        border: 1px solid var(--grey-line);
+        background: var(--grey-line);
+        display: flex;
+        flex-direction: column;
+        gap: 1px;
+    }
+
+    /* Header Bar */
+    .loop-header {
+        padding: 60px 50px;
+        color: var(--white);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: flex-start;
+        position: relative;
+        overflow: hidden;
+    }
+    .loop-module.material .loop-header {
+        background: linear-gradient(160deg, var(--material-a), var(--material-b));
+        border-top: 4px solid #5b8dd9;
+    }
+    .loop-module.edible .loop-header {
+        background: linear-gradient(160deg, var(--edible-a), var(--edible-b));
+        border-top: 4px solid #4caf81;
+    }
+
+    .loop-header .eyebrow { color: rgba(255,255,255,0.75); margin-bottom: 8px; }
+    .loop-header h2 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: clamp(2rem, 3.5vw, 2.8rem);
+        line-height: 1.15;
+        margin: 0 0 16px;
+        max-width: 700px;
+        color: var(--white);
+    }
+    .loop-header .lede { color: rgba(255,255,255,0.85); max-width: 700px; margin: 0; }
+
+    /* 3-Column Content Grid */
+    .loop-grid {
+        display: grid;
+        grid-template-columns: 1.2fr 1fr 1fr;
+        gap: 1px;
+        background: var(--grey-line);
+        width: 100%;
+    }
+
+    .loop-card {
+        background: var(--white);
+        padding: 40px 34px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+    .loop-card h4 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.4rem;
+        margin: 0 0 20px;
+        color: var(--black);
+        padding-bottom: 12px;
+        border-bottom: 1px solid var(--grey-line);
+    }
+
+    .scannable-list { list-style: none; padding: 0; margin: 0; }
+    .scannable-list li {
+        padding: 12px 0;
+        border-bottom: 1px solid rgba(10,10,10,0.06);
+        font-size: 0.88rem;
+        line-height: 1.5;
+        color: var(--grey);
+    }
+    .scannable-list li:last-child { border-bottom: none; }
+    .scannable-list li strong { color: var(--black); font-weight: 600; display: block; margin-bottom: 2px; }
+
+    /* Action Hub Inside Loop */
+    .action-hub {
+        background: var(--off-white);
+        padding: 40px 34px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: 24px;
+    }
+    .action-hub h4 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.4rem;
+        margin: 0;
+        color: var(--black);
+    }
+    .action-buttons {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+    .action-buttons .btn-outline {
+        width: 100%;
+        background: var(--white);
+        border-color: var(--grey-line);
+    }
+    .action-buttons .btn-outline:hover {
+        background: var(--orange);
+        border-color: var(--orange);
+        color: var(--white);
+    }
+    .action-buttons .btn-outline.primary {
+        background: var(--black);
+        color: var(--white);
+        border-color: var(--black);
+    }
+    .action-buttons .btn-outline.primary:hover {
+        background: var(--orange);
+        border-color: var(--orange);
+    }
+
+    .live-feed {
+        margin-top: 14px;
+        padding-top: 18px;
+        border-top: 1px solid rgba(10,10,10,0.08);
+    }
+    .live-feed span { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--grey); display: block; margin-bottom: 8px; font-weight: 600; }
+    .live-feed ul { list-style: none; padding: 0; margin: 0; }
+    .live-feed li { font-size: 0.82rem; color: var(--black); padding: 6px 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+    /* =========================================================
+       4. UPGRADED QUICK ACTIONS (4-COLUMN CARD STRIP)
+    ========================================================= */
+    .directory-actions {
+        background: var(--black);
+        color: var(--white);
+        padding: 90px 40px;
+        border-top: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .directory-actions .section-title { color: var(--white); margin-bottom: 50px; }
+
+    .actions-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1px;
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        max-width: 1280px;
+        margin: 0 auto;
+    }
+
+    .action-card {
+        background: #111111;
+        padding: 44px 30px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        min-height: 280px;
+        text-decoration: none;
+        color: var(--white);
+        transition: background 0.3s ease, transform 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+    .action-card::before {
+        content: '';
+        position: absolute;
+        top: 0; left: 0; right: 0;
+        height: 3px;
+        background: transparent;
+        transition: background 0.3s ease, height 0.3s ease;
+    }
+    .action-card:hover {
+        background: #181818;
+        transform: translateY(-4px);
+    }
+    .action-card:hover::before {
+        background: var(--orange);
+        height: 4px;
+    }
+
+    .action-card .eyebrow { color: rgba(255,255,255,0.5); margin-bottom: 12px; }
+    .action-card h3 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.6rem;
+        line-height: 1.2;
+        margin: 0 0 12px;
+        color: var(--white);
+    }
+    .action-card p {
+        font-size: 0.85rem;
+        color: rgba(255,255,255,0.65);
+        line-height: 1.5;
+        margin: 0 0 24px;
+    }
+
+    .action-card .arrow-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 0.72rem;
+        font-weight: 600;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--white);
+        margin-top: auto;
+        padding-bottom: 2px;
+        border-bottom: 1px solid rgba(255,255,255,0.3);
+        width: fit-content;
+        transition: color 0.25s ease, border-color 0.25s ease;
+    }
+    .action-card:hover .arrow-link {
+        color: var(--orange);
+        border-bottom-color: var(--orange);
+    }
+
+    /* =========================================================
+       5. ROLE INFO
+    ========================================================= */
+    .directory-info {
+        padding: 90px 40px 110px;
+        max-width: 860px;
+        margin: 0 auto;
+    }
+    .info-list { list-style: none; padding: 0; margin: 0; }
+    .info-list li {
+        padding: 16px 0;
+        border-bottom: 1px solid var(--grey-line);
+        font-size: 0.95rem;
+        line-height: 1.6;
+        color: var(--grey);
+    }
+    .info-list li strong { color: var(--black); font-weight: 600; }
+    .info-more { color: var(--grey); margin-top: 30px; font-size: 0.95rem; }
+    .info-more a { color: var(--orange); font-weight: 500; text-decoration: underline; }
+
+    /* =========================================================
+       RESPONSIVE BREAKPOINTS
+    ========================================================= */
+    @media (max-width: 1024px) {
+        .loop-grid { grid-template-columns: 1fr 1fr; }
+        .action-hub { grid-column: 1 / -1; }
+        .actions-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 768px) {
+        .directory-intro, .how-it-works, .loops-detail, .directory-actions, .directory-info {
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+        .stats-row { flex-direction: column; gap: 30px; }
+        .steps-row { grid-template-columns: 1fr; }
+        .loop-grid { grid-template-columns: 1fr; }
+        .actions-grid { grid-template-columns: 1fr; }
+        .loop-header { padding: 40px 24px; }
+    }
+</style>
+
+<div class="directory-page">
+
+    <!-- 1. INTRO -->
+    <section class="directory-intro">
+        <span class="eyebrow center">The Exchange Directory</span>
+        <h1 class="section-title">Surplus, matched with skill, creativity, and need.</h1>
+        <p class="lede center">
+            Every material. Every ingredient. Every overlooked resource — a second life waiting for its match.
+            The Exchange Directory connects businesses with dormant stock, makers with imagination, and
+            communities with value that already exists. This is where circularity becomes infrastructure.
         </p>
-        <p class="intro-text">
-            Every material. Every ingredient. Every overlooked resource.<br>
-            A second life waiting for its match.<br>
-            CallSoso’s Exchange Directory connects:
-        </p>
-        <ul class="directory-intro-list">
-            <li>Businesses with dormant stock</li>
-            <li>Makers with imagination</li>
-            <li>Communities with value that already exists</li>
-        </ul>
-        <p class="subtext">
-            This is where circularity becomes infrastructure.
-        </p>
-        <div class="soft-motion-text">
-            <span>“Nothing is waste until someone decides it is.”</span>
-            <span>“Everything circulates.”</span>
-            <span>“Surplus becomes starting points.”</span>
-            <span>“Creativity is a form of logistics.”</span>
+        <div class="ambient-microcopy center">
+            <span>&ldquo;Nothing is waste until someone decides it is.&rdquo;</span>
+            <span>&ldquo;Everything circulates.&rdquo;</span>
+            <span>&ldquo;Surplus becomes starting points.&rdquo;</span>
+            <span>&ldquo;Creativity is a form of logistics.&rdquo;</span>
         </div>
-    </header>
 
-    <!-- HOW THE DIRECTORY WORKS -->
-    <section class="directory-how mt-5">
-        <h2 class="text-center">How the Directory Works</h2>
-        <p class="text-center">Three simple actions:</p>
-        <ol class="directory-steps text-center">
-            <li>List surplus materials or food</li>
-            <li>Match with creators, chefs, makers, or businesses</li>
-            <li>Create new value: projects, culture, products, or meals</li>
-        </ol>
-        <p class="text-center">Open to:</p>
-        <ul class="directory-audience text-center">
+        {% if surplus_count is not None or demand_count is not None %}
+        <div class="stats-row">
+            <div class="stat">
+                <span class="stat-num">{{ surplus_count|default:0 }}</span>
+                <span class="stat-label">Surplus Listings</span>
+            </div>
+            <div class="stat">
+                <span class="stat-num">{{ demand_count|default:0 }}</span>
+                <span class="stat-label">Demand Requests</span>
+            </div>
+        </div>
+        {% endif %}
+    </section>
+
+    <!-- 2. HOW IT WORKS -->
+    <section class="how-it-works">
+        <span class="eyebrow center">How It Works</span>
+        <h2 class="section-title">Three Simple Actions</h2>
+
+        <div class="steps-row">
+            <div class="step">
+                <span class="step-num">01</span>
+                <p>List surplus materials, architectural offcuts, or dormant stock.</p>
+            </div>
+            <div class="step">
+                <span class="step-num">02</span>
+                <p>Match with creators, chefs, makers, or forward-thinking businesses.</p>
+            </div>
+            <div class="step">
+                <span class="step-num">03</span>
+                <p>Create new value — installations, products, culture, or civic nourishment.</p>
+            </div>
+        </div>
+
+        <span class="eyebrow center audience-label">Open To</span>
+        <ul class="audience-tags">
             <li>Businesses</li>
-            <li>Creators and Makers</li>
-            <li>Chefs & Food Innovators</li>
-            <li>Schools & Universities</li>
+            <li>Creators &amp; Makers</li>
+            <li>Chefs &amp; Food Innovators</li>
+            <li>Schools &amp; Universities</li>
             <li>Charities</li>
-            <li>Sponsors & Commissioners</li>
-            <li>Councils & Public Bodies</li>
+            <li>Sponsors &amp; Commissioners</li>
+            <li>Councils &amp; Public Bodies</li>
         </ul>
     </section>
 
-    <!-- LOOPS GRID -->
-    <section class="loops-grid mt-5">
-        <!-- Material Loop -->
-        <div class="loop-card">
-            <img src="{% static 'images/material_icon.png' %}" alt="Material Loop Icon" class="loop-icon">
-            <h3>The Material Loop</h3>
-            <p class="loop-subtitle">Surplus becomes structure, substance, and new value.</p>
-            <p class="loop-intro">
-                The Material Loop transforms business surplus into creative potential, economic gain, and cultural intelligence.
-                Materials are treated as data, story, and infrastructure for an imaginative economy. Nothing is static. Everything circulates.
-            </p>
-            <h4>Pathways</h4>
-            <ul class="loop-pathways">
-                <li><strong>Creative Reuse & Fabrication:</strong> Installations, artworks, prototypes, exhibitions, furniture, spatial elements.</li>
-                <li><strong>Industrial Reprocessing & Return:</strong> Reprocessed materials, internal reuse streams, cost-saving alternatives.</li>
-                <li><strong>Education & Workshops:</strong> Youth programmes, corporate team days, skill-building sessions, innovation labs.</li>
-                <li><strong>Research & Material Intelligence:</strong> Universities, R&D teams, product designers, material prototyping.</li>
-            </ul>
-            <h4>Who It’s For</h4>
-            <ul class="loop-audience">
-                <li>Businesses: Reduce waste, recover value, improve sustainability metrics.</li>
-                <li>Creators, Designers & Makers: Source materials, prototype ideas, craft new work, collaborate.</li>
-                <li>Architects & Built Environment Teams: Access unique materials for builds, installations.</li>
-                <li>Researchers & Educators: Use surplus as input for studies and innovations.</li>
-                <li>Councils, Sponsors & Commissioners: Engage with measurable cultural and environmental impact.</li>
-            </ul>
-            <p class="loop-cta text-center">
-                <a href="{% url 'directory:surplus_list' %}" class="btn btn-primary">Explore the Material Loop →</a>
-                <a href="{% url 'directory:surplus_create' %}" class="btn btn-outline-primary">List Your Surplus →</a>
-                <a href="{% url 'directory:demand_list' %}" class="btn btn-outline-secondary">See Creator Opportunities →</a>
-            </p>
-            <div class="loop-microcopy">
-                <span>“Every material carries a second life.”</span>
-                <span>“Surplus is future potential.”</span>
-                <span>“Nothing is waste until we waste it.”</span>
-                <span>“Circularity begins with imagination.”</span>
-                <span>“Materials make stories.”</span>
-            </div>
-        </div>
+    <!-- 3. UPGRADED LOOPS DETAIL (DASHBOARD MODULES) -->
+    <section class="loops-detail">
 
-        <!-- Edible Loop -->
-        <div class="loop-card">
-            <img src="{% static 'images/edible_icon.png' %}" alt="Edible Loop Icon" class="loop-icon">
-            <h3>The Edible Loop</h3>
-            <p class="loop-subtitle">Food becomes flavour, fuel, material, and future.</p>
-            <p class="loop-intro">
-                The Edible Loop treats food as material intelligence, capable of nourishment, creativity, production, research, and transformation. Nothing is “just waste.” Everything has a next life.
-            </p>
-            <h4>Pathways</h4>
-            <ul class="loop-pathways">
-                <li><strong>Edible Creativity & Culinary Play:</strong> Meals, menus, pop-ups, food art, edible installations.</li>
-                <li><strong>Community Nourishment & Access:</strong> Safe meals, cooking workshops, youth programmes, food literacy sessions.</li>
-                <li><strong>Material Transformation & Industrial Futures:</strong> Bioplastics, dyes, pigments, compost, fermentation substrates, craft materials.</li>
-                <li><strong>Research & Circular Innovation:</strong> Universities, labs, experimental kitchens prototyping new products and sustainable manufacturing.</li>
-            </ul>
-            <h4>Who It’s For</h4>
-            <ul class="loop-audience">
-                <li>Food Businesses: Reduce waste, save costs, support circular innovation.</li>
-                <li>Chefs & Food Creatives: Ingredients, commissions, R&D space, creative challenges.</li>
-                <li>Community Partners: Food for teaching, cooking, preserving, learning.</li>
-                <li>Researchers: Biomaterial experimentation, scientific-creative collaboration.</li>
-                <li>Sponsors & Councils: Support sustainable food systems.</li>
-            </ul>
-            <p class="loop-cta text-center">
-                <a href="{% url 'directory:demand_list' %}" class="btn btn-primary">Explore the Edible Loop →</a>
-                <a href="{% url 'directory:demand_create' %}" class="btn btn-outline-primary">List Surplus →</a>
-            </p>
-            <div class="loop-microcopy">
-                <span>“Every ingredient is a future.”</span>
-                <span>“Expired is not the end.”</span>
-                <span>“Food is material.”</span>
-                <span>“Circular nourishment is the new culture.”</span>
-                <span>“This is food beyond waste.”</span>
+        <!-- MATERIAL LOOP MODULE -->
+        <article class="loop-module material">
+            <header class="loop-header">
+                <div>
+                    <span class="eyebrow">The Material Loop</span>
+                    <h2>Surplus becomes structure, substance, and new cultural value.</h2>
+                </div>
+                <p class="lede">
+                    Transforming business surplus into creative potential and economic gain. Materials are treated as data, story, and infrastructure for an imaginative economy. Nothing is static. Everything circulates.
+                </p>
+            </header>
+
+            <div class="loop-grid">
+                <!-- Col 1: Pathways -->
+                <div class="loop-card">
+                    <div>
+                        <h4>Pathways &amp; Outcomes</h4>
+                        <ul class="scannable-list">
+                            <li><strong>Creative Reuse &amp; Fabrication</strong> Installations, artworks, prototypes, furniture, and spatial elements.</li>
+                            <li><strong>Industrial Reprocessing</strong> Reprocessed materials, internal reuse streams, and cost-saving alternatives.</li>
+                            <li><strong>Education &amp; Workshops</strong> Youth programmes, corporate team days, and skill-building labs.</li>
+                            <li><strong>Material Intelligence</strong> University R&amp;D, product design studies, and material testing.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Col 2: Who It's For -->
+                <div class="loop-card">
+                    <div>
+                        <h4>Target Ecosystem</h4>
+                        <ul class="scannable-list">
+                            <li><strong>Businesses</strong> Reduce waste overheads and improve measurable ESG metrics.</li>
+                            <li><strong>Creators &amp; Makers</strong> Source affordable materials and prototype scalable ideas.</li>
+                            <li><strong>Built Environment Teams</strong> Access unique finishes and offcuts for architectural builds.</li>
+                            <li><strong>Councils &amp; Sponsors</strong> Fund and monitor regional circular economy impact.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Col 3: Action Hub & Live Feed -->
+                <div class="action-hub">
+                    <div>
+                        <h4>Material Hub</h4>
+                        <div class="action-buttons">
+                            <a href="{% url 'directory:demand_list' %}" class="btn-outline primary">Explore Material Loop</a>
+                            <a href="{% url 'directory:demand_create' %}" class="btn-outline">Add Your Demands</a>
+                        </div>
+                    </div>
+
+                    {% if latest_surpluses %}
+                    <div class="live-feed">
+                        <span>Recently Listed</span>
+                        <ul>
+                            {% for s in latest_surpluses|slice:":3" %}
+                                <li><strong>{{ s.company }}</strong> — {{ s.get_material_type_display }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    {% endif %}
+                </div>
             </div>
-        </div>
+        </article>
+
+        <!-- EDIBLE LOOP MODULE -->
+        <article class="loop-module edible">
+            <header class="loop-header">
+                <div>
+                    <span class="eyebrow">The Edible Loop</span>
+                    <h2>Food becomes flavour, fuel, material, and future infrastructure.</h2>
+                </div>
+                <p class="lede">
+                    Treating food as material intelligence capable of nourishment, creativity, bio-production, and scientific transformation. Nothing is "just waste." Everything has a next life.
+                </p>
+            </header>
+
+            <div class="loop-grid">
+                <!-- Col 1: Pathways -->
+                <div class="loop-card">
+                    <div>
+                        <h4>Pathways &amp; Outcomes</h4>
+                        <ul class="scannable-list">
+                            <li><strong>Culinary Play &amp; Pop-ups</strong> Experimental menus, food art, pop-up kitchens, and edible installations.</li>
+                            <li><strong>Civic Nourishment</strong> Safe community meals, cooking literacy workshops, and youth access.</li>
+                            <li><strong>Biomaterial Innovation</strong> Bioplastics, organic dyes, natural pigments, compost, and fermentation substrates.</li>
+                            <li><strong>Circular Research</strong> Experimental kitchens prototyping sustainable packaging and food futures.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Col 2: Who It's For -->
+                <div class="loop-card">
+                    <div>
+                        <h4>Target Ecosystem</h4>
+                        <ul class="scannable-list">
+                            <li><strong>Food Businesses</strong> Save disposal costs and support ethical, circular redistribution.</li>
+                            <li><strong>Chefs &amp; Creatives</strong> Source experimental ingredients and collaborative R&amp;D space.</li>
+                            <li><strong>Community Partners</strong> Secure consistent ingredients for teaching, cooking, and preserving.</li>
+                            <li><strong>Scientific Researchers</strong> Experiment with biomaterial extraction and waste transformation.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Col 3: Action Hub & Live Feed -->
+                <div class="action-hub">
+                    <div>
+                        <h4>Edible Hub</h4>
+                        <div class="action-buttons">
+                            <a href="{% url 'directory:surplus_list' %}" class="btn-outline primary">Explore Edible Loop</a>
+                            <a href="{% url 'directory:surplus_create' %}" class="btn-outline">Add Food Surplus</a>
+                        </div>
+                    </div>
+
+                    {% if latest_demands %}
+                    <div class="live-feed">
+                        <span>Recently Requested</span>
+                        <ul>
+                            {% for d in latest_demands|slice:":3" %}
+                                <li><strong>{{ d.organisation|default:"Anonymous" }}</strong> — {{ d.get_material_wanted_display }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </article>
+
     </section>
 
-    <!-- QUICK ACTIONS -->
-    <section class="directory-actions mt-5 text-center">
-        <h4>Directory Quick Actions</h4>
+    <!-- 4. UPGRADED QUICK ACTIONS (4-COLUMN CARD STRIP) -->
+    <section class="directory-actions">
+        <span class="eyebrow center">Ecosystem Entry Points</span>
+        <h2 class="section-title">Take Immediate Action</h2>
+
         <div class="actions-grid">
-            <a href="{% url 'directory:surplus_create' %}" class="btn btn-secondary">➕ List Material</a>
-            <a href="{% url 'directory:demand_create' %}" class="btn btn-secondary">➕ Submit Food Request</a>
-            <a href="{% url 'website:impact_tracker' %}" class="btn btn-secondary">🌱 Track Impact</a>
-            <a href="#" class="btn btn-secondary">View Tiers & Pricing →</a>
+            <a href="{% url 'directory:demand_list' %}" class="action-card">
+                <div>
+                    <span class="eyebrow">For Businesses</span>
+                    <h3>List Material</h3>
+                    <p>Turn dormant stock, offcuts, and corporate surplus into environmental impact.</p>
+                </div>
+                <span class="arrow-link">Start Listing <span>&rarr;</span></span>
+            </a>
+
+            <a href="{% url 'directory:demand_create' %}" class="action-card">
+                <div>
+                    <span class="eyebrow">For Creators</span>
+                    <h3>Request Food / Stock</h3>
+                    <p>Submit a demand request for ingredients or materials needed for your next build.</p>
+                </div>
+                <span class="arrow-link">Submit Request <span>&rarr;</span></span>
+            </a>
+
+            <a href="{% url 'website:impact_tracker' %}" class="action-card">
+                <div>
+                    <span class="eyebrow">Telemetry</span>
+                    <h3>Track Impact</h3>
+                    <p>Explore the Call Soso Forest and see how circular exchanges grow into lasting culture.</p>
+                </div>
+                <span class="arrow-link">View Forest <span>&rarr;</span></span>
+            </a>
+
+            <a href="{% url 'website:about' %}" class="action-card">
+                <div>
+                    <span class="eyebrow">Partnership</span>
+                    <h3>Tiers &amp; Pricing</h3>
+                    <p>Discover corporate membership tiers, circular audits, and custom activation pricing.</p>
+                </div>
+                <span class="arrow-link">Explore Tiers <span>&rarr;</span></span>
+            </a>
         </div>
     </section>
 
-    <!-- ROLE INFORMATION & TIPS -->
-    <section class="directory-info mt-5 p-4 text-center rounded shadow-sm">
-        <h4>💡 Who the Directory is For</h4>
-        <ul class="info-list text-start mx-auto" style="max-width:700px;">
-            <li><strong>Businesses:</strong> Turn surplus into ESG wins, reduce waste, commission meaningful work.</li>
-            <li><strong>Creators & Makers:</strong> Source materials, prototype ideas, craft new work, collaborate.</li>
-            <li><strong>Chefs & Food Innovators:</strong> Access surplus ingredients, circular culinary briefs, food system experiments.</li>
-            <li><strong>Schools & Universities:</strong> List or source surplus for creative and educational use.</li>
-            <li><strong>Charities:</strong> Limited access for sourcing or project support.</li>
-            <li><strong>Sponsors & Councils:</strong> Fund projects, support initiatives, and monitor measurable impact.</li>
+    <!-- 5. ROLE INFO -->
+    <section class="directory-info">
+        <span class="eyebrow center">Who the Directory Is For</span>
+        <ul class="info-list">
+            <li><strong>Businesses</strong> — Turn surplus into ESG wins, reduce waste overheads, and commission meaningful regional work.</li>
+            <li><strong>Creators &amp; Makers</strong> — Source materials, prototype ideas, craft new installations, and collaborate with industry.</li>
+            <li><strong>Chefs &amp; Food Innovators</strong> — Access surplus ingredients, circular culinary briefs, and experimental food system labs.</li>
+            <li><strong>Schools &amp; Universities</strong> — List or source material surplus for creative, scientific, and educational use.</li>
+            <li><strong>Charities &amp; Civic Groups</strong> — Sourcing support for community workshops, nourishment, and local activations.</li>
+            <li><strong>Sponsors &amp; Councils</strong> — Fund targeted circular projects and monitor measurable, localized environmental impact.</li>
         </ul>
-        <p class="mt-3">Learn more about CallSoso’s impact <a href="{% url 'website:about' %}">here</a>.</p>
+        <p class="info-more center">Learn more about Call Soso's foundational ethos and cultural logic <a href="{% url 'website:about' %}">here</a>.</p>
     </section>
 
 </div>

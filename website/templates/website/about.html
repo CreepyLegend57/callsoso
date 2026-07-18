@@ -1,122 +1,145 @@
 {% extends "website/base.html" %}
 {% load static %}
 
-{% block title %}About Us – Call Soso{% endblock %}
+{% block title %}About Us — Call Soso{% endblock %}
 
 {% block content %}
 <link rel="stylesheet" href="{% static 'css/about.css' %}">
 
 <!-- HERO -->
-<header class="about-hero">
-  <h1>About Call Soso</h1>
-  <p class="subtitle">
-    Turning surplus into value through circular systems, community creativity,
-    and responsible design.
-  </p>
-  <p class="microcopy">
-    “Waste is only waste when imagination stops.”
-  </p>
+<header class="about-hero" style="background-image: url('{% static 'images/about-hero.jpg' %}');">
+    <div class="about-hero-inner">
+        <p class="eyebrow center">About Call Soso</p>
+        <h1 class="section-title">Turning surplus into value through circular systems.</h1>
+        <p class="lede center">Community creativity and responsible design, rooted in Milton Keynes.</p>
+        <p class="hero-microcopy">&ldquo;Waste is only waste when imagination stops.&rdquo;</p>
+    </div>
 </header>
 
 <div class="about-container">
 
-  <!-- MAIN CONTENT -->
-  <main class="about-main">
-
-    <!-- INTRO -->
+    <!-- WHO WE ARE -->
     <section class="about-section">
-      <h2>Who We Are</h2>
-      <p>
-        Call Soso is a Milton Keynes–based circular economy venture working at the
-        intersection of corporate surplus, creative reuse, and community impact.
-        We capture materials that would otherwise be discarded and redirect them
-        into meaningful second lives.
-      </p>
-      <p>
-        From cardboard and textiles to foam and product returns, we work with
-        businesses, upcyclers, designers, and educators to transform waste into
-        value — socially, environmentally, and economically.
-      </p>
+        <p class="eyebrow center">Who We Are</p>
+        <h2 class="section-title">A circular economy venture</h2>
+        <p class="lede center">
+            Call Soso is a Milton Keynes–based circular economy venture working at the intersection of
+            corporate surplus, creative reuse, and community impact. We capture materials that would
+            otherwise be discarded and redirect them into meaningful second lives.
+        </p>
+        <p class="lede center">
+            From cardboard and textiles to foam and product returns, we work with businesses, upcyclers,
+            designers, and educators to transform waste into value — socially, environmentally, and economically.
+        </p>
+    </section>
+
+    <!-- ROOTED MANIFESTO -->
+    <section class="about-section dark-block">
+        <p class="eyebrow center">Manifesto</p>
+        <h2 class="section-title">The Rooted Manifesto</h2>
+        <p class="lede center">
+            We honour materials, edible and otherwise. Everything has a second life. We treat surplus as
+            intelligence, culture, and possibility. Circularity isn't compliance, it's creativity.
+            We build systems, not scraps.
+        </p>
     </section>
 
     <!-- HOW IT WORKS -->
     <section class="about-section">
-      <h2>How It Works</h2>
+        <p class="eyebrow center">Process</p>
+        <h2 class="section-title">How It Works</h2>
 
-      <div class="about-cards">
-        <div class="about-card">
-          <h3>Capture</h3>
-          <p>
-            We partner with organisations to identify surplus materials across
-            their operations — packaging, textiles, offcuts, returns, and more.
-          </p>
+        <div class="about-cards">
+            <div class="about-card">
+                <span class="card-num">01</span>
+                <h3>Capture</h3>
+                <p>We partner with organisations to identify surplus materials across their operations —
+                   packaging, textiles, offcuts, returns, and more.</p>
+            </div>
+            <div class="about-card">
+                <span class="card-num">02</span>
+                <h3>Match</h3>
+                <p>Materials are matched with internal teams, makers, creatives, and community groups
+                   who can reuse them effectively.</p>
+            </div>
+            <div class="about-card">
+                <span class="card-num">03</span>
+                <h3>Transform</h3>
+                <p>Surplus becomes new products, installations, learning tools, or resources — extending
+                   material life and reducing waste.</p>
+            </div>
         </div>
-
-        <div class="about-card">
-          <h3>Match</h3>
-          <p>
-            Materials are matched with internal teams, makers, creatives, and
-            community groups who can reuse them effectively.
-          </p>
-        </div>
-
-        <div class="about-card">
-          <h3>Transform</h3>
-          <p>
-            Surplus becomes new products, installations, learning tools, or
-            resources — extending material life and reducing waste.
-          </p>
-        </div>
-      </div>
     </section>
 
     <!-- IMPACT -->
-    <section class="about-section highlight">
-      <h2>Our Impact</h2>
+    <section class="about-section">
+        <p class="eyebrow center">Our Impact</p>
+        <h2 class="section-title">What This Adds Up To</h2>
 
-      <div class="impact-grid">
-        <div class="impact-item">
-          <span class="impact-number">10%</span>
-          <p>of profits reinvested into community workshops</p>
+        <div class="impact-grid">
+            <div class="impact-item">
+                <span class="impact-number">10%</span>
+                <p>of profits reinvested into community workshops</p>
+            </div>
+            <div class="impact-item">
+                <span class="impact-number">1000s</span>
+                <p>of materials diverted from landfill</p>
+            </div>
+            <div class="impact-item">
+                <span class="impact-number">&infin;</span>
+                <p>creative reuse possibilities unlocked</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOUNDING STORIES -->
+    <section class="about-section dark-block">
+        <p class="eyebrow center">Origins</p>
+        <h2 class="section-title">Founding Stories</h2>
+
+        <div class="founders-grid">
+            <div>
+                <h4>Sybil — Founder &amp; Creative Director</h4>
+                <p>Sybil built Call Soso from a clear instinct: everything we overlook — materials, food,
+                   ideas, people — can reshape a city.</p>
+            </div>
+            <div>
+                <h4>Nyasha — Co-Founder</h4>
+                <p>Nyasha provides precision, structure, and operational flow to bring the ecosystem to life.</p>
+            </div>
         </div>
 
-        <div class="impact-item">
-          <span class="impact-number">1000s</span>
-          <p>of materials diverted from landfill</p>
-        </div>
-
-        <div class="impact-item">
-          <span class="impact-number">∞</span>
-          <p>creative reuse possibilities unlocked</p>
-        </div>
-      </div>
+        <form method="POST" action="{% url 'website:home' %}" class="founders-form">
+            {% csrf_token %}
+            <input type="email" name="email" placeholder="Enter your email" required>
+            <button type="submit" class="btn-outline light">Join the Founders List</button>
+        </form>
     </section>
 
     <!-- FOUNDATION -->
     <section class="about-section">
-      <h2>The Call Soso Foundation</h2>
-      <p>
-        We reinvest 10% of our profits into the Call Soso Foundation, supporting
-        workshops, educational programmes, and hands-on learning experiences for
-        communities.
-      </p>
-      <p>
-        These initiatives empower people to understand materials, develop
-        creative confidence, and participate directly in the circular economy.
-      </p>
+        <p class="eyebrow center">Give Back</p>
+        <h2 class="section-title">The Call Soso Foundation</h2>
+        <p class="lede center">
+            We reinvest 10% of our profits into the Call Soso Foundation, supporting workshops,
+            educational programmes, and hands-on learning experiences for communities.
+        </p>
+        <p class="lede center">
+            These initiatives empower people to understand materials, develop creative confidence,
+            and participate directly in the circular economy.
+        </p>
     </section>
 
     <!-- CTA -->
     <section class="about-cta">
-      <h2>Work With Us</h2>
-      <p>
-        Whether you’re a business with surplus, a designer, educator, or
-        community group — we’d love to collaborate.
-      </p>
-      <a href="{% url 'website:contact' %}" class="cta-button">Get in Touch</a>
+        <p class="eyebrow center">Get Involved</p>
+        <h2 class="section-title">Work With Us</h2>
+        <p class="lede center">
+            Whether you're a business with surplus, a designer, educator, or community group —
+            we'd love to collaborate.
+        </p>
+        <a href="{% url 'website:contact' %}" class="btn-outline light">Get in Touch</a>
     </section>
-
-  </main>
 
 </div>
 {% endblock %}

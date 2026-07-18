@@ -3,46 +3,69 @@
 {% block title %}Support Call Soso{% endblock %}
 
 {% block content %}
-<h1>Support Call Soso 💚</h1>
-<p>Your contributions help us grow the circular economy community.</p>
+<link rel="stylesheet" href="{% static 'css/support.css' %}">
 
-<!-- Funding options -->
-<div class="funding-options">
-    <a href="https://www.kickstarter.com" target="_blank" class="fund-btn">Kickstarter</a>
-    <a href="https://www.buymeacoffee.com" target="_blank" class="fund-btn">Buy Me a Coffee</a>
+<div class="support-page">
+
+    <header class="support-hero">
+        <p class="eyebrow center">Support Us</p>
+        <h1 class="section-title">Support Call Soso</h1>
+        <p class="lede center">Your contributions help us grow the circular economy community.</p>
+    </header>
+
+    <!-- FUNDING OPTIONS -->
+    <section class="funding-options">
+        <a href="https://www.kickstarter.com" target="_blank" class="fund-card">
+            <span class="eyebrow">Kickstarter</span>
+            <h3>Back the Campaign</h3>
+            <span class="panel-link small">Visit Kickstarter <span class="arrow">&rarr;</span></span>
+        </a>
+        <a href="https://www.buymeacoffee.com" target="_blank" class="fund-card">
+            <span class="eyebrow">One-Off Support</span>
+            <h3>Buy Us a Coffee</h3>
+            <span class="panel-link small">Visit Buy Me a Coffee <span class="arrow">&rarr;</span></span>
+        </a>
+    </section>
+
+    <!-- CONTRIBUTIONS -->
+    <section class="contributions">
+        <p class="eyebrow center">Community</p>
+        <h2 class="section-title">Recent Contributions</h2>
+
+        <ul class="contrib-list">
+            {% for contrib in contributions %}
+            <li class="contrib-item" data-amount="{{ contrib.amount|default:0 }}">
+                <span class="contrib-name">{{ contrib.contributor_name|default:contrib.user.username|default:"Anonymous" }}</span>
+                <span class="contrib-detail">
+                    {% if contrib.amount %}
+                        donated &pound;{{ contrib.amount }}
+                    {% else %}
+                        contributed via {{ contrib.get_source_display }}
+                    {% endif %}
+                    on {{ contrib.date|date:"j M Y" }}
+                </span>
+            </li>
+            {% empty %}
+            <li class="contrib-item empty">No contributions yet. Be the first to support us.</li>
+            {% endfor %}
+        </ul>
+    </section>
+
 </div>
 
-<h2>Recent Contributions</h2>
-<ul class="contrib-list">
-    {% for contrib in contributions %}
-    <li class="contrib-item" data-amount="{{ contrib.amount }}">
-        {{ contrib.user }} donated ${{ contrib.amount }} on {{ contrib.date }}
-    </li>
-    {% empty %}
-    <li>No contributions yet. Be the first to support us!</li>
-    {% endfor %}
-</ul>
-
-<!-- Inline JS for interactivity -->
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    const items = document.querySelectorAll('.contrib-item');
+    const items = document.querySelectorAll('.contrib-item:not(.empty)');
     items.forEach(item => {
-        item.addEventListener('mouseover', () => {
-            const amount = parseFloat(item.dataset.amount);
-            item.style.fontWeight = 'bold';
-            item.style.color = amount > 50 ? '#2e7d32' : '#1565c0'; // big donors green, smaller blue
+        item.addEventListener('mouseenter', () => {
+            const amount = parseFloat(item.dataset.amount) || 0;
+            item.classList.add('is-hovered');
+            item.classList.toggle('major-gift', amount > 50);
         });
-        item.addEventListener('mouseout', () => {
-            item.style.fontWeight = 'normal';
-            item.style.color = '#000';
+        item.addEventListener('mouseleave', () => {
+            item.classList.remove('is-hovered', 'major-gift');
         });
     });
 });
 </script>
-
-{% endblock %}
-
-{% block extra_css %}
-<link rel="stylesheet" href="{% static 'css/support.css' %}">
 {% endblock %}
