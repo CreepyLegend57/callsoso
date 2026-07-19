@@ -1,249 +1,285 @@
+/* =========================================================
+   CALL SOSO — MAGAZINE
+========================================================= */
 :root {
-    --green-dark: #0d4d40;
-    --green-accent: #12b981;
-    --cream-light: #f2f6f1;
-    --earth-brown: #8b5a3c;
-    --grey-muted: #6b7280;
-    --white: #ffffff;
-  
-    --radius-lg: 14px;
-    --radius-md: 10px;
-  
-    --shadow-soft: 0 8px 18px rgba(0,0,0,0.06);
-    --shadow-hover: 0 14px 30px rgba(0,0,0,0.12);
-  }
-  
-  .magazine-page {
-    max-width: 1300px;
-    margin: 0 auto;
-    padding: 2rem;
-  }
-  
-  /* HERO */
-  .magazine-hero {
-    text-align: center;
-    padding: 4rem 2rem;
-    background: linear-gradient(135deg, var(--earth-brown), #6f4b33);
-    color: var(--cream-light);
-    border-radius: var(--radius-lg);
-    margin-bottom: 3rem;
-  }
-  
-  .magazine-hero h1 {
-    font-size: 2.6rem;
-    margin-bottom: 0.75rem;
-  }
-  
-  .magazine-hero .subtitle {
-    font-size: 1.1rem;
-    max-width: 700px;
-    margin: 0 auto;
-  }
-  
-  /* SEARCH */
-  .magazine-top-bar {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 3rem;
-  }
-  
-  .magazine-search {
-    display: flex;
-    width: 100%;
-    max-width: 650px;
-    background: var(--white);
-    border-radius: var(--radius-md);
-    box-shadow: var(--shadow-soft);
-    overflow: hidden;
-  }
-  
-  .magazine-search input {
-    flex: 1;
-    padding: 14px 18px;
-    border: none;
-    font-size: 1rem;
-  }
-  
-  .magazine-search button {
-    background: var(--green-accent);
-    color: white;
-    border: none;
-    padding: 0 22px;
-    font-weight: 600;
-    cursor: pointer;
-  }
-  
-  /* LAYOUT */
-  .magazine-wrapper {
-    display: grid;
-    grid-template-columns: 240px 1fr 300px;
-    gap: 32px;
-  }
-  
-  /* SIDEBARS */
-  .sidebar-box {
-    background: var(--white);
-    padding: 20px;
-    border-radius: var(--radius-md);
-    box-shadow: var(--shadow-soft);
-    margin-bottom: 24px;
-  }
-  
-  .sidebar-title {
-    font-size: 1.05rem;
-    margin-bottom: 14px;
-    color: var(--green-dark);
-  }
-  
-  .category-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-  
-  .category-item {
-    display: block;
-    padding: 10px 14px;
-    border-radius: 8px;
-    text-decoration: none;
-    color: var(--green-dark);
-    font-size: 0.95rem;
-  }
-  
-  .category-item:hover {
-    background: var(--cream-light);
-  }
-  
-  .category-item.active {
-    background: var(--green-accent);
-    color: white;
-  }
-  
-  /* FEATURED */
-  .featured-section {
-    margin-bottom: 3.5rem;
-  }
-  
-  .featured-issues-slider {
-    display: flex;
-    gap: 20px;
-    overflow-x: auto;
-    padding-bottom: 12px;
-    cursor: grab;
-  }
-  
-  .featured-issue-card {
-    min-width: 300px;
-    background: var(--white);
-    border-radius: var(--radius-md);
-    box-shadow: var(--shadow-soft);
-    transition: transform 0.3s, box-shadow 0.3s;
-  }
-  
-  .featured-issue-card:hover {
-    transform: translateY(-6px);
-    box-shadow: var(--shadow-hover);
-  }
-  
-  /* CARDS */
-  .card-image img {
-    width: 100%;
-    height: 180px;
-    object-fit: cover;
-  }
-  
-  .card-content {
-    padding: 16px;
-  }
-  
-  .card-content h3,
-  .card-content h4 {
-    margin: 0 0 6px;
-  }
-  
-  .card-content a {
-    text-decoration: none;
-    color: var(--green-dark);
-  }
-  
-  .issue-date {
-    font-size: 0.85rem;
-    color: var(--grey-muted);
-  }
-  
-  /* GRID */
-  .regular-issues-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
-    gap: 22px;
-  }
-  
-  /* POPULAR */
-  .popular-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-  
-  .popular-article-card {
-    display: flex;
-    gap: 12px;
-    align-items: center;
-    margin-bottom: 14px;
-  }
-  
-  .popular-article-card img {
-    width: 56px;
-    height: 56px;
-    object-fit: cover;
-    border-radius: 8px;
-  }
-  
-  .sidebar-cta {
-    background: linear-gradient(135deg, #dcfce7, #f0fdf4);
-    border-radius: var(--radius-md);
-    padding: 22px;
-    text-align: center;
-  }
-  
-  .sidebar-cta .cta-button {
-    display: inline-block;
-    margin-top: 12px;
-    padding: 10px 18px;
-    background: var(--green-accent);
-    color: white;
-    border-radius: 8px;
-    text-decoration: none;
-  }
-  
-  /* PAGINATION */
-  .pagination {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin-top: 40px;
-  }
-  
-  .pagination a,
-  .pagination span {
-    padding: 8px 16px;
-    border-radius: 6px;
-    border: 1px solid #d1d5db;
-    text-decoration: none;
-  }
-  
-  .pagination .current {
-    background: var(--green-accent);
-    color: white;
-  }
-  
-  /* RESPONSIVE */
-  @media (max-width: 1200px) {
-    .magazine-wrapper {
-      grid-template-columns: 1fr;
-    }
-    .popular-sidebar {
-      display: none;
-    }
-  }
-  
+  --black:     #0a0a0a;
+  --white:     #ffffff;
+  --off-white: #f5f4f1;
+  --orange:    #ff5a1f;
+  --grey:      #6b6b6b;
+  --grey-line: rgba(10,10,10,0.1);
+
+  --font-display: 'Cormorant Garamond', Georgia, serif;
+  --font-sans:    'Inter', -apple-system, sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+.magazine-page { font-family: var(--font-sans); color: var(--black); max-width: 1300px; margin: 0 auto; padding: 0 40px 100px; }
+
+.eyebrow { font-size: 0.72rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--grey); display: block; margin-bottom: 12px; }
+.eyebrow.center { text-align: center; }
+.btn-outline {
+  display: inline-block;
+  border: 1px solid var(--black);
+  color: var(--black);
+  background: transparent;
+  padding: 12px 26px;
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.btn-outline:hover { background: var(--orange); border-color: var(--orange); color: var(--white); }
+.btn-outline.light { border-color: var(--white); color: var(--white); }
+.btn-outline.light:hover { background: var(--orange); border-color: var(--orange); }
+
+.hairline-list { list-style: none; padding: 0; margin: 0; }
+.empty-state, .empty-note { color: var(--grey); }
+
+.panel-link.small {
+  display: inline-block;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  border-bottom: 1px solid var(--black);
+  padding-bottom: 2px;
+  color: var(--black);
+}
+.panel-link.small:hover { color: var(--orange); border-color: var(--orange); }
+
+/* =========================================================
+ MASTHEAD — nameplate treatment, thin rules like a print title
+========================================================= */
+.magazine-masthead {
+  text-align: center;
+  padding: 90px 20px 40px;
+  border-bottom: 1px solid var(--grey-line);
+  margin-bottom: 0;
+}
+.masthead-eyebrow { text-align: center; }
+.masthead-title {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(2.6rem, 6vw, 4.4rem);
+  letter-spacing: 0.02em;
+  margin: 0;
+  position: relative;
+  display: inline-block;
+  padding: 0 0 18px;
+}
+.masthead-title::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 2px;
+  background: var(--orange);
+}
+.masthead-tagline {
+  font-family: var(--font-display);
+  font-style: italic;
+  color: var(--grey);
+  margin: 18px 0 0;
+  font-size: 1.05rem;
+}
+
+/* =========================================================
+ TOOLBAR — category tabs + search, horizontal masthead-style nav
+========================================================= */
+.magazine-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 24px 0;
+  border-bottom: 1px solid var(--grey-line);
+  margin-bottom: 60px;
+}
+.magazine-tabs { display: flex; flex-wrap: wrap; gap: 26px; overflow-x: auto; }
+.magazine-tabs .tab {
+  font-size: 0.8rem;
+  letter-spacing: 0.04em;
+  color: var(--grey);
+  padding-bottom: 6px;
+  border-bottom: 1px solid transparent;
+  white-space: nowrap;
+}
+.magazine-tabs .tab:hover { color: var(--black); }
+.magazine-tabs .tab.active { color: var(--orange); border-bottom-color: var(--orange); }
+
+.magazine-search { display: flex; border: 1px solid var(--grey-line); flex-shrink: 0; }
+.magazine-search input {
+  padding: 10px 14px;
+  border: none;
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  width: 200px;
+  outline: none;
+}
+.magazine-search button {
+  background: var(--black);
+  color: var(--white);
+  border: none;
+  padding: 0 16px;
+  cursor: pointer;
+}
+.magazine-search button:hover { background: var(--orange); }
+
+/* =========================================================
+ SPOTLIGHT — the lead featured issue, full editorial treatment
+========================================================= */
+.spotlight {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 60px;
+  align-items: center;
+  margin-bottom: 70px;
+}
+.spotlight-cover {
+  display: block;
+  aspect-ratio: 3 / 4;
+  background: var(--off-white);
+  overflow: hidden;
+  box-shadow: 0 30px 60px rgba(0,0,0,0.16);
+}
+.spotlight-cover img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+.spotlight-content h2 { margin: 0 0 14px; }
+.spotlight-content h2 a {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(1.8rem, 3vw, 2.6rem);
+  color: var(--black);
+  line-height: 1.15;
+}
+.spotlight-content h2 a:hover { color: var(--orange); }
+.spotlight-date { display: block; font-size: 0.8rem; color: var(--grey); margin-bottom: 20px; }
+.spotlight-excerpt { font-size: 1rem; color: var(--grey); line-height: 1.65; margin-bottom: 26px; max-width: 480px; }
+
+/* =========================================================
+ SHELF — secondary featured issues, standing like covers on a shelf
+========================================================= */
+.shelf-section { margin-bottom: 80px; }
+.shelf {
+  display: flex;
+  gap: 34px;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 10px 0 0;
+}
+.shelf-issue { width: 150px; text-align: center; }
+.shelf-cover {
+  display: block;
+  aspect-ratio: 3 / 4;
+  background: var(--off-white);
+  overflow: hidden;
+  box-shadow: 0 14px 26px rgba(0,0,0,0.15);
+  transition: transform 0.25s ease;
+}
+.shelf-issue:nth-child(odd) .shelf-cover { transform: rotate(-2deg); }
+.shelf-issue:nth-child(even) .shelf-cover { transform: rotate(2deg); }
+.shelf-issue:hover .shelf-cover { transform: translateY(-6px) rotate(0deg); }
+.shelf-cover img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.shelf-issue h4 { margin: 14px 0 0; font-family: var(--font-display); font-weight: 500; font-size: 0.95rem; }
+.shelf-issue h4 a { color: var(--black); }
+.shelf-issue:hover h4 a { color: var(--orange); }
+.shelf-line { max-width: 700px; margin: 40px auto 0; height: 1px; background: var(--grey-line); }
+
+/* =========================================================
+ ARCHIVE — numbered, grouped by category
+========================================================= */
+.magazine-archive { margin-bottom: 80px; }
+.browsing-label { text-align: center; font-size: 0.85rem; color: var(--grey); margin: -20px 0 40px; }
+.browsing-label span { color: var(--orange); font-weight: 600; }
+
+.archive-section { border-top: 1px solid var(--grey-line); padding-top: 34px; margin-bottom: 50px; }
+.archive-heading { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 26px; }
+.archive-heading h2 { font-family: var(--font-display); font-weight: 500; font-size: 1.5rem; margin: 0; }
+.archive-count { font-size: 0.75rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--grey); }
+
+.archive-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+  gap: 34px 24px;
+}
+
+.issue-card { display: flex; flex-direction: column; }
+.issue-cover {
+  position: relative;
+  display: block;
+  aspect-ratio: 3 / 4;
+  background: var(--off-white);
+  overflow: hidden;
+  border: 1px solid var(--grey-line);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.issue-cover img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.issue-card:hover .issue-cover { transform: translateY(-4px); box-shadow: 0 16px 30px rgba(0,0,0,0.12); }
+
+.issue-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: rgba(10,10,10,0.75);
+  color: var(--white);
+  font-family: var(--font-sans);
+  font-size: 0.62rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 4px 8px;
+}
+
+.issue-caption { padding-top: 14px; }
+.issue-caption h4 { margin: 0 0 6px; font-family: var(--font-display); font-weight: 500; font-size: 1rem; }
+.issue-caption h4 a { color: var(--black); }
+.issue-card:hover .issue-caption h4 a { color: var(--orange); }
+.issue-date { font-size: 0.78rem; color: var(--grey); }
+
+/* =========================================================
+ CLOSING — Popular + Membership
+========================================================= */
+.magazine-closing {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: 1px;
+  background: var(--grey-line);
+  border: 1px solid var(--grey-line);
+}
+.closing-block { background: var(--white); padding: 44px; }
+.closing-block h3 { font-family: var(--font-display); font-weight: 500; font-size: 1.4rem; margin: 0 0 20px; }
+.closing-block.dark { background: var(--black); color: var(--white); }
+.closing-block.dark .eyebrow { color: rgba(255,255,255,0.6); }
+.closing-block.dark p { color: rgba(255,255,255,0.8); margin: 0 0 22px; }
+
+.popular-list { display: flex; flex-direction: column; gap: 16px; }
+.popular-item { display: flex; gap: 14px; align-items: center; }
+.popular-thumb {
+  flex-shrink: 0;
+  width: 54px;
+  height: 54px;
+  background-color: var(--off-white);
+  background-size: cover;
+  background-position: center;
+}
+.popular-title { font-family: var(--font-display); font-size: 0.98rem; color: var(--black); line-height: 1.3; }
+.popular-item:hover .popular-title { color: var(--orange); }
+
+/* =========================================================
+ RESPONSIVE
+========================================================= */
+@media (max-width: 900px) {
+  .spotlight { grid-template-columns: 1fr; }
+  .spotlight-cover { max-width: 320px; margin: 0 auto; }
+  .spotlight-content { text-align: center; }
+  .spotlight-excerpt { margin-left: auto; margin-right: auto; }
+  .magazine-closing { grid-template-columns: 1fr; }
+}
+@media (max-width: 600px) {
+  .magazine-page { padding: 0 20px 80px; }
+  .magazine-toolbar { flex-direction: column; align-items: stretch; }
+  .magazine-search input { width: auto; flex: 1; }
+}

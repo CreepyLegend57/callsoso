@@ -2,187 +2,137 @@
 {% load static %}
 {% now "Y" as current_year %}
 
-{% block title %}Call Soso - Magazine Archive{% endblock %}
-
-{% block extra_css %}
-<!-- You can add your CSS here later to match the style -->
-{% endblock %}
+{% block title %}Magazine Archive — Call Soso{% endblock %}
 
 {% block content %}
+<link rel="stylesheet" href="{% static 'css/magazine.css' %}">
 <main class="magazine-page">
 
-  <!-- HERO -->
-  <header class="magazine-hero">
-    <h1 id="mag-hero-title">Magazine Archive</h1>
-    <p class="subtitle">Exclusive digital magazines for members — browse featured issues, read previews, and dive into circular economy stories.</p>
-  </header>
+    <!-- MASTHEAD -->
+    <header class="magazine-masthead">
+        <p class="masthead-eyebrow">Call Soso Presents</p>
+        <h1 class="masthead-title">Magazine Archive</h1>
+        <p class="masthead-tagline">Circular economy stories, issue by issue.</p>
+    </header>
 
-  <!-- Top search bar -->
-  <div class="magazine-top-bar" style="margin-bottom:30px;">
-    <form method="get" action="{% url 'website:magazine' %}" class="magazine-search enhanced-search" style="flex:1; max-width:600px;">
-      <input type="text" name="q" placeholder="Search issues by title or topic..." value="{{ search_query|default:'' }}">
-      {% if selected_category %}
-        <input type="hidden" name="category" value="{{ selected_category }}">
-      {% endif %}
-      <button type="submit">Search</button>
-    </form>
-  </div>
-
-  <!-- Main layout -->
-  <section class="magazine-wrapper" style="display:flex; gap:32px; align-items:flex-start; flex-wrap:wrap;">
-
-    <!-- Sidebar -->
-    <aside class="insights-sidebar" style="width:280px; flex: none;">
-      <div class="sidebar-section" style="background: #fff; padding:20px; border-radius:12px; box-shadow:0 8px 18px rgba(0,0,0,0.05); margin-bottom:24px;">
-        <h4 style="margin-top:0; margin-bottom:16px; font-size:1.1rem; color:#0d4d40; border-bottom:1px solid #f3f4f6; padding-bottom:10px;">Categories</h4>
-        <ul class="filter-tabs" style="list-style:none; padding:0; margin:0;">
-          <li style="margin-bottom:8px;">
+    <!-- CATEGORY TABS + SEARCH -->
+    <div class="magazine-toolbar">
+        <nav class="magazine-tabs">
             <a href="{% url 'website:magazine' %}{% if search_query %}?q={{ search_query|urlencode }}{% endif %}"
-               class="{% if not selected_category %}active{% endif %}"
-               style="text-decoration:none; display:flex; justify-content:space-between; align-items:center; padding:8px 12px; border-radius:8px; font-size:0.95rem; {% if not selected_category %} background:#f0fdf4; color:#12b981; font-weight:600; {% else %} color:#4b5563; {% endif %}">
-              <span>All Issues</span>
-            </a>
-          </li>
-          {% for category in all_categories %}
-          <li style="margin-bottom:8px;">
+               class="tab {% if not selected_category %}active{% endif %}">All</a>
+            {% for category in all_categories %}
             <a href="?{% if search_query %}q={{ search_query|urlencode }}&{% endif %}category={{ category.slug }}"
-               class="{% if category.slug == selected_category %}active{% endif %}"
-               style="text-decoration:none; display:flex; justify-content:space-between; align-items:center; padding:8px 12px; border-radius:8px; font-size:0.95rem; {% if category.slug == selected_category %} background:#f0fdf4; color:#12b981; font-weight:600; {% else %} color:#4b5563; {% endif %}">
-              <span>{{ category.name }}</span>
-            </a>
-          </li>
-          {% endfor %}
-        </ul>
-      </div>
+               class="tab {% if category.slug == selected_category %}active{% endif %}">{{ category.name }}</a>
+            {% endfor %}
+        </nav>
 
-      {% if popular_articles %}
-      <div class="sidebar-section" aria-labelledby="popular-title" style="background:#fff; padding:20px; border-radius:12px; box-shadow:0 8px 18px rgba(0,0,0,0.05); margin-bottom:24px;">
-        <h4 id="popular-title" style="margin:0 0 16px; font-size:1.1rem; color:#0d4d40;">Most Popular</h4>
-        <ul style="list-style:none; padding:0; margin:0; display:grid; gap:16px;">
-          {% for article in popular_articles %}
-          <li>
-            <div class="popular-article-card" style="display:flex; gap:12px; align-items:start;">
-              <div style="width:60px; height:60px; overflow:hidden; border-radius:8px; background:#f3f4f6;">
-                {% if article.display_image %}
-                <img src="{{ article.display_image }}" alt="{{ article.title }}" loading="lazy" style="width:100%; height:100%; object-fit:cover;">
-                {% else %}
-                <img src="{% static 'images/placeholder.jpg' %}" alt="Placeholder" loading="lazy" style="width:100%; height:100%; object-fit:cover;">
-                {% endif %}
-              </div>
-              <div class="popular-content" style="flex:1; min-width:0;">
-                <h5 style="margin:0 0 4px; font-size:0.85rem;"><a href="{{ article.url }}" style="color:#0d4d40; text-decoration:none;">{{ article.title|truncatewords:8 }}</a></h5>
-              </div>
-            </div>
-          </li>
-          {% endfor %}
-        </ul>
-      </div>
-      {% endif %}
-
-      <!-- Join -->
-      <div class="sidebar-section" style="padding:20px; background: linear-gradient(135deg, #f0fdf4, #dcfce7); border-radius:12px; text-align:center; border: 1px solid #86efac;">
-        <strong style="font-size: 1rem; color: #166534; display: block; margin-bottom: 8px;">Become a Member</strong>
-        <p style="margin:0 0 12px; color: #166534; font-size:0.85rem;">Unlock full magazine access.</p>
-        <a href="{% url 'signup' %}" style="display:inline-block; padding:8px 16px; background:#12b981; color:#fff; border-radius:6px; text-decoration:none; font-size:0.9rem; font-weight:500;">Join Now</a>
-      </div>
-    </aside>
-
-    <!-- Articles & Issues -->
-    <div class="magazine-list" style="flex:1;">
-
-      {% if featured_issues %}
-      <section class="featured-issues" aria-labelledby="featured-issues-title" style="margin-bottom:40px;">
-        <h2 id="featured-issues-title" style="font-size:1.5rem; margin-bottom:20px;">Featured Issues</h2>
-        <div class="featured-issues-slider" id="featured-slider" style="display:flex; gap:18px; overflow-x:auto; padding-bottom:12px; cursor:grab;">
-          {% for issue in featured_issues %}
-          <article class="featured-issue-card" style="min-width:300px; max-width:300px; background:#fff; border-radius:12px; overflow:hidden; box-shadow:0 4px 12px rgba(0,0,0,0.08);">
-            <div style="position:relative; height:160px;">
-              {% if issue.display_image %}
-              <img src="{{ issue.display_image }}" alt="{{ issue.title }}" style="width:100%; height:100%; object-fit:cover;">
-              {% endif %}
-            </div>
-            <div style="padding:16px;">
-              <h3 style="margin:0 0 8px; font-size:1.1rem;"><a href="{{ issue.get_absolute_url }}" style="color:#1f2937; text-decoration:none;">{{ issue.title }}</a></h3>
-              <p style="margin:0; color:#4b5563; font-size:0.9rem;">{{ issue.description|truncatewords:15 }}</p>
-            </div>
-          </article>
-          {% endfor %}
-        </div>
-      </section>
-      {% endif %}
-
-      <section class="regular-issues" style="margin-top:40px;">
-        <h2 id="all-issues-title">{{ selected_category|default:"All" }} Issues</h2>
-        {% if regular_issues %}
-        <div class="regular-issues-grid" style="display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:20px;">
-          {% for issue in regular_issues %}
-          <article class="regular-issue-card" style="background:#fff; border-radius:12px; overflow:hidden; box-shadow:0 2px 8px rgba(0,0,0,0.06); transition:transform 0.2s ease;">
-            <div style="height:140px; background:#f3f4f6;">
-              {% if issue.display_image %}
-              <img src="{{ issue.display_image }}" alt="{{ issue.title }}" style="width:100%; height:100%; object-fit:cover;">
-              {% endif %}
-            </div>
-            <div style="padding:16px;">
-              <h4 style="margin:0 0 8px; font-size:1rem;"><a href="{{ issue.get_absolute_url }}" style="color:#1f2937; text-decoration:none;">{{ issue.title }}</a></h4>
-              <p style="margin:0; font-size:0.85rem; color:#6b7280;">{{ issue.published_date|date:"M Y" }}</p>
-            </div>
-          </article>
-          {% endfor %}
-        </div>
-        {% if is_paginated %}
-        <div class="pagination" style="margin-top:40px; display:flex; justify-content:center; gap:8px;">
-          {% if page_obj.has_previous %}
-          <a href="?page={{ page_obj.previous_page_number }}{% if selected_category %}&category={{ selected_category }}{% endif %}{% if search_query %}&q={{ search_query|urlencode }}{% endif %}" style="padding:8px 16px; background:#fff; border:1px solid #d1d5db; border-radius:6px; text-decoration:none; color:#374151;">Previous</a>
-          {% endif %}
-          <span style="padding:8px 16px; background:#12b981; color:#fff; border-radius:6px;">{{ page_obj.number }}</span>
-          {% if page_obj.has_next %}
-          <a href="?page={{ page_obj.next_page_number }}{% if selected_category %}&category={{ selected_category }}{% endif %}{% if search_query %}&q={{ search_query|urlencode }}{% endif %}" style="padding:8px 16px; background:#fff; border:1px solid #d1d5db; border-radius:6px; text-decoration:none; color:#374151;">Next</a>
-          {% endif %}
-        </div>
-        {% endif %}
-        {% else %}
-        <div class="empty-state" style="text-align:center; padding:60px 20px; background:#f9fafb; border-radius:12px;">
-          <p style="color:#6b7280;">No issues found in this category.</p>
-        </div>
-        {% endif %}
-      </section>
-
+        <form method="get" action="{% url 'website:magazine' %}" class="magazine-search">
+            <input type="text" name="q" placeholder="Search issues..." value="{{ search_query|default:'' }}">
+            {% if selected_category %}<input type="hidden" name="category" value="{{ selected_category }}">{% endif %}
+            <button type="submit" aria-label="Search"><i class="fas fa-search"></i></button>
+        </form>
     </div>
-  </section>
+
+    {% if featured_issues %}
+    {% with featured_issues.0 as lead %}
+    <!-- SPOTLIGHT: the lead featured issue gets the full editorial treatment -->
+    <section class="spotlight">
+        <a href="{{ lead.get_absolute_url }}" class="spotlight-cover">
+            {% if lead.display_image %}<img src="{{ lead.display_image }}" alt="{{ lead.title }}">{% endif %}
+        </a>
+        <div class="spotlight-content">
+            <p class="eyebrow">Latest Issue</p>
+            <h2><a href="{{ lead.get_absolute_url }}">{{ lead.title }}</a></h2>
+            {% if lead.published_date %}<time class="spotlight-date">{{ lead.published_date|date:"F Y" }}</time>{% endif %}
+            <p class="spotlight-excerpt">{{ lead.description|truncatewords:32 }}</p>
+            <a href="{{ lead.get_absolute_url }}" class="panel-link small">Read This Issue <span class="arrow">&rarr;</span></a>
+        </div>
+    </section>
+    {% endwith %}
+
+    {% if featured_issues|length > 1 %}
+    <!-- SHELF: remaining featured issues, standing like covers on a shelf -->
+    <section class="shelf-section">
+        <p class="eyebrow center">Also Featured</p>
+        <div class="shelf">
+            {% for issue in featured_issues|slice:"1:" %}
+            <article class="shelf-issue">
+                <a href="{{ issue.get_absolute_url }}" class="shelf-cover">
+                    {% if issue.display_image %}<img src="{{ issue.display_image }}" alt="{{ issue.title }}" loading="lazy">{% endif %}
+                </a>
+                <h4><a href="{{ issue.get_absolute_url }}">{{ issue.title|truncatewords:6 }}</a></h4>
+            </article>
+            {% endfor %}
+        </div>
+        <div class="shelf-line"></div>
+    </section>
+    {% endif %}
+    {% endif %}
+
+    <!-- ARCHIVE -->
+    <div class="magazine-archive">
+        {% if selected_category %}
+            <p class="browsing-label">Browsing <span>{{ selected_category_name }}</span></p>
+        {% endif %}
+
+        {% if issues_by_category %}
+            {% for category, issues in issues_by_category.items %}
+            <section class="archive-section" id="{{ category|slugify }}">
+                <div class="archive-heading">
+                    <h2>{{ category }}</h2>
+                    <span class="archive-count">{{ issues|length }} Issue{{ issues|length|pluralize }}</span>
+                </div>
+                {% if issues %}
+                <div class="archive-grid">
+                    {% for issue in issues %}
+                    <article class="issue-card">
+                        <a href="{{ issue.get_absolute_url }}" class="issue-cover">
+                            {% if issue.display_image %}<img src="{{ issue.display_image }}" alt="{{ issue.title }}" loading="lazy">{% endif %}
+                            <span class="issue-badge">No. {{ forloop.counter|stringformat:"02d" }}</span>
+                        </a>
+                        <div class="issue-caption">
+                            <h4><a href="{{ issue.get_absolute_url }}">{{ issue.title }}</a></h4>
+                            <span class="issue-date">{{ issue.published_date|date:"M Y" }}</span>
+                        </div>
+                    </article>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <p class="empty-note">No issues yet in {{ category }}.</p>
+                {% endif %}
+            </section>
+            {% endfor %}
+        {% else %}
+            <div class="empty-state">No issues found.</div>
+        {% endif %}
+    </div>
+
+    <!-- CLOSING: Popular + Membership side by side -->
+    <section class="magazine-closing">
+        {% if popular_articles %}
+        <div class="closing-block">
+            <p class="eyebrow">From the Archive</p>
+            <h3>Popular Reads</h3>
+            <ul class="hairline-list popular-list">
+                {% for article in popular_articles %}
+                <li>
+                    <a href="{{ article.url }}" class="popular-item">
+                        <span class="popular-thumb" {% if article.display_image %}style="background-image: url('{{ article.display_image }}');"{% endif %}></span>
+                        <span class="popular-title">{{ article.title|truncatewords:8 }}</span>
+                    </a>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+
+        <div class="closing-block dark">
+            <p class="eyebrow">Membership</p>
+            <h3>Become a Member</h3>
+            <p>Unlock full magazine access, every issue, every loop.</p>
+            <a href="{% url 'signup' %}" class="btn-outline light">Join Now</a>
+        </div>
+    </section>
+
 </main>
-
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-  // Slider drag
-  const slider = document.getElementById('featured-slider');
-  if (slider) {
-    let isDown = false, startX, scrollLeft;
-    slider.addEventListener('mousedown', (e) => {
-      isDown = true; slider.style.cursor = 'grabbing';
-      startX = e.pageX - slider.offsetLeft;
-      scrollLeft = slider.scrollLeft;
-    });
-    slider.addEventListener('mouseleave', () => { isDown = false; slider.style.cursor = 'grab'; });
-    slider.addEventListener('mouseup', () => { isDown = false; slider.style.cursor = 'grab'; });
-    slider.addEventListener('mousemove', (e) => {
-      if (!isDown) return;
-      e.preventDefault();
-      const x = e.pageX - slider.offsetLeft;
-      const walk = (x - startX) * 2;
-      slider.scrollLeft = scrollLeft - walk;
-    });
-  }
-
-  // Hover effect on cards
-  const cards = document.querySelectorAll('.regular-issue-card, .featured-issue-card');
-  cards.forEach(card => {
-    card.addEventListener('mouseenter', () => {
-      card.style.transform = 'translateY(-4px)';
-    });
-    card.addEventListener('mouseleave', () => {
-      card.style.transform = 'translateY(0)';
-    });
-  });
-});
-</script>
 {% endblock %}
