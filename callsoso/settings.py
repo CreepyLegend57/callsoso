@@ -169,8 +169,8 @@ CONTACT_EMAIL = os.getenv(
 # AUTHENTICATION
 # ======================================================
 LOGIN_URL = "login"
-LOGIN_REDIRECT_URL = "directory_home"
-LOGOUT_REDIRECT_URL = "home"
+LOGIN_REDIRECT_URL = "directory:directory_home"
+LOGOUT_REDIRECT_URL = "website:home"
 
 # ======================================================
 # SECURITY (ONLY WHEN DEBUG = FALSE)

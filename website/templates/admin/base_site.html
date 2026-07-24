@@ -1,0 +1,41 @@
+{% extends "admin/base_site.html" %}
+{% load static %}
+
+{# ---------------------------------------------------------------------
+   WHERE THIS GOES:
+   Create a project-level templates directory (sibling to manage.py is
+   fine), e.g.  C:\...\callsoso\templates\admin\base_site.html
+   and save this file there.
+
+   Then in settings.py, make sure that folder is in TEMPLATES[0]['DIRS']:
+
+       TEMPLATES = [
+           {
+               ...
+               'DIRS': [BASE_DIR / 'templates'],   # <-- add/confirm this
+               'APP_DIRS': True,
+               ...
+           },
+       ]
+
+   This override MUST live in a DIRS-listed folder (not just any app's
+   templates/ folder) to reliably win over Django's own admin templates,
+   regardless of INSTALLED_APPS ordering.
+--------------------------------------------------------------------- #}
+
+{% block title %}{{ title }} — Call Soso Admin{% endblock %}
+
+{% block branding %}
+<h1 id="site-name">
+    <a href="{% url 'admin:index' %}">Call Soso <span class="admin-suffix">Admin</span></a>
+</h1>
+{% endblock %}
+
+{% block nav-global %}{% endblock %}
+
+{% block extrastyle %}
+{{ block.super }}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{% static 'admin/css/call_soso_admin.css' %}">
+{% endblock %}

@@ -1,0 +1,188 @@
+/* =========================================================
+   CALL SOSO — DJANGO ADMIN THEME
+   Save at: website/static/admin/css/call_soso_admin.css
+   (loaded by templates/admin/base_site.html)
+========================================================= */
+
+/* Django's admin (3.2+) defines these as CSS custom properties in its
+   own base.css — overriding them here reskins nearly everything without
+   fighting individual selectors. */
+   :root {
+    --primary: #0a0a0a;
+    --primary-fg: #ffffff;
+
+    --secondary: #ff5a1f;
+    --secondary-fg: #ffffff;
+
+    --accent: #ff5a1f;
+
+    --header-color: #ffffff;
+    --header-branding-color: #ffffff;
+    --header-bg: #0a0a0a;
+    --header-link-color: #ffffff;
+
+    --breadcrumbs-fg: #6b6b6b;
+    --breadcrumbs-link-fg: #0a0a0a;
+    --breadcrumbs-bg: #f5f4f1;
+
+    --link-fg: #0a0a0a;
+    --link-hover-color: #ff5a1f;
+    --link-selected-fg: #ff5a1f;
+
+    --button-bg: #0a0a0a;
+    --button-fg: #ffffff;
+    --button-hover-bg: #ff5a1f;
+    --default-button-bg: #ff5a1f;
+    --default-button-hover-bg: #0a0a0a;
+
+    --object-tools-bg: #ff5a1f;
+    --object-tools-hover-bg: #0a0a0a;
+
+    --font-family-primary: 'Inter', -apple-system, sans-serif;
+}
+
+body {
+    font-family: var(--font-family-primary);
+}
+
+/* Branding — serif nameplate to match the front-end site */
+#site-name a {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-weight: 600;
+    font-size: 1.4rem;
+    letter-spacing: 0.02em;
+}
+#site-name .admin-suffix {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 0.75rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    opacity: 0.6;
+    margin-left: 6px;
+}
+
+/* Fallback concrete overrides for older Django versions without the
+   CSS-variable theme (harmless no-ops on newer versions since the
+   variables above already cover it). */
+#header {
+    background: #0a0a0a;
+    color: #ffffff;
+}
+#header a:link, #header a:visited {
+    color: #ffffff;
+}
+div.breadcrumbs {
+    background: #f5f4f1;
+    color: #6b6b6b;
+}
+.module h2, .module caption, .inline-group h2 {
+    background: #0a0a0a;
+    color: #ffffff;
+}
+a.button, button, input[type=submit], input[type=button], .submit-row input {
+    background: #0a0a0a;
+    color: #ffffff;
+}
+a.button:hover, button:hover, input[type=submit]:hover, input[type=button]:hover {
+    background: #ff5a1f;
+}
+.default, input[type=submit].default, .submit-row input.default {
+    background: #ff5a1f;
+}
+.default:hover {
+    background: #0a0a0a;
+}
+
+/* Image thumbnails in change-list (used by the ModelAdmin list_display
+   preview methods below) */
+.field-cover_thumb img,
+.field-image_thumb img {
+    border: 1px solid #e5e3de;
+    display: block;
+}
+
+/* =========================================================
+   DASHBOARD (index page) — the app-list boxes become hairline
+   tiles instead of Django's default blue module boxes.
+========================================================= */
+#content-main .app-list,
+#content-main .module {
+    background: #ffffff;
+    border: 1px solid #e5e3de;
+    box-shadow: none;
+    border-radius: 0;
+    margin-bottom: 24px;
+}
+#content-main .module caption,
+#content-main .module caption a {
+    background: #ffffff;
+    color: #0a0a0a;
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-weight: 600;
+    font-size: 1.1rem;
+    letter-spacing: 0.02em;
+    text-transform: none;
+    border-bottom: 1px solid #e5e3de;
+    padding: 14px 16px;
+}
+#content-main table {
+    border: none;
+}
+#content-main table th,
+#content-main table td {
+    border-bottom: 1px solid #f0efeb;
+    padding: 10px 16px;
+}
+#content-main table th a {
+    color: #0a0a0a;
+    font-weight: 500;
+}
+#content-main table th a:hover {
+    color: #ff5a1f;
+}
+#content-main .addlink, #content-main .changelink {
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #6b6b6b;
+}
+#content-main .addlink:hover, #content-main .changelink:hover {
+    color: #ff5a1f;
+}
+
+/* Recent actions sidebar panel */
+#content-related .module {
+    background: #ffffff;
+    border: 1px solid #e5e3de;
+    border-radius: 0;
+}
+#content-related h2, #content-related h3 {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-weight: 600;
+    color: #0a0a0a;
+}
+#recent-actions-module a {
+    color: #0a0a0a;
+}
+#recent-actions-module a:hover {
+    color: #ff5a1f;
+}
+
+/* =========================================================
+   LOGIN PAGE
+========================================================= */
+body.login {
+    background: #0a0a0a;
+}
+body.login #container {
+    background: #ffffff;
+    border-radius: 0;
+    box-shadow: 0 30px 60px rgba(0,0,0,0.3);
+}
+body.login .submit-row input {
+    background: #0a0a0a;
+}
+body.login .submit-row input:hover {
+    background: #ff5a1f;
+}

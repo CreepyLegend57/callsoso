@@ -1,0 +1,97 @@
+{% extends "website/base.html" %}
+{% load static %}
+
+{% block title %}Search{% if query %}: {{ query }}{% endif %} — Call Soso{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/search.css' %}">
+
+<div class="search-page">
+
+    <header class="search-header">
+        <p class="eyebrow center">Search</p>
+        {% if query %}
+            <h1 class="section-title">{{ total_results }} result{{ total_results|pluralize }} for &ldquo;{{ query }}&rdquo;</h1>
+        {% else %}
+            <h1 class="section-title">Search Call Soso</h1>
+            <p class="lede center">Find issues, stories, and services from across the site.</p>
+        {% endif %}
+    </header>
+
+    {% if query and total_results == 0 %}
+        <div class="empty-state">
+            <p>No results for &ldquo;{{ query }}&rdquo;.</p>
+            <p class="empty-sub">Try a different word, or browse <a href="{% url 'website:magazine' %}">the Magazine</a>,
+               <a href="{% url 'website:insights' %}">Stories</a>, or <a href="{% url 'website:knowledge' %}">Services</a> directly.</p>
+        </div>
+    {% endif %}
+
+    {% if issues %}
+    <section class="results-section">
+        <div class="results-heading">
+            <h2>Magazine Issues</h2>
+            <a href="{% url 'website:magazine' %}?q={{ query|urlencode }}" class="panel-link small">See All <span class="arrow">&rarr;</span></a>
+        </div>
+        <div class="results-grid">
+            {% for issue in issues %}
+            <article class="result-card" style="background-image: url('{{ issue.display_image }}');">
+                <div class="result-body">
+                    <span class="result-type">Issue</span>
+                    <h3><a href="{{ issue.get_absolute_url }}">{{ issue.title }}</a></h3>
+                    {% if issue.published_date %}<span class="result-meta">{{ issue.published_date|date:"M Y" }}</span>{% endif %}
+                </div>
+            </article>
+            {% endfor %}
+        </div>
+    </section>
+    {% endif %}
+
+    {% if articles %}
+    <section class="results-section">
+        <div class="results-heading">
+            <h2>Stories</h2>
+            <a href="{% url 'website:insights' %}" class="panel-link small">See All <span class="arrow">&rarr;</span></a>
+        </div>
+        <div class="results-grid">
+            {% for article in articles %}
+            <article class="result-card" style="background-image: url('{{ article.display_image }}');">
+                <div class="result-body">
+                    <span class="result-type">Story</span>
+                    <h3><a href="{{ article.get_absolute_url }}">{{ article.title }}</a></h3>
+                    {% if article.published_date %}<span class="result-meta">{{ article.published_date|date:"j M Y" }}</span>{% endif %}
+                    <p class="result-excerpt">
+                        {% if article.excerpt %}{{ article.excerpt|truncatewords:18 }}
+                        {% else %}{{ article.body|striptags|truncatewords:18 }}{% endif %}
+                    </p>
+                </div>
+            </article>
+            {% endfor %}
+        </div>
+    </section>
+    {% endif %}
+
+    {% if resources %}
+    <section class="results-section">
+        <div class="results-heading">
+            <h2>Services &amp; Resources</h2>
+            <a href="{% url 'website:knowledge' %}" class="panel-link small">See All <span class="arrow">&rarr;</span></a>
+        </div>
+        <div class="results-grid">
+            {% for resource in resources %}
+            <article class="result-card" style="background-image: url('{{ resource.display_image }}');">
+                <div class="result-body">
+                    <span class="result-type">Service</span>
+                    <h3>{{ resource.title }}</h3>
+                    <p class="result-excerpt">{{ resource.description|truncatewords:18 }}</p>
+                    {% if resource.link %}
+                    <a href="{{ resource.link }}" class="panel-link small" target="_blank">View <span class="arrow">&rarr;</span></a>
+                    {% endif %}
+                </div>
+            </article>
+            {% endfor %}
+        </div>
+    </section>
+    {% endif %}
+
+</div>
+{% endblock %}

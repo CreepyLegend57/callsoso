@@ -25,6 +25,7 @@ urlpatterns = [
     path('support/', views.support, name='support'),
     path('loops/', views.loops_detail, name='loops_detail'),
     path('tiers/', views.tiers, name='tiers'),
+    path('search/', views.search, name='search'),
 ]
 
 # Auth URLs (outside namespace for simplicity)

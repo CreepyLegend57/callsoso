@@ -1,0 +1,85 @@
+/* =========================================================
+   CALL SOSO — SEARCH RESULTS
+========================================================= */
+:root {
+    --black:     #0a0a0a;
+    --white:     #ffffff;
+    --off-white: #f5f4f1;
+    --orange:    #ff5a1f;
+    --grey:      #6b6b6b;
+    --grey-line: rgba(10,10,10,0.1);
+
+    --font-display: 'Cormorant Garamond', Georgia, serif;
+    --font-sans:    'Inter', -apple-system, sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+.search-page { font-family: var(--font-sans); color: var(--black); max-width: 1280px; margin: 0 auto; padding: 90px 40px 100px; }
+
+.eyebrow { font-size: 0.72rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--grey); display: block; margin-bottom: 14px; }
+.eyebrow.center { text-align: center; }
+.section-title { font-family: var(--font-display); font-weight: 500; font-size: clamp(1.8rem, 3.6vw, 2.6rem); text-align: center; margin: 0 0 14px; }
+.lede { font-size: 1rem; color: var(--grey); }
+.lede.center { text-align: center; max-width: 560px; margin: 0 auto; }
+
+.panel-link.small {
+    display: inline-block;
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--black);
+    padding-bottom: 2px;
+    color: var(--black);
+    white-space: nowrap;
+}
+.panel-link.small:hover { color: var(--orange); border-color: var(--orange); }
+
+.search-header { margin-bottom: 60px; }
+
+.empty-state { text-align: center; padding: 60px 20px; border: 1px solid var(--grey-line); color: var(--grey); margin-bottom: 40px; }
+.empty-sub { font-size: 0.9rem; margin-top: 10px; }
+.empty-sub a { color: var(--orange); }
+
+.results-section { border-top: 1px solid var(--grey-line); padding-top: 34px; margin-bottom: 60px; }
+.results-heading { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 26px; }
+.results-heading h2 { font-family: var(--font-display); font-weight: 500; font-size: 1.5rem; margin: 0; }
+.results-heading .panel-link.small { color: var(--black); }
+
+.results-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1px;
+    background: var(--grey-line);
+    border: 1px solid var(--grey-line);
+}
+
+.result-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-height: 220px;
+    background-color: var(--black);
+    background-size: cover;
+    background-position: center;
+}
+.result-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(10,10,10,.35), rgba(10,10,10,.88));
+}
+.result-body { position: relative; z-index: 1; padding: 24px; display: flex; flex-direction: column; gap: 6px; flex: 1; justify-content: flex-end; }
+.result-type { font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--orange); }
+.result-body h3 { margin: 0; font-family: var(--font-display); font-weight: 500; font-size: 1.15rem; }
+.result-body h3 a { color: var(--white); }
+.result-card:hover h3 a { color: var(--orange); }
+.result-meta { font-size: 0.76rem; color: rgba(255,255,255,0.7); }
+.result-excerpt { font-size: 0.85rem; color: rgba(255,255,255,0.8); line-height: 1.5; margin: 6px 0 0; }
+.result-body .panel-link.small { color: var(--white); border-color: rgba(255,255,255,0.6); margin-top: 6px; }
+.result-card:hover .panel-link.small { color: var(--orange); border-color: var(--orange); }
+
+@media (max-width: 600px) {
+    .search-page { padding: 70px 20px 80px; }
+    .results-heading { flex-direction: column; align-items: flex-start; gap: 8px; }
+}

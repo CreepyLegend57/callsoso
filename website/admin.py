@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.utils.html import format_html
 from .models import (
     Article,
     Resource,
@@ -6,10 +7,10 @@ from .models import (
     Collaboration,
     Contribution,
     FoundersList,
-    MagazineIssue, 
+    MagazineIssue,
     PopularArticle
 )
- 
+
 
 # ===========================
 # CATEGORY
@@ -26,26 +27,39 @@ class CategoryAdmin(admin.ModelAdmin):
 # ===========================
 @admin.register(MagazineIssue)
 class MagazineIssueAdmin(admin.ModelAdmin):
-    list_display = ("title", "published_date", "is_featured", "is_published")
+    list_display = ("title", "cover_thumb", "published_date", "is_featured", "is_published")
     list_filter = ("is_featured", "is_published", "published_date", "categories")
     search_fields = ("title", "description")
     filter_horizontal = ("categories",)
     prepopulated_fields = {"slug": ("title",)}
     date_hierarchy = "published_date"
     ordering = ("-published_date",)
+    readonly_fields = ("cover_preview",)
 
     fieldsets = (
         ("Core", {
             "fields": ("title", "slug", "description", "categories"),
         }),
         ("Media", {
-            "fields": ("cover_image", "cover_image_url", "video_preview_url"),
+            "fields": ("cover_image", "cover_image_url", "cover_preview", "video_preview_url"),
             "description": "Upload a cover image or paste external URL. Optionally add a video preview.",
         }),
         ("Publishing", {
             "fields": ("published_date", "is_featured", "is_published"),
         }),
     )
+
+    def cover_thumb(self, obj):
+        if obj.display_image:
+            return format_html('<img src="{}" style="height:40px;width:auto;">', obj.display_image)
+        return "—"
+    cover_thumb.short_description = "Cover"
+
+    def cover_preview(self, obj):
+        if obj.display_image:
+            return format_html('<img src="{}" style="max-height:220px;width:auto;">', obj.display_image)
+        return "No image yet"
+    cover_preview.short_description = "Preview"
 
 # ===========================
 # POPULAR ARTICLES
@@ -64,6 +78,7 @@ class PopularArticleAdmin(admin.ModelAdmin):
 class ArticleAdmin(admin.ModelAdmin):
     list_display = (
         "title",
+        "image_thumb",
         "published_date",
         "is_published",
         "is_featured",
@@ -84,13 +99,14 @@ class ArticleAdmin(admin.ModelAdmin):
     filter_horizontal = ("categories",)
     date_hierarchy = "published_date"
     ordering = ("-published_date",)
+    readonly_fields = ("image_preview",)
 
     fieldsets = (
         ("Content", {
             "fields": ("title", "slug", "excerpt", "summary", "body"),
         }),
         ("Media", {
-            "fields": ("image", "image_url"),
+            "fields": ("image", "image_url", "image_preview"),
             "description": "Upload an image OR paste an external image URL (Pinterest, Unsplash, etc.)",
         }),
         ("Metadata", {
@@ -104,6 +120,18 @@ class ArticleAdmin(admin.ModelAdmin):
         }),
     )
 
+    def image_thumb(self, obj):
+        if obj.display_image:
+            return format_html('<img src="{}" style="height:40px;width:auto;">', obj.display_image)
+        return "—"
+    image_thumb.short_description = "Image"
+
+    def image_preview(self, obj):
+        if obj.display_image:
+            return format_html('<img src="{}" style="max-height:220px;width:auto;">', obj.display_image)
+        return "No image yet"
+    image_preview.short_description = "Preview"
+
 
 # ===========================
 # RESOURCE (Knowledge Center)
@@ -112,6 +140,7 @@ class ArticleAdmin(admin.ModelAdmin):
 class ResourceAdmin(admin.ModelAdmin):
     list_display = (
         "title",
+        "image_thumb",
         "resource_type",
         "published",
         "is_featured",
@@ -129,6 +158,7 @@ class ResourceAdmin(admin.ModelAdmin):
     )
     filter_horizontal = ("categories",)
     ordering = ("-created_at",)
+    readonly_fields = ("image_preview",)
 
     fieldsets = (
         ("Core", {
@@ -140,7 +170,7 @@ class ResourceAdmin(admin.ModelAdmin):
             ),
         }),
         ("Media", {
-            "fields": ("image", "image_url"),
+            "fields": ("image", "image_url", "image_preview"),
             "description": "Upload an image OR paste an external image URL (Pinterest, YouTube thumbnails, etc.)",
         }),
         ("Linking", {
@@ -154,6 +184,18 @@ class ResourceAdmin(admin.ModelAdmin):
             ),
         }),
     )
+
+    def image_thumb(self, obj):
+        if obj.display_image:
+            return format_html('<img src="{}" style="height:40px;width:auto;">', obj.display_image)
+        return "—"
+    image_thumb.short_description = "Image"
+
+    def image_preview(self, obj):
+        if obj.display_image:
+            return format_html('<img src="{}" style="max-height:220px;width:auto;">', obj.display_image)
+        return "No image yet"
+    image_preview.short_description = "Preview"
 
 
 # ===========================

@@ -50,7 +50,7 @@
     <!-- MAIN CONTENT -->
     <main class="insights-main">
         {% for category, articles in categories_dict.items %}
-        <section class="category-section" data-category="{{ category|slugify }}">
+        <section class="category-section" id="{{ category|slugify }}" data-category="{{ category|slugify }}">
             <h2 class="category-title">{{ category }}</h2>
             <div class="articles-grid">
                 {% if articles %}

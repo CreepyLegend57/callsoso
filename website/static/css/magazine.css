@@ -94,7 +94,7 @@
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
-  gap: 20px;
+  gap: 12px;
   padding: 24px 0;
   border-bottom: 1px solid var(--grey-line);
   margin-bottom: 60px;
@@ -111,23 +111,13 @@
 .magazine-tabs .tab:hover { color: var(--black); }
 .magazine-tabs .tab.active { color: var(--orange); border-bottom-color: var(--orange); }
 
-.magazine-search { display: flex; border: 1px solid var(--grey-line); flex-shrink: 0; }
-.magazine-search input {
-  padding: 10px 14px;
-  border: none;
-  font-family: var(--font-sans);
-  font-size: 0.85rem;
-  width: 200px;
-  outline: none;
+.search-query-label {
+  font-size: 0.82rem;
+  color: var(--grey);
+  font-style: italic;
+  font-family: var(--font-display);
+  white-space: nowrap;
 }
-.magazine-search button {
-  background: var(--black);
-  color: var(--white);
-  border: none;
-  padding: 0 16px;
-  cursor: pointer;
-}
-.magazine-search button:hover { background: var(--orange); }
 
 /* =========================================================
  SPOTLIGHT — the lead featured issue, full editorial treatment
@@ -281,5 +271,4 @@
 @media (max-width: 600px) {
   .magazine-page { padding: 0 20px 80px; }
   .magazine-toolbar { flex-direction: column; align-items: stretch; }
-  .magazine-search input { width: auto; flex: 1; }
 }

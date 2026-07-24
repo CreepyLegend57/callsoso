@@ -9,7 +9,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib import messages
 from django.db.models import Count
-
+from django.db.models import Q
 from .models import (
     Collaboration,
     Contribution,
@@ -174,6 +174,59 @@ def article_detail(request, slug):
     }
     return render(request, 'website/article_detail.html', context)
 
+# ---------------------------
+# Sitewide Search
+# ---------------------------
+def search(request):
+    """
+    Single search box in the header searches across:
+      - Magazine Issues (title, description)
+      - Stories / Articles (title, excerpt, summary, body)
+      - Services / Resources (title, description)
+    Replaces the separate per-page search bars (e.g. the old Magazine
+    page search) with one consistent, sitewide search experience.
+    """
+    query = request.GET.get("q", "").strip()
+
+    issues = []
+    articles = []
+    resources = []
+
+    if query:
+        issues = (
+            MagazineIssue.objects.filter(is_published=True)
+            .filter(Q(title__icontains=query) | Q(description__icontains=query))
+            .order_by("-published_date")[:12]
+        )
+
+        articles = (
+            Article.objects.filter(is_published=True)
+            .filter(
+                Q(title__icontains=query)
+                | Q(excerpt__icontains=query)
+                | Q(summary__icontains=query)
+                | Q(body__icontains=query)
+            )
+            .order_by("-published_date")[:12]
+        )
+
+        resources = (
+            Resource.objects.filter(published=True)
+            .filter(Q(title__icontains=query) | Q(description__icontains=query))
+            .order_by("-created_at")[:12]
+        )
+
+    total_results = len(issues) + len(articles) + len(resources)
+
+    context = {
+        "query": query,
+        "issues": issues,
+        "articles": articles,
+        "resources": resources,
+        "total_results": total_results,
+    }
+    return render(request, "website/search_results.html", context)
+
 
 # ---------------------------
 # Directory Home (private)
@@ -232,64 +285,139 @@ def insights(request):
 # ---------------------------
 def knowledge_center(request):
     """
-    Knowledge Center:
-    - Admin-managed categories
-    - Separates 'Highlights' from other resources
-    - Passes category IDs and names as strings for template
+    Knowledge Center
+
+    Features
+    --------
+    • Category filtering (?category=slug)
+    • Featured resources
+    • Resource cards
+    • Recently published sidebar
     """
 
-    # Sidebar categories
+    # ---------------------------------------
+    # Categories
+    # ---------------------------------------
     categories = Category.objects.all().order_by("name")
 
-    # Fetch all published resources
-    resources_qs = Resource.objects.filter(published=True).prefetch_related("categories").order_by("-created_at")
+    # Selected category from URL
+    selected_category = request.GET.get("category")
 
+    # ---------------------------------------
+    # Base queryset
+    # ---------------------------------------
+    resources_qs = (
+        Resource.objects.filter(published=True)
+        .prefetch_related("categories")
+        .order_by("-created_at")
+    )
+
+    # Filter by category if supplied
+    if selected_category:
+        resources_qs = resources_qs.filter(
+            categories__slug=selected_category
+        ).distinct()
+
+    # ---------------------------------------
+    # Featured + Regular Resources
+    # ---------------------------------------
     highlights = []
     resources = []
 
-    for r in resources_qs:
-        cats = r.categories.all()
+    for resource in resources_qs:
+
+        category_list = list(resource.categories.all())
+
         resource_data = {
-            "title": r.title,
-            "published_date": r.created_at,
-            "description": r.description,
-            "link": r.link,
-            "display_image": r.display_image,  # Uses model property
-            "categories": [cat.name for cat in cats],
-            "category_ids": [str(cat.id) for cat in cats],
+            "title": resource.title,
+            "published_date": resource.created_at,
+            "description": resource.description,
+            "link": resource.link,
+            "display_image": resource.display_image,
+            "resource_type": resource.get_resource_type_display(),
+
+            # template helpers
+            "categories": [c.name for c in category_list],
+            "category_ids": [str(c.id) for c in category_list],
+            "category_slugs": [c.slug for c in category_list],
         }
 
-        if r.is_featured:
+        if resource.is_featured:
             highlights.append(resource_data)
         else:
             resources.append(resource_data)
 
-    # Popular resources: top 5 newest
-    popular_qs = resources_qs.order_by("-created_at")[:5]
-    popular = [
-        {
-            "title": r.title,
-            "published_date": r.created_at,
-            "link": r.link,
-        }
-        for r in popular_qs
-    ]
+    # ---------------------------------------
+    # Sidebar
+    # ---------------------------------------
+    popular = []
 
+    for resource in (
+        Resource.objects.filter(published=True)
+        .order_by("-created_at")[:5]
+    ):
+        popular.append({
+            "title": resource.title,
+            "published_date": resource.created_at,
+            "link": resource.link,
+        })
+
+    # ---------------------------------------
+    # Selected category name
+    # ---------------------------------------
+    selected_category_name = None
+
+    if selected_category:
+        category = Category.objects.filter(
+            slug=selected_category
+        ).first()
+
+        if category:
+            selected_category_name = category.name
+
+    # ---------------------------------------
+    # Context
+    # ---------------------------------------
     context = {
         "categories": categories,
+
         "highlights": highlights,
         "resources": resources,
         "popular": popular,
+
+        "selected_category": selected_category,
+        "selected_category_name": selected_category_name,
     }
 
-    return render(request, "website/knowledge_center.html", context)
+    return render(
+        request,
+        "website/knowledge_center.html",
+        context,
+    )
 
 
 # ---------------------------
 # Categories
 # ---------------------------
 def categories(request):
-    return render(request, 'website/categories.html')
+    """
+    Categories hub — shows every real Category with counts of how much
+    content exists under it across Stories (Articles), Services
+    (Resources), and Magazine Issues, each linking into the right place.
+    """
+    all_categories = Category.objects.all().order_by("name")
+ 
+    category_data = []
+    for cat in all_categories:
+        category_data.append({
+            "category": cat,
+            "story_count": cat.article_set.filter(is_published=True).count(),
+            "service_count": cat.resource_set.filter(published=True).count(),
+            "issue_count": cat.magazineissue_set.filter(is_published=True).count(),
+        })
+ 
+    context = {"category_data": category_data}
+    return render(request, "website/categories.html", context)
 
 # ---------------------------
 # Magazine

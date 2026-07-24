@@ -1,0 +1,122 @@
+{% extends "website/base.html" %}
+{% load static %}
+
+{% block title %}Browse by Category — Call Soso{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/categories.css' %}">
+
+<div class="categories-page">
+
+    <header class="categories-header">
+        <p class="eyebrow center">Explore</p>
+
+        <h1 class="section-title">
+            Browse by Category
+        </h1>
+
+        <p class="lede center">
+            Discover insights, resources and magazine issues organised into
+            the key themes driving the Call Soso circular economy ecosystem.
+        </p>
+    </header>
+
+    {% if category_data %}
+
+    <div class="categories-grid">
+
+        {% for entry in category_data %}
+
+        <article class="category-tile">
+
+            <div class="category-header">
+        
+                <div class="category-heading">
+        
+                    <h2>
+                        <a href="{% url 'website:insights' %}?category={{ entry.category.slug }}">
+                            {{ entry.category.name }}
+                        </a>
+                    </h2>
+        
+                    <a href="{% url 'website:insights' %}?category={{ entry.category.slug }}"
+                       class="browse-category">
+        
+                        Browse everything
+                        <span>&rarr;</span>
+        
+                    </a>
+        
+                </div>
+        
+                <span class="category-total">
+        
+                    {{ entry.story_count|add:entry.service_count|add:entry.issue_count }}
+        
+                    Items
+        
+                </span>
+        
+            </div>
+        
+            <div class="tile-links">
+        
+                <a href="{% url 'website:insights' %}?category={{ entry.category.slug }}"
+                   class="tile-link {% if not entry.story_count %}muted{% endif %}">
+        
+                    <span class="tile-count">
+                        {{ entry.story_count }}
+                    </span>
+        
+                    Insight{{ entry.story_count|pluralize }}
+        
+                </a>
+        
+                <a href="{% url 'website:knowledge' %}?category={{ entry.category.slug }}"
+                   class="tile-link {% if not entry.service_count %}muted{% endif %}">
+        
+                    <span class="tile-count">
+                        {{ entry.service_count }}
+                    </span>
+        
+                    Resource{{ entry.service_count|pluralize }}
+        
+                </a>
+        
+                <a href="{% url 'website:magazine' %}?category={{ entry.category.slug }}"
+                   class="tile-link {% if not entry.issue_count %}muted{% endif %}">
+        
+                    <span class="tile-count">
+                        {{ entry.issue_count }}
+                    </span>
+        
+                    Magazine Issue{{ entry.issue_count|pluralize }}
+        
+                </a>
+        
+            </div>
+        
+        </article>
+
+        {% endfor %}
+
+    </div>
+
+    {% else %}
+
+    <div class="empty-state">
+
+        <p>No categories available yet.</p>
+
+        <p class="empty-sub">
+            Categories created in the admin dashboard will automatically
+            appear here once content has been assigned to them.
+        </p>
+
+    </div>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

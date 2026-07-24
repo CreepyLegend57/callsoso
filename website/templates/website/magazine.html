@@ -25,14 +25,12 @@
                class="tab {% if category.slug == selected_category %}active{% endif %}">{{ category.name }}</a>
             {% endfor %}
         </nav>
-
-        <form method="get" action="{% url 'website:magazine' %}" class="magazine-search">
-            <input type="text" name="q" placeholder="Search issues..." value="{{ search_query|default:'' }}">
-            {% if selected_category %}<input type="hidden" name="category" value="{{ selected_category }}">{% endif %}
-            <button type="submit" aria-label="Search"><i class="fas fa-search"></i></button>
-        </form>
+        {% if search_query %}
+            <p class="search-query-label">Showing results for &ldquo;{{ search_query }}&rdquo;</p>
+        {% endif %}
     </div>
 
+    {% if not selected_category %}
     {% if featured_issues %}
     {% with featured_issues.0 as lead %}
     <!-- SPOTLIGHT: the lead featured issue gets the full editorial treatment -->
@@ -66,6 +64,7 @@
         </div>
         <div class="shelf-line"></div>
     </section>
+    {% endif %}
     {% endif %}
     {% endif %}
 
