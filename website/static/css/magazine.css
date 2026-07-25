@@ -87,7 +87,8 @@
 }
 
 /* =========================================================
- TOOLBAR — category tabs + search, horizontal masthead-style nav
+ TOOLBAR — filter pills, shared visual language with Categories.
+ This is the reference implementation Knowledge/Insights will copy.
 ========================================================= */
 .magazine-toolbar {
   display: flex;
@@ -99,17 +100,25 @@
   border-bottom: 1px solid var(--grey-line);
   margin-bottom: 60px;
 }
-.magazine-tabs { display: flex; flex-wrap: wrap; gap: 26px; overflow-x: auto; }
-.magazine-tabs .tab {
-  font-size: 0.8rem;
-  letter-spacing: 0.04em;
-  color: var(--grey);
-  padding-bottom: 6px;
-  border-bottom: 1px solid transparent;
-  white-space: nowrap;
+
+.filter-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
 }
-.magazine-tabs .tab:hover { color: var(--black); }
-.magazine-tabs .tab.active { color: var(--orange); border-bottom-color: var(--orange); }
+.filter-pill {
+  display: inline-block;
+  padding: 9px 18px;
+  border: 1px solid var(--grey-line);
+  background: var(--white);
+  color: var(--black);
+  font-size: 0.78rem;
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+  transition: border-color .2s ease, background .2s ease, color .2s ease;
+}
+.filter-pill:hover { border-color: var(--orange); color: var(--orange); }
+.filter-pill.active { background: var(--black); border-color: var(--black); color: var(--white); }
 
 .search-query-label {
   font-size: 0.82rem;

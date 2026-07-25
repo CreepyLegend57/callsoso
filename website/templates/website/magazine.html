@@ -15,14 +15,14 @@
         <p class="masthead-tagline">Circular economy stories, issue by issue.</p>
     </header>
 
-    <!-- CATEGORY TABS + SEARCH -->
+    <!-- CATEGORY FILTER -->
     <div class="magazine-toolbar">
-        <nav class="magazine-tabs">
+        <nav class="filter-pills">
             <a href="{% url 'website:magazine' %}{% if search_query %}?q={{ search_query|urlencode }}{% endif %}"
-               class="tab {% if not selected_category %}active{% endif %}">All</a>
+               class="filter-pill {% if not selected_category %}active{% endif %}">All</a>
             {% for category in all_categories %}
             <a href="?{% if search_query %}q={{ search_query|urlencode }}&{% endif %}category={{ category.slug }}"
-               class="tab {% if category.slug == selected_category %}active{% endif %}">{{ category.name }}</a>
+               class="filter-pill {% if category.slug == selected_category %}active{% endif %}">{{ category.name }}</a>
             {% endfor %}
         </nav>
         {% if search_query %}
