@@ -18,117 +18,96 @@
     </div>
 </header>
 
-<div class="knowledge-container">
+<div class="knowledge-page">
 
-    <!-- SIDEBAR -->
-    <aside class="knowledge-sidebar">
-        <div class="sidebar-section">
-            <h3>Browse by Topic</h3>
-            <ul id="filter-tabs">
-                <li class="active" data-filter="all">All Resources</li>
-                {% for category in categories %}
-                    <li data-filter="{{ category.id }}">{{ category.name }}</li>
-                {% endfor %}
-                <li id="clear-filters">Clear Filters</li>
-            </ul>
-        </div>
-
-        {% if popular %}
-        <div class="sidebar-section">
-            <h3>Recently Published</h3>
-            <ul class="hairline-list popular-list">
-                {% for item in popular %}
-                <li>
-                    {% if item.link %}<a href="{{ item.link }}" target="_blank">{{ item.title }}</a>{% else %}<span>{{ item.title }}</span>{% endif %}
-                    {% if item.published_date %}<span class="date">{{ item.published_date|date:"j M Y" }}</span>{% endif %}
-                </li>
-                {% endfor %}
-            </ul>
-        </div>
+    <!-- CATEGORY FILTER — same pattern as Magazine -->
+    <div class="knowledge-toolbar">
+        <nav class="filter-pills">
+            <a href="{% url 'website:knowledge' %}" class="filter-pill {% if not selected_category %}active{% endif %}">All</a>
+            {% for category in categories %}
+            <a href="?category={{ category.slug }}" class="filter-pill {% if category.slug == selected_category %}active{% endif %}">
+                {{ category.name }}
+                <span class="pill-count">{{ category.resource_count }}</span>
+            </a>
+            {% endfor %}
+        </nav>
+        {% if selected_category %}
+            <p class="browsing-label">Browsing <span>{{ selected_category_name }}</span></p>
         {% endif %}
-    </aside>
+    </div>
 
-    <!-- MAIN -->
-    <main class="knowledge-main">
+    <div class="knowledge-wrapper">
 
-        {% if highlights %}
-        <section class="knowledge-section">
-            <p class="eyebrow">Highlights</p>
-            <div class="resources-grid">
-                {% for resource in highlights %}
-                <article class="resource-card" data-category-ids="{{ resource.category_ids|join:',' }}"
-                          style="background-image: url('{{ resource.display_image }}');">
-                    <div class="resource-body">
-                        {% if resource.published_date %}<div class="resource-date">{{ resource.published_date|date:"j M Y" }}</div>{% endif %}
-                        <h4>{{ resource.title }}</h4>
-                        {% if resource.categories %}<div class="resource-categories">{{ resource.categories|join:" / " }}</div>{% endif %}
-                        {% if resource.description %}<p>{{ resource.description|truncatewords:22 }}</p>{% endif %}
-                        {% if resource.link %}
-                        <a href="{{ resource.link }}" class="panel-link small" target="_blank">Explore <span class="arrow">&rarr;</span></a>
-                        {% endif %}
-                    </div>
-                </article>
-                {% endfor %}
-            </div>
-        </section>
-        {% endif %}
+        <!-- MAIN -->
+        <main class="knowledge-main">
 
-        <section class="knowledge-section">
-            <p class="eyebrow">All Resources</p>
-            {% if resources %}
-            <div class="resources-grid">
-                {% for resource in resources %}
-                <article class="resource-card" data-category-ids="{{ resource.category_ids|join:',' }}"
-                          style="background-image: url('{{ resource.display_image }}');">
-                    <div class="resource-body">
-                        {% if resource.published_date %}<div class="resource-date">{{ resource.published_date|date:"j M Y" }}</div>{% endif %}
-                        <h4>{{ resource.title }}</h4>
-                        {% if resource.categories %}<div class="resource-categories">{{ resource.categories|join:" / " }}</div>{% endif %}
-                        {% if resource.description %}<p>{{ resource.description|truncatewords:20 }}</p>{% endif %}
-                        {% if resource.link %}
-                        <a href="{{ resource.link }}" class="panel-link small" target="_blank">Read more <span class="arrow">&rarr;</span></a>
-                        {% endif %}
-                    </div>
-                </article>
-                {% endfor %}
-            </div>
-            {% else %}
-            <p class="empty-state">No resources published yet.</p>
+            {% if highlights %}
+            <section class="knowledge-section">
+                <p class="eyebrow">Highlights</p>
+                <div class="resources-grid">
+                    {% for resource in highlights %}
+                    <article class="resource-card" style="background-image: url('{{ resource.display_image }}');">
+                        <div class="resource-body">
+                            <span class="resource-badge">{{ resource.resource_type }}</span>
+                            {% if resource.published_date %}<div class="resource-date">{{ resource.published_date|date:"j M Y" }}</div>{% endif %}
+                            <h4>{{ resource.title }}</h4>
+                            {% if resource.categories %}<div class="resource-categories">{{ resource.categories|join:" / " }}</div>{% endif %}
+                            {% if resource.description %}<p>{{ resource.description|truncatewords:22 }}</p>{% endif %}
+                            {% if resource.link %}
+                            <a href="{{ resource.link }}" class="panel-link small" target="_blank">Explore <span class="arrow">&rarr;</span></a>
+                            {% endif %}
+                        </div>
+                    </article>
+                    {% endfor %}
+                </div>
+            </section>
             {% endif %}
-        </section>
 
-    </main>
+            <section class="knowledge-section">
+                <p class="eyebrow">{% if selected_category %}{{ selected_category_name }}{% else %}All Resources{% endif %}</p>
+                {% if resources %}
+                <div class="resources-grid">
+                    {% for resource in resources %}
+                    <article class="resource-card" style="background-image: url('{{ resource.display_image }}');">
+                        <div class="resource-body">
+                            <span class="resource-badge">{{ resource.resource_type }}</span>
+                            {% if resource.published_date %}<div class="resource-date">{{ resource.published_date|date:"j M Y" }}</div>{% endif %}
+                            <h4>{{ resource.title }}</h4>
+                            {% if resource.categories %}<div class="resource-categories">{{ resource.categories|join:" / " }}</div>{% endif %}
+                            {% if resource.description %}<p>{{ resource.description|truncatewords:20 }}</p>{% endif %}
+                            {% if resource.link %}
+                            <a href="{{ resource.link }}" class="panel-link small" target="_blank">Read more <span class="arrow">&rarr;</span></a>
+                            {% endif %}
+                        </div>
+                    </article>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <p class="empty-state">
+                    {% if selected_category %}No resources yet in {{ selected_category_name }}.{% else %}No resources published yet.{% endif %}
+                </p>
+                {% endif %}
+            </section>
+
+        </main>
+
+        <!-- SIDEBAR -->
+        {% if popular %}
+        <aside class="knowledge-sidebar">
+            <div class="sidebar-section">
+                <h3>Recently Published</h3>
+                <ul class="hairline-list popular-list">
+                    {% for item in popular %}
+                    <li>
+                        {% if item.link %}<a href="{{ item.link }}" target="_blank">{{ item.title }}</a>{% else %}<span>{{ item.title }}</span>{% endif %}
+                        {% if item.published_date %}<span class="date">{{ item.published_date|date:"j M Y" }}</span>{% endif %}
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </aside>
+        {% endif %}
+
+    </div>
 </div>
-
-<!-- FILTER SCRIPT -->
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-    const tabs = document.querySelectorAll('#filter-tabs li[data-filter]');
-    const cards = document.querySelectorAll('.resource-card');
-
-    function filter(category) {
-        cards.forEach(card => {
-            const ids = card.dataset.categoryIds ? card.dataset.categoryIds.split(',') : [];
-            card.style.display = (category === 'all' || ids.includes(category)) ? 'flex' : 'none';
-        });
-    }
-
-    tabs.forEach(tab => {
-        tab.addEventListener('click', () => {
-            tabs.forEach(t => t.classList.remove('active'));
-            tab.classList.add('active');
-            filter(tab.dataset.filter);
-        });
-    });
-
-    const clearBtn = document.getElementById('clear-filters');
-    if (clearBtn) {
-        clearBtn.addEventListener('click', () => {
-            tabs.forEach(t => t.classList.remove('active'));
-            tabs[0].classList.add('active');
-            filter('all');
-        });
-    }
-});
-</script>
 {% endblock %}

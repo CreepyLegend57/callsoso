@@ -15,116 +15,82 @@
     </div>
 </header>
 
-<div class="insights-container">
+<div class="insights-page">
 
-    <!-- SIDEBAR -->
-    <aside class="insights-sidebar">
-        <div class="sidebar-section">
-            <h3>Filter by Category</h3>
-            <ul id="filter-tabs">
-                <li class="active" data-filter="all">All</li>
-                {% for category in categories_list %}
-                    <li data-filter="{{ category|slugify }}">{{ category }}</li>
-                {% endfor %}
-                <li id="clear-filters">Clear Filters</li>
-            </ul>
-        </div>
+    <!-- CATEGORY FILTER — same pattern as Magazine/Knowledge -->
+    <div class="insights-toolbar">
+        <nav class="filter-pills">
+            <a href="{% url 'website:insights' %}" class="filter-pill {% if not selected_category %}active{% endif %}">All</a>
+            {% for category in categories %}
+            <a href="?category={{ category.slug }}" class="filter-pill {% if category.slug == selected_category %}active{% endif %}">
+                {{ category.name }}
+                <span class="pill-count">{{ category.story_count }}</span>
+            </a>
+            {% endfor %}
+        </nav>
+        {% if selected_category %}
+            <p class="browsing-label">Browsing <span>{{ selected_category_name }}</span></p>
+        {% endif %}
+    </div>
 
-        <div class="sidebar-section">
-            <h3>Recently Published</h3>
-            <ul class="hairline-list popular-list">
-                {% for item in popular %}
-                <li>
-                    <a href="{{ item.get_absolute_url|default:'#' }}">{{ item.title }}</a>
-                    {% if item.published_date %}
-                        <span class="date">{{ item.published_date|date:"jS M, Y" }}</span>
-                    {% endif %}
-                </li>
-                {% empty %}
-                <li class="muted">No articles published yet.</li>
-                {% endfor %}
-            </ul>
-        </div>
-    </aside>
+    <div class="insights-wrapper">
 
-    <!-- MAIN CONTENT -->
-    <main class="insights-main">
-        {% for category, articles in categories_dict.items %}
-        <section class="category-section" id="{{ category|slugify }}" data-category="{{ category|slugify }}">
-            <h2 class="category-title">{{ category }}</h2>
+        <!-- MAIN: single editorial grid -->
+        <main class="insights-main">
+            {% if articles %}
             <div class="articles-grid">
-                {% if articles %}
-                    {% for article in articles %}
-                    <article class="article-card"
-                              {% if article.display_image %}style="background-image: url('{{ article.display_image }}');"{% endif %}>
-                        <div class="article-body">
-                            {% if article.published_date %}
-                                <div class="article-date">{{ article.published_date|date:"jS F, Y" }}</div>
+                {% for article in articles %}
+                <article class="article-card"
+                          {% if article.display_image %}style="background-image: url('{{ article.display_image }}');"{% endif %}>
+                    <div class="article-body">
+                        {% with cats=article.categories.all %}
+                            {% if cats %}
+                            <span class="article-category">{{ cats.0.name }}</span>
                             {% endif %}
-                            <h4><a href="{{ article.get_absolute_url|default:'#' }}">{{ article.title }}</a></h4>
-                            {% with cats=article.categories.all %}
-                                {% if cats %}
-                                <div class="article-categories">
-                                    {% for cat in cats %}{{ cat.name }}{% if not forloop.last %} / {% endif %}{% endfor %}
-                                </div>
-                                {% endif %}
-                            {% endwith %}
-                            <p class="excerpt">
-                                {% if article.excerpt %}{{ article.excerpt|truncatewords:28 }}
-                                {% elif article.summary %}{{ article.summary|truncatewords:28 }}
-                                {% elif article.body %}{{ article.body|striptags|truncatewords:28 }}
-                                {% else %}No description available.{% endif %}
-                            </p>
-                            <a class="panel-link small" href="{{ article.get_absolute_url|default:'#' }}">
-                                Read more <span class="arrow">&rarr;</span>
-                            </a>
-                        </div>
-                    </article>
-                    {% endfor %}
-                {% else %}
-                    <p class="muted">No articles found in this category.</p>
-                {% endif %}
+                        {% endwith %}
+                        {% if article.published_date %}
+                            <div class="article-date">{{ article.published_date|date:"j M Y" }}</div>
+                        {% endif %}
+                        <h4><a href="{{ article.get_absolute_url|default:'#' }}">{{ article.title }}</a></h4>
+                        <p class="excerpt">
+                            {% if article.excerpt %}{{ article.excerpt|truncatewords:24 }}
+                            {% elif article.summary %}{{ article.summary|truncatewords:24 }}
+                            {% elif article.body %}{{ article.body|striptags|truncatewords:24 }}
+                            {% else %}No description available.{% endif %}
+                        </p>
+                        <a class="panel-link small" href="{{ article.get_absolute_url|default:'#' }}">
+                            Read Article <span class="arrow">&rarr;</span>
+                        </a>
+                    </div>
+                </article>
+                {% endfor %}
             </div>
-            <a href="{% url 'website:news' %}" class="btn-outline see-more-btn">See More</a>
-        </section>
-        {% empty %}
-            <p class="muted">No categories found yet.</p>
-        {% endfor %}
-    </main>
+            {% else %}
+            <p class="empty-state">
+                {% if selected_category %}No stories yet in {{ selected_category_name }}.{% else %}No stories published yet.{% endif %}
+            </p>
+            {% endif %}
+        </main>
 
+        <!-- SIDEBAR -->
+        {% if popular %}
+        <aside class="insights-sidebar">
+            <div class="sidebar-section">
+                <h3>Recently Published</h3>
+                <ul class="hairline-list popular-list">
+                    {% for item in popular %}
+                    <li>
+                        <a href="{{ item.get_absolute_url|default:'#' }}">{{ item.title }}</a>
+                        {% if item.published_date %}
+                            <span class="date">{{ item.published_date|date:"jS M, Y" }}</span>
+                        {% endif %}
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </aside>
+        {% endif %}
+
+    </div>
 </div>
-
-<!-- Category filtering -->
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-    const tabs = document.querySelectorAll('#filter-tabs li[data-filter]');
-    const sections = document.querySelectorAll('.category-section');
-    const clearBtn = document.getElementById('clear-filters');
-
-    function setActiveTab(clicked) {
-        tabs.forEach(t => t.classList.remove('active'));
-        clicked.classList.add('active');
-    }
-
-    tabs.forEach(tab => {
-        tab.addEventListener('click', () => {
-            const filter = tab.getAttribute('data-filter');
-            setActiveTab(tab);
-            sections.forEach(sec => {
-                const secCategory = sec.getAttribute('data-category');
-                sec.style.display = (filter === 'all' || secCategory === filter) ? 'block' : 'none';
-            });
-            document.querySelector('.insights-main').scrollIntoView({ behavior: 'smooth' });
-        });
-    });
-
-    if (clearBtn) {
-        clearBtn.addEventListener('click', () => {
-            sections.forEach(sec => sec.style.display = 'block');
-            tabs.forEach(t => t.classList.remove('active'));
-            document.querySelector('#filter-tabs li[data-filter="all"]').classList.add('active');
-        });
-    }
-});
-</script>
 {% endblock %}

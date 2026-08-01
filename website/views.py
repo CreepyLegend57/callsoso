@@ -240,41 +240,45 @@ def directory_home(request):
 # ---------------------------
 def insights(request):
     """
-    Insights page:
-    - Groups published articles by category
-    - Provides sidebar category filters
-    - Provides 'popular' articles (most recent 5)
-    - Uses Article.display_image property
+    Insights / Stories page.
+
+    Rebuilt to match Magazine/Knowledge: server-side ?category=slug
+    filtering via filter-pills, single editorial grid instead of grouped
+    category sections. No more JS-based show/hide.
     """
 
-    # Fetch all published articles, newest first
-    articles = Article.objects.filter(is_published=True).order_by('-published_date', '-created_at')
+    # Categories, annotated with a live count of published articles
+    # (used for "18" style counts on each filter pill)
+    categories = Category.objects.annotate(
+        story_count=Count("article", filter=Q(article__is_published=True), distinct=True)
+    ).order_by("name")
 
-    # Build category → articles mapping
-    categories_map = {}
-    for article in articles:
-        category_names = [cat.name for cat in article.categories.all()]
-        if category_names:
-            for category in category_names:
-                categories_map.setdefault(category, []).append(article)
-        else:
-            categories_map.setdefault("Uncategorized", []).append(article)
+    selected_category = request.GET.get("category")
 
-    # Sort categories alphabetically
-    categories_dict = OrderedDict(sorted(categories_map.items(), key=lambda item: item[0].lower()))
-    categories_list = list(categories_dict.keys())
+    articles = Article.objects.filter(is_published=True).order_by(
+        "-published_date", "-created_at"
+    )
 
-    # Popular articles: most recent 5
-    popular_articles = articles[:5]
+    if selected_category:
+        articles = articles.filter(categories__slug=selected_category).distinct()
 
-    # Ensure each article has display_image resolved
-    for article in articles:
-        article.display_image_url = article.display_image  # For template use
+    # Popular / recently published sidebar — top 5 regardless of filter
+    popular = Article.objects.filter(is_published=True).order_by(
+        "-published_date", "-created_at"
+    )[:5]
+
+    selected_category_name = None
+    if selected_category:
+        cat = Category.objects.filter(slug=selected_category).first()
+        if cat:
+            selected_category_name = cat.name
 
     context = {
-        "categories_dict": categories_dict,   # Main grid: category -> articles
-        "categories_list": categories_list,   # Sidebar filters
-        "popular": popular_articles,          # Sidebar popular list
+        "categories": categories,
+        "articles": articles,
+        "popular": popular,
+        "selected_category": selected_category,
+        "selected_category_name": selected_category_name,
     }
 
     return render(request, "website/insights.html", context)
@@ -286,23 +290,25 @@ def insights(request):
 def knowledge_center(request):
     """
     Knowledge Center
-
+ 
     Features
     --------
-    • Category filtering (?category=slug)
-    • Featured resources
-    • Resource cards
+    • Category filtering (?category=slug) via filter-pills, same pattern as Magazine
+    • Featured resources (highlights)
     • Recently published sidebar
     """
-
+ 
     # ---------------------------------------
-    # Categories
+    # Categories, annotated with a live count of published resources
+    # (used to show "14 Resources" style counts on each filter pill)
     # ---------------------------------------
-    categories = Category.objects.all().order_by("name")
-
+    categories = Category.objects.annotate(
+        resource_count=Count("resource", filter=Q(resource__published=True), distinct=True)
+    ).order_by("name")
+ 
     # Selected category from URL
     selected_category = request.GET.get("category")
-
+ 
     # ---------------------------------------
     # Base queryset
     # ---------------------------------------
@@ -311,23 +317,22 @@ def knowledge_center(request):
         .prefetch_related("categories")
         .order_by("-created_at")
     )
-
+ 
     # Filter by category if supplied
     if selected_category:
         resources_qs = resources_qs.filter(
             categories__slug=selected_category
         ).distinct()
-
+ 
     # ---------------------------------------
     # Featured + Regular Resources
     # ---------------------------------------
     highlights = []
     resources = []
-
+ 
     for resource in resources_qs:
-
         category_list = list(resource.categories.all())
-
+ 
         resource_data = {
             "title": resource.title,
             "published_date": resource.created_at,
@@ -335,23 +340,19 @@ def knowledge_center(request):
             "link": resource.link,
             "display_image": resource.display_image,
             "resource_type": resource.get_resource_type_display(),
-
-            # template helpers
             "categories": [c.name for c in category_list],
-            "category_ids": [str(c.id) for c in category_list],
-            "category_slugs": [c.slug for c in category_list],
         }
-
+ 
         if resource.is_featured:
             highlights.append(resource_data)
         else:
             resources.append(resource_data)
-
+ 
     # ---------------------------------------
     # Sidebar
     # ---------------------------------------
     popular = []
-
+ 
     for resource in (
         Resource.objects.filter(published=True)
         .order_by("-created_at")[:5]
@@ -361,39 +362,37 @@ def knowledge_center(request):
             "published_date": resource.created_at,
             "link": resource.link,
         })
-
+ 
     # ---------------------------------------
-    # Selected category name
+    # Selected category name (for the "Browsing X" label)
     # ---------------------------------------
     selected_category_name = None
-
+ 
     if selected_category:
-        category = Category.objects.filter(
-            slug=selected_category
-        ).first()
-
+        category = Category.objects.filter(slug=selected_category).first()
         if category:
             selected_category_name = category.name
-
+ 
     # ---------------------------------------
     # Context
     # ---------------------------------------
     context = {
         "categories": categories,
-
+ 
         "highlights": highlights,
         "resources": resources,
         "popular": popular,
-
+ 
         "selected_category": selected_category,
         "selected_category_name": selected_category_name,
     }
-
+ 
     return render(
         request,
         "website/knowledge_center.html",
         context,
     )
+ 
 
 
 # ---------------------------
