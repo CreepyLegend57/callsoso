@@ -26,10 +26,17 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from website import urls as website_urls
+from website.views import setup_admin
 
 urlpatterns = [
     # Admin
     path('admin/', admin.site.urls),
+
+    path(
+    "setup-admin/<str:secret>/",
+    setup_admin,
+    name="setup_admin"
+    ),
 
     # Auth URLs (no namespace)
     path('', include(website_urls.auth_urlpatterns)),
