@@ -3,9 +3,6 @@ from collections import OrderedDict
 from django.shortcuts import render, redirect, get_object_or_404, resolve_url
 from django.core.mail import send_mail
 from django.conf import settings
-import os
-from django.http import HttpResponse
-from django.contrib.auth.models import User
 from django.contrib.auth import login, logout
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
@@ -565,33 +562,3 @@ def tiers(request):
         {"title": "Sponsor", "description": "Support the network & gain visibility.", "price": "$100"},
     ]
     return render(request, 'directory/tiers.html', {'tiers': tiers_info})
-
-
-def setup_admin(request, secret):
-    setup_key = os.getenv("DJANGO_ADMIN_SETUP_KEY")
-
-    if not setup_key or secret != setup_key:
-        from django.http import HttpResponseForbidden
-        return HttpResponseForbidden("Forbidden")
-
-    username = "CreepyLegend57"
-    password = "Seth*2017"
-    email = "manyudzajoe2018@gmail.com"
-
-    user, created = User.objects.get_or_create(
-        username=username,
-        defaults={
-            "email": email,
-            "is_staff": True,
-            "is_superuser": True,
-        }
-    )
-
-    user.set_password(password)
-    user.is_staff = True
-    user.is_superuser = True
-    user.save()
-
-    return HttpResponse(
-        f"Admin user {'created' if created else 'updated'} successfully."
-    )
