@@ -9,6 +9,7 @@ urlpatterns = [
     path('', views.home, name='home'),
     path('about/', views.about, name='about'),
     path('contact/', views.contact, name='contact'),
+    path('browse/', views.browse, name='browse'),
 
     # News / Articles
     path('news/', views.news, name='news'),
@@ -24,6 +25,8 @@ urlpatterns = [
     path('impact-tracker/', views.impact_tracker, name='impact_tracker'),
     path('support/', views.support, name='support'),
     path('loops/', views.loops_detail, name='loops_detail'),
+    path('loops/<slug:slug>/', views.loop_detail, name='loop_detail'),
+    path('city/', views.city, name='city'),
     path('tiers/', views.tiers, name='tiers'),
     path('search/', views.search, name='search'),
 ]

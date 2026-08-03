@@ -1,0 +1,93 @@
+{% extends "website/base.html" %}
+
+{% block title %}Membership Tiers — Call Soso{% endblock %}
+
+{% block content %}
+<style>
+    .tiers-page {
+        font-family: var(--font-sans);
+        color: var(--black);
+        background: var(--white);
+        max-width: 1080px;
+        margin: 0 auto;
+        padding: 90px 40px 110px;
+    }
+
+    .tiers-hero {
+        text-align: center;
+        border-bottom: 1px solid var(--grey-line);
+        padding-bottom: 60px;
+        margin-bottom: 70px;
+    }
+
+    .tiers-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1px;
+        background: var(--grey-line);
+        border: 1px solid var(--grey-line);
+    }
+
+    .tier-card {
+        background: var(--white);
+        padding: 48px 36px;
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+        transition: background 0.25s ease;
+    }
+    .tier-card:hover { background: var(--off-white); }
+
+    .tier-title {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.9rem;
+        margin: 0;
+    }
+    .tier-price {
+        font-family: var(--font-display);
+        font-size: 2.2rem;
+        color: var(--orange);
+        line-height: 1;
+    }
+    .tier-desc {
+        color: var(--grey);
+        font-size: 0.95rem;
+        line-height: 1.6;
+        margin: 0;
+    }
+
+    .empty-state {
+        text-align: center;
+        color: var(--grey);
+        padding: 60px 0;
+    }
+
+    @media (max-width: 768px) {
+        .tiers-page { padding: 60px 20px 80px; }
+        .tiers-grid { grid-template-columns: 1fr; }
+    }
+</style>
+
+<div class="tiers-page">
+
+    <header class="tiers-hero">
+        <span class="eyebrow center">Membership</span>
+        <h1 class="section-title">Choose Your Tier</h1>
+        <p class="lede center">Join the Call Soso network at the level that fits how you want to participate.</p>
+    </header>
+
+    <section class="tiers-grid">
+        {% for tier in tiers %}
+        <article class="tier-card">
+            <span class="tier-price">{{ tier.price }}</span>
+            <h2 class="tier-title">{{ tier.title }}</h2>
+            <p class="tier-desc">{{ tier.description }}</p>
+        </article>
+        {% empty %}
+        <div class="empty-state">Tiers are coming soon.</div>
+        {% endfor %}
+    </section>
+
+</div>
+{% endblock %}

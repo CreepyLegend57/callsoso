@@ -1,0 +1,108 @@
+{% extends "website/base.html" %}
+{% load static %}
+
+{% block title %}{{ loop.name }} — Call Soso{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/loops.css' %}">
+
+<div class="loop-detail-page loop-{{ loop.slug }}">
+
+    <!-- ================================
+         LOOP HERO
+    ================================ -->
+    <section class="loop-hero {{ loop.slug }}" style="background-image: url('{% static loop.image %}');">
+        <div class="loop-hero-inner">
+            <span class="eyebrow">{{ loop.number }} — Choose Your Loop</span>
+            <h1>{{ loop.name }}</h1>
+            <p class="lede">{{ loop.lede }}</p>
+            <div class="loop-hero-actions">
+                {% for action in loop.actions %}
+                <a href="{% url action.url_name %}" class="btn-outline {% if action.primary %}primary{% endif %}">{{ action.label }}</a>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <!-- ================================
+         MODULES (same shape as the directory's Material/Edible)
+    ================================ -->
+    <section class="loop-modules">
+
+        <!-- Pathways & Outcomes -->
+        <article class="loop-module {{ loop.slug }}">
+            <header class="loop-header">
+                <div>
+                    <span class="eyebrow">Pathways &amp; Outcomes</span>
+                    <h2>What {{ loop.short_name|lower }} makes possible.</h2>
+                </div>
+                <p class="lede">{{ loop.description }}</p>
+            </header>
+
+            <div class="loop-grid">
+                <div class="loop-card">
+                    <h4>Pathways &amp; Outcomes</h4>
+                    <ul class="scannable-list">
+                        {% for title, desc in loop.pathways %}
+                        <li><strong>{{ title }}</strong>{{ desc }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+
+                <div class="loop-card">
+                    <h4>Target Ecosystem</h4>
+                    <ul class="scannable-list">
+                        {% for title, desc in loop.ecosystem %}
+                        <li><strong>{{ title }}</strong>{{ desc }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+
+                <!-- Action Hub + Live Feed -->
+                <div class="action-hub">
+                    <div>
+                        <h4>{{ loop.short_name }} Hub</h4>
+                        <div class="action-buttons">
+                            {% for action in loop.actions %}
+                            <a href="{% url action.url_name %}" class="btn-outline {% if action.primary %}primary{% endif %}">{{ action.label }}</a>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    {% if feed_items %}
+                    <div class="live-feed">
+                        <span>{{ feed_label }}</span>
+                        <ul>
+                            {% for item in feed_items %}
+                            <li><strong>{{ item.name }}</strong> — {{ item.detail }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </article>
+
+    </section>
+
+    <!-- ================================
+         OTHER LOOPS
+    ================================ -->
+    <section class="other-loops">
+        <span class="eyebrow center">Keep Exploring</span>
+        <h2 class="section-title">Other Loops</h2>
+        <div class="other-loops-grid">
+            {% for other in other_loops %}
+            <a href="{% url 'website:loop_detail' other.slug %}" class="other-loop-card {{ other.slug }}">
+                <span class="other-loop-num">{{ other.number }}</span>
+                <i class="fas {{ other.icon }}"></i>
+                <h3>{{ other.name }}</h3>
+                <p>{{ other.description }}</p>
+                <span class="panel-link small">Explore <span class="arrow">&rarr;</span></span>
+            </a>
+            {% endfor %}
+        </div>
+    </section>
+
+</div>
+{% endblock %}

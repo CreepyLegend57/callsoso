@@ -42,7 +42,7 @@
         <ul class="listing-rows">
             {% for surplus in surpluses %}
                 <li>
-                    <strong>{{ surplus.company }}</strong><br>
+                    <strong>{{ surplus.company }}</strong>{% if not surplus.approved %} <span class="pending-badge">Pending approval</span>{% endif %}<br>
                     Material: {{ surplus.get_material_type_display }}<br>
                     Volume: {{ surplus.monthly_volume }} units<br>
                     Location: {{ surplus.location }}

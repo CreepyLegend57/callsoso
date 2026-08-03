@@ -41,7 +41,8 @@
         <ul class="listing-rows">
             {% for demand in demands %}
                 <li>
-                    <strong>{{ demand.organisation|default:"Anonymous" }}</strong> is looking for <em>{{ demand.get_material_wanted_display }}</em>
+                    <strong>{{ demand.organisation|default:"Anonymous" }}</strong>{% if not demand.approved %} <span class="pending-badge">Pending approval</span>{% endif %}
+                    is looking for <em>{{ demand.get_material_wanted_display }}</em>
                     — <span class="muted">{{ demand.quantity_needed }} units</span> in <strong>{{ demand.location }}</strong>
                 </li>
             {% endfor %}

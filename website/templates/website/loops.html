@@ -1,68 +1,40 @@
 {% extends "website/base.html" %}
 {% load static %}
-{% block title %}Material & Edible Loops — Call Soso{% endblock %}
+
+{% block title %}Choose Your Loop — Call Soso{% endblock %}
 
 {% block content %}
 <link rel="stylesheet" href="{% static 'css/loops.css' %}">
 
-<div class="loops-page">
+<div class="loops-hub">
 
-    <header class="loops-header">
-        <p class="eyebrow center">How It Flows</p>
-        <h1 class="section-title">Material &amp; Edible Loops</h1>
-        <p class="lede center">How resources are collected, processed, and circulated back into our community, step by step.</p>
+    <header class="loops-hub-hero">
+        <span class="eyebrow center">A Call Soso Framework</span>
+        <h1>Realizing and Diverting Your Scope 3.</h1>
+        <p class="lede center">
+            A circular economy framework matching materials, food, strategy, and culture
+            across four connected loops.
+        </p>
     </header>
 
-    <div class="loops-container">
+    <span class="eyebrow center">Choose Your Loop</span>
+    <h2 class="section-title">Four Connected Pathways</h2>
 
-        <!-- Material Loop -->
-        <article class="loop-card material" id="material-loop">
-            <div class="loop-card-header">
-                <span class="eyebrow">The Material Loop</span>
-                <h2>From production to reuse and recycling.</h2>
+    <section class="loop-selector-grid">
+        {% for loop in loops %}
+        <a href="{% url 'website:loop_detail' loop.slug %}" class="loop-card {{ loop.slug }}"
+           style="background-image: url('{% static loop.image %}');">
+            <span class="loop-card-img" aria-hidden="true"></span>
+            <div class="loop-card-top">
+                <span class="loop-number">{{ loop.number }}</span>
+                <i class="fas {{ loop.icon }}"></i>
             </div>
-            <img src="{% static 'images/material-loop.png' %}" alt="Material Loop Diagram" class="loop-img">
-            <ol class="loop-steps">
-                <li data-step="1"><span class="step-num">01</span>Collection of used materials</li>
-                <li data-step="2"><span class="step-num">02</span>Sorting &amp; processing</li>
-                <li data-step="3"><span class="step-num">03</span>Manufacturing into new products</li>
-                <li data-step="4"><span class="step-num">04</span>Distribution &amp; use</li>
-                <li data-step="5"><span class="step-num">05</span>Return for reuse or recycling</li>
-            </ol>
-        </article>
+            <h3>{{ loop.name }}</h3>
+            <p>{{ loop.description }}</p>
+            <span class="loop-link">{{ loop.cta_label }} <span class="arrow">&rarr;</span></span>
+        </a>
+        {% endfor %}
+    </section>
 
-        <!-- Edible Loop -->
-        <article class="loop-card edible" id="edible-loop">
-            <div class="loop-card-header">
-                <span class="eyebrow">The Edible Loop</span>
-                <h2>Reducing food waste through community circulation.</h2>
-            </div>
-            <img src="{% static 'images/edible-loop.png' %}" alt="Edible Loop Diagram" class="loop-img">
-            <ol class="loop-steps">
-                <li data-step="1"><span class="step-num">01</span>Surplus food collection</li>
-                <li data-step="2"><span class="step-num">02</span>Inspection &amp; sorting</li>
-                <li data-step="3"><span class="step-num">03</span>Redistribution to communities</li>
-                <li data-step="4"><span class="step-num">04</span>Consumption &amp; feedback</li>
-                <li data-step="5"><span class="step-num">05</span>Composting for remaining waste</li>
-            </ol>
-        </article>
-
-    </div>
 </div>
-
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-    const loopCards = document.querySelectorAll('.loop-card');
-
-    loopCards.forEach(card => {
-        card.querySelectorAll('.loop-steps li').forEach(step => {
-            step.addEventListener('mouseenter', () => step.classList.add('active-step'));
-            step.addEventListener('mouseleave', () => step.classList.remove('active-step'));
-        });
-
-        const img = card.querySelector('.loop-img');
-        img.addEventListener('click', () => img.classList.toggle('enlarge'));
-    });
-});
-</script>
 {% endblock %}

@@ -1,0 +1,137 @@
+{% extends "website/base.html" %}
+{% load static %}
+
+{% block title %}Matches — Call Soso Directory{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/directory.css' %}">
+
+<style>
+    .matches-page {
+        font-family: var(--font-sans);
+        color: var(--black);
+        background: var(--white);
+        max-width: 1080px;
+        margin: 0 auto;
+        padding: 90px 40px 110px;
+    }
+
+    .matches-header {
+        text-align: center;
+        border-bottom: 1px solid var(--grey-line);
+        padding-bottom: 50px;
+        margin-bottom: 60px;
+    }
+
+    .match-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 1px;
+        background: var(--grey-line);
+        border: 1px solid var(--grey-line);
+    }
+
+    .match-item {
+        background: var(--white);
+        padding: 34px 36px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 24px;
+        transition: background 0.25s ease;
+    }
+    .match-item:hover { background: var(--off-white); }
+
+    .match-route {
+        font-family: var(--font-display);
+        font-size: 1.4rem;
+        line-height: 1.3;
+    }
+    .match-route .arrow { color: var(--orange); }
+    .match-meta {
+        margin-top: 8px;
+        color: var(--grey);
+        font-size: 0.85rem;
+    }
+    .match-notes { font-size: 0.9rem; color: var(--grey); margin-top: 8px; }
+
+    .match-badges {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        align-items: flex-end;
+        flex-shrink: 0;
+    }
+    .badge {
+        border: 1px solid var(--grey-line);
+        background: var(--off-white);
+        padding: 5px 12px;
+        font-size: 0.7rem;
+        font-weight: 600;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+    }
+    .badge.orange { color: var(--white); background: var(--orange); border-color: var(--orange); }
+
+    .empty-state {
+        text-align: center;
+        color: var(--grey);
+        padding: 70px 0;
+        background: var(--white);
+    }
+    .empty-state a { color: var(--orange); font-weight: 500; }
+
+    @media (max-width: 700px) {
+        .matches-page { padding: 60px 20px 80px; }
+        .match-item { flex-direction: column; align-items: flex-start; }
+        .match-badges { align-items: flex-start; }
+    }
+</style>
+
+<div class="matches-page">
+
+    <header class="matches-header">
+        <span class="eyebrow center">The Exchange</span>
+        <h1 class="section-title">Matches</h1>
+        <p class="lede center">Surplus and demand, brought together.</p>
+    </header>
+
+    {% if matches %}
+    <ul class="match-list">
+        {% for match in matches %}
+        <li class="match-item">
+            <div>
+                <div class="match-route">
+                    {{ match.surplus.company }} <span class="arrow">&rarr;</span>
+                    {{ match.demand.organisation|default:"Anonymous" }}
+                </div>
+                <div class="match-meta">
+                    {{ match.surplus.get_material_type_display }} &middot;
+                    suggested on {{ match.created_on|date:"j M Y" }}
+                    {% if match.suggested_by %} by {{ match.suggested_by.username }}{% endif %}
+                </div>
+                {% if match.notes %}
+                <div class="match-notes">{{ match.notes }}</div>
+                {% endif %}
+            </div>
+            <div class="match-badges">
+                <span class="badge">{{ match.surplus.location }}</span>
+                <span class="badge orange">{{ match.demand.location }}</span>
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <div class="empty-state">
+        No matches yet.
+        <br><br>
+        <a href="{% url 'directory:surplus_list' %}">List surplus</a> or
+        <a href="{% url 'directory:demand_list' %}">submit a demand</a> to start the conversation.
+    </div>
+    {% endif %}
+
+</div>
+{% endblock %}

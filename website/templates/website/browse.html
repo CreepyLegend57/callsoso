@@ -1,0 +1,108 @@
+{% extends "website/base.html" %}
+{% load static %}
+
+{% block title %}Marketplace — Call Soso{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/browse.css' %}">
+
+<div class="browse-page">
+
+    <header class="browse-hero">
+        <span class="eyebrow center">The Exchange</span>
+        <h1 class="section-title">Browse the Marketplace</h1>
+        <p class="lede center">Approved surplus and demand, live from the Call Soso directory.</p>
+
+        <div class="browse-stats">
+            <div class="stat">
+                <span class="stat-num">{{ surpluses.count }}</span>
+                <span class="stat-label">Surplus Listings</span>
+            </div>
+            <div class="stat">
+                <span class="stat-num">{{ demands.count }}</span>
+                <span class="stat-label">Demand Requests</span>
+            </div>
+        </div>
+
+        <form method="GET" class="filter-form">
+            <select name="material_type">
+                <option value="">All Materials</option>
+                <option value="wood" {% if material_type == 'wood' %}selected{% endif %}>Wood</option>
+                <option value="metal" {% if material_type == 'metal' %}selected{% endif %}>Metal</option>
+                <option value="textiles" {% if material_type == 'textiles' %}selected{% endif %}>Textiles</option>
+                <option value="plastic" {% if material_type == 'plastic' %}selected{% endif %}>Plastic</option>
+                <option value="foam" {% if material_type == 'foam' %}selected{% endif %}>Foam</option>
+                <option value="cardboard" {% if material_type == 'cardboard' %}selected{% endif %}>Cardboard</option>
+                <option value="food" {% if material_type == 'food' %}selected{% endif %}>Food</option>
+                <option value="other" {% if material_type == 'other' %}selected{% endif %}>Other</option>
+            </select>
+
+            <select name="location">
+                <option value="">All Locations</option>
+                <option value="Milton Keynes" {% if location == 'Milton Keynes' %}selected{% endif %}>Milton Keynes</option>
+                <option value="London" {% if location == 'London' %}selected{% endif %}>London</option>
+            </select>
+
+            <button type="submit" class="btn-outline">Filter</button>
+            <a href="{% url 'website:browse' %}" class="btn-outline muted">Clear</a>
+        </form>
+    </header>
+
+    <div class="browse-cols">
+
+        <!-- SURPLUS -->
+        <section class="browse-col">
+            <h2>Available Surplus <span class="count">({{ surpluses.count }})</span></h2>
+            {% if surpluses %}
+            <ul class="listing-list">
+                {% for s in surpluses %}
+                <li class="listing-item">
+                    <span class="material-tag">{{ s.get_material_type_display }}</span>
+                    <div class="company">{{ s.company }}</div>
+                    <div class="meta">
+                        {{ s.description|default:"No details provided." }}<br>
+                        {{ s.monthly_volume }} units per month &middot; {{ s.location }}
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+            {% else %}
+            <div class="empty-state">No surplus listings available.</div>
+            {% endif %}
+        </section>
+
+        <!-- DEMAND -->
+        <section class="browse-col">
+            <h2>Current Demand <span class="count">({{ demands.count }})</span></h2>
+            {% if demands %}
+            <ul class="listing-list">
+                {% for d in demands %}
+                <li class="listing-item">
+                    <span class="material-tag">{{ d.get_material_wanted_display }}</span>
+                    <div class="company">{{ d.organisation|default:"Anonymous" }}</div>
+                    <div class="meta">
+                        {{ d.intended_use|default:"No details provided." }}<br>
+                        {{ d.quantity_needed }} units &middot; {{ d.location }}
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+            {% else %}
+            <div class="empty-state">No demand requests right now.</div>
+            {% endif %}
+        </section>
+
+    </div>
+
+    <div class="browse-cta">
+        <p class="eyebrow center">Join the Exchange</p>
+        <h2 class="section-title">Have surplus or a need?</h2>
+        <p class="lede center">Create an account to list materials, submit requests, and get matched.</p>
+        <p class="center">
+            <a href="{% url 'signup' %}" class="btn-outline">Sign Up</a>
+            <a href="{% url 'login' %}" class="btn-outline muted">Login</a>
+        </p>
+    </div>
+
+</div>
+{% endblock %}

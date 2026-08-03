@@ -8,13 +8,9 @@
 
 <div class="categories-page">
 
-    <header class="categories-header">
-        <p class="eyebrow center">Explore</p>
-
-        <h1 class="section-title">
-            Browse by Category
-        </h1>
-
+    <header class="categories-hero">
+        <p class="eyebrow center">Explore the Ecosystem</p>
+        <h1 class="section-title">Browse by Category</h1>
         <p class="lede center">
             Discover insights, resources and magazine issues organised into
             the key themes driving the Call Soso circular economy ecosystem.
@@ -27,75 +23,51 @@
 
         {% for entry in category_data %}
 
-        <article class="category-tile">
+        <article class="category-tile {% cycle 'tone-a' 'tone-b' 'tone-c' 'tone-d' %}">
+            <span class="tile-index">{{ forloop.counter|stringformat:"02d" }}</span>
 
-            <div class="category-header">
-        
+            <div class="tile-top">
+                <span class="tile-orb" aria-hidden="true"></span>
                 <div class="category-heading">
-        
                     <h2>
                         <a href="{% url 'website:insights' %}?category={{ entry.category.slug }}">
                             {{ entry.category.name }}
                         </a>
                     </h2>
-        
-                    <a href="{% url 'website:insights' %}?category={{ entry.category.slug }}"
-                       class="browse-category">
-        
-                        Browse everything
-                        <span>&rarr;</span>
-        
-                    </a>
-        
+                    <span class="category-total">
+                        {{ entry.story_count|add:entry.service_count|add:entry.issue_count }}
+                        Items
+                    </span>
                 </div>
-        
-                <span class="category-total">
-        
-                    {{ entry.story_count|add:entry.service_count|add:entry.issue_count }}
-        
-                    Items
-        
-                </span>
-        
             </div>
-        
+
             <div class="tile-links">
-        
+
                 <a href="{% url 'website:insights' %}?category={{ entry.category.slug }}"
                    class="tile-link {% if not entry.story_count %}muted{% endif %}">
-        
-                    <span class="tile-count">
-                        {{ entry.story_count }}
-                    </span>
-        
-                    Insight{{ entry.story_count|pluralize }}
-        
+                    <span class="tile-label">Insight{{ entry.story_count|pluralize }}</span>
+                    <span class="tile-count">{{ entry.story_count }}</span>
                 </a>
-        
-                <a href="{% url 'website:knowledge' %}?category={{ entry.category.slug }}"
+
+                <a href="{% url 'website:insights' %}?type=resources&category={{ entry.category.slug }}"
                    class="tile-link {% if not entry.service_count %}muted{% endif %}">
-        
-                    <span class="tile-count">
-                        {{ entry.service_count }}
-                    </span>
-        
-                    Resource{{ entry.service_count|pluralize }}
-        
+                    <span class="tile-label">Resource{{ entry.service_count|pluralize }}</span>
+                    <span class="tile-count">{{ entry.service_count }}</span>
                 </a>
-        
+
                 <a href="{% url 'website:magazine' %}?category={{ entry.category.slug }}"
                    class="tile-link {% if not entry.issue_count %}muted{% endif %}">
-        
-                    <span class="tile-count">
-                        {{ entry.issue_count }}
-                    </span>
-        
-                    Magazine Issue{{ entry.issue_count|pluralize }}
-        
+                    <span class="tile-label">Magazine Issue{{ entry.issue_count|pluralize }}</span>
+                    <span class="tile-count">{{ entry.issue_count }}</span>
                 </a>
-        
+
             </div>
-        
+
+            <a href="{% url 'website:insights' %}?category={{ entry.category.slug }}"
+               class="tile-browse">
+                Browse everything <span>&rarr;</span>
+            </a>
+
         </article>
 
         {% endfor %}
@@ -105,14 +77,11 @@
     {% else %}
 
     <div class="empty-state">
-
         <p>No categories available yet.</p>
-
         <p class="empty-sub">
             Categories created in the admin dashboard will automatically
             appear here once content has been assigned to them.
         </p>
-
     </div>
 
     {% endif %}

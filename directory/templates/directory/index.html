@@ -27,6 +27,10 @@
         --material-b:   #3f5c8a;
         --edible-a:     #1f3a2a;
         --edible-b:     #4f7a52;
+        --strategic-a:  #3a2f1c;
+        --strategic-b:  #8a6f3f;
+        --cultural-a:   #2b1f3a;
+        --cultural-b:   #6b4f8a;
     }
 
     * { box-sizing: border-box; }
@@ -196,146 +200,219 @@
     }
 
     /* =========================================================
-       3. UPGRADED LOOPS DETAIL (DASHBOARD MODULES)
+       3. YOUR EXCHANGE — unique to the directory dashboard
     ========================================================= */
-    .loops-detail {
-        padding: 40px 40px 100px;
+    .your-exchange {
+        padding: 90px 40px;
         max-width: 1280px;
         margin: 0 auto;
-        display: flex;
-        flex-direction: column;
-        gap: 80px;
+        border-bottom: 1px solid var(--grey-line);
     }
+    .your-exchange .section-title { margin-bottom: 50px; }
 
-    .loop-module {
-        border: 1px solid var(--grey-line);
-        background: var(--grey-line);
-        display: flex;
-        flex-direction: column;
-        gap: 1px;
-    }
-
-    /* Header Bar */
-    .loop-header {
-        padding: 60px 50px;
-        color: var(--white);
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        align-items: flex-start;
-        position: relative;
-        overflow: hidden;
-    }
-    .loop-module.material .loop-header {
-        background: linear-gradient(160deg, var(--material-a), var(--material-b));
-        border-top: 4px solid #5b8dd9;
-    }
-    .loop-module.edible .loop-header {
-        background: linear-gradient(160deg, var(--edible-a), var(--edible-b));
-        border-top: 4px solid #4caf81;
-    }
-
-    .loop-header .eyebrow { color: rgba(255,255,255,0.75); margin-bottom: 8px; }
-    .loop-header h2 {
-        font-family: var(--font-display);
-        font-weight: 500;
-        font-size: clamp(2rem, 3.5vw, 2.8rem);
-        line-height: 1.15;
-        margin: 0 0 16px;
-        max-width: 700px;
-        color: var(--white);
-    }
-    .loop-header .lede { color: rgba(255,255,255,0.85); max-width: 700px; margin: 0; }
-
-    /* 3-Column Content Grid */
-    .loop-grid {
+    .exchange-grid {
         display: grid;
-        grid-template-columns: 1.2fr 1fr 1fr;
+        grid-template-columns: 1fr 1fr;
         gap: 1px;
         background: var(--grey-line);
-        width: 100%;
+        border: 1px solid var(--grey-line);
+        margin-bottom: 30px;
     }
-
-    .loop-card {
-        background: var(--white);
-        padding: 40px 34px;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-    }
-    .loop-card h4 {
+    .exchange-col { background: var(--white); padding: 40px 38px; }
+    .exchange-col h3 {
         font-family: var(--font-display);
         font-weight: 500;
-        font-size: 1.4rem;
+        font-size: 1.5rem;
         margin: 0 0 20px;
-        color: var(--black);
         padding-bottom: 12px;
         border-bottom: 1px solid var(--grey-line);
     }
 
-    .scannable-list { list-style: none; padding: 0; margin: 0; }
-    .scannable-list li {
+    .exchange-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 16px;
+        padding: 14px 0;
+        border-bottom: 1px solid rgba(10,10,10,0.06);
+        font-size: 0.9rem;
+    }
+    .exchange-item:last-child { border-bottom: none; }
+    .exchange-item strong { display: block; color: var(--black); font-weight: 600; }
+    .exchange-item .muted { color: var(--grey); font-size: 0.82rem; }
+
+    .status-badge {
+        flex-shrink: 0;
+        font-size: 0.64rem;
+        font-weight: 600;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        padding: 4px 10px;
+        border: 1px solid var(--grey-line);
+    }
+    .status-badge.approved { color: #1c5c2e; border-color: rgba(28,92,46,0.3); background: #eef7ee; }
+    .status-badge.pending  { color: #6b4a00; border-color: rgba(107,74,0,0.3); background: #fff5e6; }
+
+    .exchange-empty {
+        color: var(--grey);
+        font-size: 0.92rem;
+        line-height: 1.6;
+        padding: 10px 0;
+    }
+
+    .exchange-cta {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 12px;
+        margin-top: 10px;
+    }
+
+    .my-matches {
+        background: var(--off-white);
+        padding: 40px 38px;
+        margin-top: 30px;
+        border: 1px solid var(--grey-line);
+    }
+    .my-matches h3 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.5rem;
+        margin: 0 0 20px;
+    }
+    .match-line {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 16px;
         padding: 12px 0;
         border-bottom: 1px solid rgba(10,10,10,0.06);
-        font-size: 0.88rem;
-        line-height: 1.5;
-        color: var(--grey);
+        font-size: 0.9rem;
     }
-    .scannable-list li:last-child { border-bottom: none; }
-    .scannable-list li strong { color: var(--black); font-weight: 600; display: block; margin-bottom: 2px; }
+    .match-line:last-child { border-bottom: none; }
+    .match-line .route { color: var(--black); }
+    .match-line .route .arrow { color: var(--orange); }
+    .match-line .meta { color: var(--grey); font-size: 0.8rem; margin-top: 2px; }
 
-    /* Action Hub Inside Loop */
-    .action-hub {
-        background: var(--off-white);
-        padding: 40px 34px;
+    /* =========================================================
+       4. LOOP NAVIGATION — compact 2x2 grid, links to loop pages
+    ========================================================= */
+    .loop-nav {
+        padding: 90px 40px 100px;
+        max-width: 1280px;
+        margin: 0 auto;
+        border-bottom: 1px solid var(--grey-line);
+    }
+    .loop-nav .section-title { margin-bottom: 50px; }
+
+    .loop-nav-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1px;
+        background: var(--grey-line);
+        border: 1px solid var(--grey-line);
+    }
+
+    .loop-nav-card {
+        position: relative;
         display: flex;
         flex-direction: column;
-        justify-content: space-between;
-        gap: 24px;
+        justify-content: flex-end;
+        padding: 46px 40px;
+        min-height: 300px;
+        color: var(--white);
+        background-size: cover;
+        background-position: center;
+        overflow: hidden;
+        text-decoration: none;
     }
-    .action-hub h4 {
+    .loop-nav-card::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+    }
+    .loop-nav-card > * { position: relative; z-index: 1; }
+
+    .loop-nav-card.material::before  { background: linear-gradient(160deg, rgba(28,43,69,.82), rgba(63,92,138,.55)); }
+    .loop-nav-card.edible::before    { background: linear-gradient(160deg, rgba(31,58,42,.82), rgba(79,122,82,.55)); }
+    .loop-nav-card.strategic::before { background: linear-gradient(160deg, rgba(58,47,28,.84), rgba(138,111,63,.55)); }
+    .loop-nav-card.cultural::before  { background: linear-gradient(160deg, rgba(43,31,58,.84), rgba(107,79,138,.55)); }
+
+    .loop-nav-card .loop-nav-num {
+        font-family: var(--font-display);
+        font-size: 1rem;
+        color: rgba(255,255,255,0.7);
+        margin-bottom: 12px;
+    }
+    .loop-nav-card h3 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.7rem;
+        line-height: 1.2;
+        margin: 0 0 10px;
+        color: var(--white);
+    }
+    .loop-nav-card p {
+        font-size: 0.86rem;
+        color: rgba(255,255,255,0.8);
+        line-height: 1.5;
+        margin: 0 0 20px;
+        max-width: 380px;
+    }
+    .loop-nav-card .panel-link {
+        font-size: 0.72rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        border-bottom: 1px solid rgba(255,255,255,0.6);
+        padding-bottom: 4px;
+        width: fit-content;
+        color: var(--white);
+    }
+    .loop-nav-card:hover .panel-link { border-color: var(--orange); color: var(--orange); }
+
+    /* =========================================================
+       5. MATCH SUGGESTIONS
+    ========================================================= */
+    .match-suggestions {
+        padding: 90px 40px;
+        max-width: 1280px;
+        margin: 0 auto;
+        border-bottom: 1px solid var(--grey-line);
+    }
+    .match-suggestions .section-title { margin-bottom: 50px; }
+    .match-suggestions-list {
+        display: flex;
+        flex-direction: column;
+        gap: 1px;
+        background: var(--grey-line);
+        border: 1px solid var(--grey-line);
+    }
+    .match-suggestion {
+        background: var(--white);
+        padding: 30px 36px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 24px;
+        transition: background 0.25s ease;
+    }
+    .match-suggestion:hover { background: var(--off-white); }
+    .match-suggestion .route {
         font-family: var(--font-display);
         font-weight: 500;
         font-size: 1.4rem;
-        margin: 0;
-        color: var(--black);
+        line-height: 1.3;
     }
-    .action-buttons {
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
+    .match-suggestion .route .arrow { color: var(--orange); }
+    .match-suggestion .meta {
+        margin-top: 8px;
+        color: var(--grey);
+        font-size: 0.85rem;
     }
-    .action-buttons .btn-outline {
-        width: 100%;
-        background: var(--white);
-        border-color: var(--grey-line);
-    }
-    .action-buttons .btn-outline:hover {
-        background: var(--orange);
-        border-color: var(--orange);
-        color: var(--white);
-    }
-    .action-buttons .btn-outline.primary {
-        background: var(--black);
-        color: var(--white);
-        border-color: var(--black);
-    }
-    .action-buttons .btn-outline.primary:hover {
-        background: var(--orange);
-        border-color: var(--orange);
-    }
-
-    .live-feed {
-        margin-top: 14px;
-        padding-top: 18px;
-        border-top: 1px solid rgba(10,10,10,0.08);
-    }
-    .live-feed span { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--grey); display: block; margin-bottom: 8px; font-weight: 600; }
-    .live-feed ul { list-style: none; padding: 0; margin: 0; }
-    .live-feed li { font-size: 0.82rem; color: var(--black); padding: 6px 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .match-suggestion .btn-outline { flex-shrink: 0; }
 
     /* =========================================================
-       4. UPGRADED QUICK ACTIONS (4-COLUMN CARD STRIP)
+       6. UPGRADED QUICK ACTIONS (4-COLUMN CARD STRIP)
     ========================================================= */
     .directory-actions {
         background: var(--black);
@@ -423,7 +500,7 @@
     }
 
     /* =========================================================
-       5. ROLE INFO
+       7. ROLE INFO
     ========================================================= */
     .directory-info {
         padding: 90px 40px 110px;
@@ -446,21 +523,24 @@
        RESPONSIVE BREAKPOINTS
     ========================================================= */
     @media (max-width: 1024px) {
-        .loop-grid { grid-template-columns: 1fr 1fr; }
-        .action-hub { grid-column: 1 / -1; }
+        .exchange-grid { grid-template-columns: 1fr; }
         .actions-grid { grid-template-columns: repeat(2, 1fr); }
     }
 
+    @media (max-width: 900px) {
+        .loop-nav-grid { grid-template-columns: 1fr 1fr; }
+    }
+
     @media (max-width: 768px) {
-        .directory-intro, .how-it-works, .loops-detail, .directory-actions, .directory-info {
+        .directory-intro, .how-it-works, .your-exchange, .loop-nav,
+        .directory-actions, .directory-info {
             padding-left: 20px;
             padding-right: 20px;
         }
         .stats-row { flex-direction: column; gap: 30px; }
         .steps-row { grid-template-columns: 1fr; }
-        .loop-grid { grid-template-columns: 1fr; }
+        .loop-nav-grid { grid-template-columns: 1fr; }
         .actions-grid { grid-template-columns: 1fr; }
-        .loop-header { padding: 40px 24px; }
     }
 </style>
 
@@ -472,8 +552,8 @@
         <h1 class="section-title">Surplus, matched with skill, creativity, and need.</h1>
         <p class="lede center">
             Every material. Every ingredient. Every overlooked resource — a second life waiting for its match.
-            The Exchange Directory connects businesses with dormant stock, makers with imagination, and
-            communities with value that already exists. This is where circularity becomes infrastructure.
+            The Exchange Directory is your workspace: list what you have, ask for what you need,
+            and watch the city's circular infrastructure route it somewhere better than waste.
         </p>
         <div class="ambient-microcopy center">
             <span>&ldquo;Nothing is waste until someone decides it is.&rdquo;</span>
@@ -528,144 +608,167 @@
         </ul>
     </section>
 
-    <!-- 3. UPGRADED LOOPS DETAIL (DASHBOARD MODULES) -->
-    <section class="loops-detail">
+    <!-- 3. YOUR EXCHANGE — unique dashboard content -->
+    <section class="your-exchange">
+        <span class="eyebrow center">Your Exchange</span>
+        <h2 class="section-title">What you have. What you need.</h2>
 
-        <!-- MATERIAL LOOP MODULE -->
-        <article class="loop-module material">
-            <header class="loop-header">
-                <div>
-                    <span class="eyebrow">The Material Loop</span>
-                    <h2>Surplus becomes structure, substance, and new cultural value.</h2>
-                </div>
-                <p class="lede">
-                    Transforming business surplus into creative potential and economic gain. Materials are treated as data, story, and infrastructure for an imaginative economy. Nothing is static. Everything circulates.
-                </p>
-            </header>
-
-            <div class="loop-grid">
-                <!-- Col 1: Pathways -->
-                <div class="loop-card">
-                    <div>
-                        <h4>Pathways &amp; Outcomes</h4>
-                        <ul class="scannable-list">
-                            <li><strong>Creative Reuse &amp; Fabrication</strong> Installations, artworks, prototypes, furniture, and spatial elements.</li>
-                            <li><strong>Industrial Reprocessing</strong> Reprocessed materials, internal reuse streams, and cost-saving alternatives.</li>
-                            <li><strong>Education &amp; Workshops</strong> Youth programmes, corporate team days, and skill-building labs.</li>
-                            <li><strong>Material Intelligence</strong> University R&amp;D, product design studies, and material testing.</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- Col 2: Who It's For -->
-                <div class="loop-card">
-                    <div>
-                        <h4>Target Ecosystem</h4>
-                        <ul class="scannable-list">
-                            <li><strong>Businesses</strong> Reduce waste overheads and improve measurable ESG metrics.</li>
-                            <li><strong>Creators &amp; Makers</strong> Source affordable materials and prototype scalable ideas.</li>
-                            <li><strong>Built Environment Teams</strong> Access unique finishes and offcuts for architectural builds.</li>
-                            <li><strong>Councils &amp; Sponsors</strong> Fund and monitor regional circular economy impact.</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- Col 3: Action Hub & Live Feed -->
-                <div class="action-hub">
-                    <div>
-                        <h4>Material Hub</h4>
-                        <div class="action-buttons">
-                            <a href="{% url 'directory:demand_list' %}" class="btn-outline primary">Explore Material Loop</a>
-                            <a href="{% url 'directory:demand_create' %}" class="btn-outline">Add Your Demands</a>
+        <div class="exchange-grid">
+            <div class="exchange-col">
+                <h3>Your Surplus</h3>
+                {% if my_surpluses %}
+                    {% for s in my_surpluses %}
+                    <div class="exchange-item">
+                        <div>
+                            <strong>{{ s.company }}</strong>
+                            <span class="muted">{{ s.get_material_type_display }} &middot; {{ s.location }} &middot; {{ s.monthly_volume }} monthly</span>
                         </div>
+                        <span class="status-badge {% if s.approved %}approved{% else %}pending{% endif %}">
+                            {{ s.approved|yesno:"Live,Pending" }}
+                        </span>
                     </div>
-
-                    {% if latest_surpluses %}
-                    <div class="live-feed">
-                        <span>Recently Listed</span>
-                        <ul>
-                            {% for s in latest_surpluses|slice:":3" %}
-                                <li><strong>{{ s.company }}</strong> — {{ s.get_material_type_display }}</li>
-                            {% endfor %}
-                        </ul>
-                    </div>
-                    {% endif %}
+                    {% endfor %}
+                {% else %}
+                    <p class="exchange-empty">You haven't listed any surplus yet. Turn dormant stock into a live exchange stream.</p>
+                {% endif %}
+                <div style="margin-top: 22px;">
+                    <a href="{% url 'directory:surplus_create' %}" class="btn-outline">Add Surplus</a>
+                    {% if my_surpluses %}<a href="{% url 'directory:surplus_list' %}" class="btn-outline" style="margin-left:10px;">Manage</a>{% endif %}
                 </div>
             </div>
-        </article>
 
-        <!-- EDIBLE LOOP MODULE -->
-        <article class="loop-module edible">
-            <header class="loop-header">
-                <div>
-                    <span class="eyebrow">The Edible Loop</span>
-                    <h2>Food becomes flavour, fuel, material, and future infrastructure.</h2>
-                </div>
-                <p class="lede">
-                    Treating food as material intelligence capable of nourishment, creativity, bio-production, and scientific transformation. Nothing is "just waste." Everything has a next life.
-                </p>
-            </header>
-
-            <div class="loop-grid">
-                <!-- Col 1: Pathways -->
-                <div class="loop-card">
-                    <div>
-                        <h4>Pathways &amp; Outcomes</h4>
-                        <ul class="scannable-list">
-                            <li><strong>Culinary Play &amp; Pop-ups</strong> Experimental menus, food art, pop-up kitchens, and edible installations.</li>
-                            <li><strong>Civic Nourishment</strong> Safe community meals, cooking literacy workshops, and youth access.</li>
-                            <li><strong>Biomaterial Innovation</strong> Bioplastics, organic dyes, natural pigments, compost, and fermentation substrates.</li>
-                            <li><strong>Circular Research</strong> Experimental kitchens prototyping sustainable packaging and food futures.</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- Col 2: Who It's For -->
-                <div class="loop-card">
-                    <div>
-                        <h4>Target Ecosystem</h4>
-                        <ul class="scannable-list">
-                            <li><strong>Food Businesses</strong> Save disposal costs and support ethical, circular redistribution.</li>
-                            <li><strong>Chefs &amp; Creatives</strong> Source experimental ingredients and collaborative R&amp;D space.</li>
-                            <li><strong>Community Partners</strong> Secure consistent ingredients for teaching, cooking, and preserving.</li>
-                            <li><strong>Scientific Researchers</strong> Experiment with biomaterial extraction and waste transformation.</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- Col 3: Action Hub & Live Feed -->
-                <div class="action-hub">
-                    <div>
-                        <h4>Edible Hub</h4>
-                        <div class="action-buttons">
-                            <a href="{% url 'directory:surplus_list' %}" class="btn-outline primary">Explore Edible Loop</a>
-                            <a href="{% url 'directory:surplus_create' %}" class="btn-outline">Add Food Surplus</a>
+            <div class="exchange-col">
+                <h3>Your Demand</h3>
+                {% if my_demands %}
+                    {% for d in my_demands %}
+                    <div class="exchange-item">
+                        <div>
+                            <strong>{{ d.organisation|default:"Anonymous" }}</strong>
+                            <span class="muted">{{ d.get_material_wanted_display }} &middot; {{ d.location }} &middot; {{ d.quantity_needed }} needed</span>
                         </div>
+                        <span class="status-badge {% if d.approved %}approved{% else %}pending{% endif %}">
+                            {{ d.approved|yesno:"Live,Pending" }}
+                        </span>
                     </div>
-
-                    {% if latest_demands %}
-                    <div class="live-feed">
-                        <span>Recently Requested</span>
-                        <ul>
-                            {% for d in latest_demands|slice:":3" %}
-                                <li><strong>{{ d.organisation|default:"Anonymous" }}</strong> — {{ d.get_material_wanted_display }}</li>
-                            {% endfor %}
-                        </ul>
-                    </div>
-                    {% endif %}
+                    {% endfor %}
+                {% else %}
+                    <p class="exchange-empty">No active demand requests. Tell the network what you need next.</p>
+                {% endif %}
+                <div style="margin-top: 22px;">
+                    <a href="{% url 'directory:demand_create' %}" class="btn-outline">Post Demand</a>
+                    {% if my_demands %}<a href="{% url 'directory:demand_list' %}" class="btn-outline" style="margin-left:10px;">Manage</a>{% endif %}
                 </div>
             </div>
-        </article>
+        </div>
 
+        <div class="my-matches">
+            <h3>Your Recent Matches</h3>
+            {% if my_matches %}
+                {% for m in my_matches %}
+                <div class="match-line">
+                    <div>
+                        <div class="route">{{ m.surplus.company }} <span class="arrow">&rarr;</span> {{ m.demand.organisation|default:"Requester" }}</div>
+                        <div class="meta">{{ m.surplus.get_material_type_display }} &middot; {{ m.surplus.location }} to {{ m.demand.location }}</div>
+                    </div>
+                    <a href="{% url 'directory:match_list' %}" class="btn-outline">View Match</a>
+                </div>
+                {% endfor %}
+            {% else %}
+                <p class="exchange-empty">
+                    No confirmed matches yet. Match suggestions below are routed from your listings —
+                    approve them to turn a possible connection into a live route.
+                </p>
+            {% endif %}
+        </div>
+
+        <div class="exchange-cta">
+            <a href="{% url 'website:city' %}" class="btn-outline primary">See the City Network</a>
+            <a href="{% url 'directory:match_list' %}" class="btn-outline">View All Matches</a>
+        </div>
     </section>
 
-    <!-- 4. UPGRADED QUICK ACTIONS (4-COLUMN CARD STRIP) -->
+    <!-- 4. LOOP NAVIGATION — compact 2x2 grid linking to the loop pages -->
+    <section class="loop-nav">
+        <span class="eyebrow center">Choose Your Loop</span>
+        <h2 class="section-title">Four ways in.</h2>
+        <p class="lede center">
+            Your listings feed into one or more of the loops. Step into each to see the full
+            pathways, ecosystem, and live activity — then come back to exchange.
+        </p>
+
+        <div class="loop-nav-grid">
+            <a href="{% url 'website:loop_detail' 'material' %}" class="loop-nav-card material"
+               style="background-image: url('{% static 'images/loop-material.jpg' %}');">
+                <span class="loop-nav-num">01</span>
+                <h3>The Material Loop</h3>
+                <p>Surplus becomes structure, substance, and new cultural value.</p>
+                <span class="panel-link">Explore the Material Loop <span class="arrow">&rarr;</span></span>
+            </a>
+
+            <a href="{% url 'website:loop_detail' 'edible' %}" class="loop-nav-card edible"
+               style="background-image: url('{% static 'images/loop-edible.jpg' %}');">
+                <span class="loop-nav-num">02</span>
+                <h3>The Edible Loop</h3>
+                <p>Food becomes flavour, fuel, material, and future infrastructure.</p>
+                <span class="panel-link">Explore the Edible Loop <span class="arrow">&rarr;</span></span>
+            </a>
+
+            <a href="{% url 'website:loop_detail' 'strategic' %}" class="loop-nav-card strategic"
+               style="background-image: url('{% static 'images/loop-strategy.jpg' %}');">
+                <span class="loop-nav-num">03</span>
+                <h3>The Strategic Loop</h3>
+                <p>Realizing and diverting your Scope 3 — audits, memberships, and procurement.</p>
+                <span class="panel-link">Get an Audit <span class="arrow">&rarr;</span></span>
+            </a>
+
+            <a href="{% url 'website:loop_detail' 'cultural' %}" class="loop-nav-card cultural"
+               style="background-image: url('{% static 'images/loop-culture.jpg' %}');">
+                <span class="loop-nav-num">04</span>
+                <h3>The Cultural Loop</h3>
+                <p>Culture forms from what we choose to value — the behaviours that make it last.</p>
+                <span class="panel-link">Join the Pulse <span class="arrow">&rarr;</span></span>
+            </a>
+        </div>
+    </section>
+
+    <!-- 5. MATCH SUGGESTIONS -->
+    <section class="match-suggestions">
+        <span class="eyebrow center">Suggested Matches</span>
+        <h2 class="section-title">Possible Connections</h2>
+
+        {% if match_suggestions %}
+        <div class="match-suggestions-list">
+            {% for pair in match_suggestions %}
+            <article class="match-suggestion">
+                <div>
+                    <div class="route">
+                        {{ pair.surplus.company }} <span class="arrow">&rarr;</span>
+                        {{ pair.demand.organisation|default:"Anonymous" }}
+                    </div>
+                    <div class="meta">
+                        {{ pair.surplus.get_material_type_display }} &middot;
+                        {{ pair.surplus.location }} to {{ pair.demand.location }}
+                    </div>
+                </div>
+                <a href="{% url 'directory:suggest_match' pair.surplus.id pair.demand.id %}" class="btn-outline">Suggest Match</a>
+            </article>
+            {% endfor %}
+        </div>
+        {% else %}
+        <p class="lede center">
+            No matches to suggest yet. List surplus or demand in a matching
+            material to see possible connections here.
+        </p>
+        {% endif %}
+    </section>
+
+    <!-- 6. UPGRADED QUICK ACTIONS (4-COLUMN CARD STRIP) -->
     <section class="directory-actions">
         <span class="eyebrow center">Ecosystem Entry Points</span>
         <h2 class="section-title">Take Immediate Action</h2>
 
         <div class="actions-grid">
-            <a href="{% url 'directory:demand_list' %}" class="action-card">
+            <a href="{% url 'directory:surplus_create' %}" class="action-card">
                 <div>
                     <span class="eyebrow">For Businesses</span>
                     <h3>List Material</h3>
@@ -692,7 +795,7 @@
                 <span class="arrow-link">View Forest <span>&rarr;</span></span>
             </a>
 
-            <a href="{% url 'website:about' %}" class="action-card">
+            <a href="{% url 'website:tiers' %}" class="action-card">
                 <div>
                     <span class="eyebrow">Partnership</span>
                     <h3>Tiers &amp; Pricing</h3>
@@ -703,7 +806,7 @@
         </div>
     </section>
 
-    <!-- 5. ROLE INFO -->
+    <!-- 7. ROLE INFO -->
     <section class="directory-info">
         <span class="eyebrow center">Who the Directory Is For</span>
         <ul class="info-list">

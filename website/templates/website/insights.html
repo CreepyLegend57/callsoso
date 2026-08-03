@@ -1,7 +1,7 @@
 {% extends "website/base.html" %}
 {% load static %}
 
-{% block title %}Insights & Knowledge — Call Soso{% endblock %}
+{% block title %}Insights — Call Soso{% endblock %}
 
 {% block content %}
 <link rel="stylesheet" href="{% static 'css/insights.css' %}">
@@ -9,7 +9,7 @@
 <!-- HERO -->
 <header class="insights-hero" style="background-image: url('{% static 'images/insights-hero.jpg' %}');">
     <div class="insights-hero-inner">
-        <p class="eyebrow center">Insights &amp; Knowledge</p>
+        <p class="eyebrow center">Insights</p>
         <h1 class="section-title">Research, opinion, and circular economy innovation.</h1>
         <p class="hero-microcopy">&ldquo;Circularity begins with attention.&rdquo;</p>
     </div>
@@ -17,57 +17,88 @@
 
 <div class="insights-page">
 
-    <!-- CATEGORY FILTER — same pattern as Magazine/Knowledge -->
+    <!-- FILTERS -->
     <div class="insights-toolbar">
-        <nav class="filter-pills">
-            <a href="{% url 'website:insights' %}" class="filter-pill {% if not selected_category %}active{% endif %}">All</a>
-            {% for category in categories %}
-            <a href="?category={{ category.slug }}" class="filter-pill {% if category.slug == selected_category %}active{% endif %}">
-                {{ category.name }}
-                <span class="pill-count">{{ category.story_count }}</span>
-            </a>
-            {% endfor %}
-        </nav>
-        {% if selected_category %}
-            <p class="browsing-label">Browsing <span>{{ selected_category_name }}</span></p>
+
+        <div class="filter-row">
+            <div class="filter-group">
+                <span class="filter-label">Browse</span>
+                <nav class="segmented" aria-label="Content type">
+                    <a href="{% url 'website:insights' %}{% if selected_category %}?category={{ selected_category }}{% endif %}"
+                       class="{% if selected_type == 'all' %}active{% endif %}">All</a>
+                    <a href="?type=stories{% if selected_category %}&amp;category={{ selected_category }}{% endif %}"
+                       class="{% if selected_type == 'stories' %}active{% endif %}">Stories</a>
+                    <a href="?type=resources{% if selected_category %}&amp;category={{ selected_category }}{% endif %}"
+                       class="{% if selected_type == 'resources' %}active{% endif %}">Resources</a>
+                </nav>
+            </div>
+            <span class="result-count">{{ items|length }} item{{ items|length|pluralize }}</span>
+        </div>
+
+        {% if categories %}
+        <div class="filter-row">
+            <div class="filter-group">
+                <span class="filter-label">Categories</span>
+                <nav class="filter-pills" aria-label="Category">
+                    <a href="{% url 'website:insights' %}{% if selected_type != 'all' %}?type={{ selected_type }}{% endif %}"
+                       class="filter-pill {% if not selected_category %}active{% endif %}">All</a>
+                    {% for category in categories %}
+                    <a href="?{% if selected_type != 'all' %}type={{ selected_type }}&amp;{% endif %}category={{ category.slug }}"
+                       class="filter-pill {% if category.slug == selected_category %}active{% endif %}">
+                        {{ category.name }}
+                        <span class="pill-count">{{ category.story_count|add:category.resource_count }}</span>
+                    </a>
+                    {% endfor %}
+                </nav>
+            </div>
+        </div>
         {% endif %}
+
     </div>
 
     <div class="insights-wrapper">
 
-        <!-- MAIN: single editorial grid -->
+        <!-- MAIN: unified editorial grid -->
         <main class="insights-main">
-            {% if articles %}
+            {% if items %}
             <div class="articles-grid">
-                {% for article in articles %}
+                {% for item in items %}
                 <article class="article-card"
-                          {% if article.display_image %}style="background-image: url('{{ article.display_image }}');"{% endif %}>
+                          {% if item.image %}style="background-image: url('{{ item.image }}');"{% endif %}>
                     <div class="article-body">
-                        {% with cats=article.categories.all %}
-                            {% if cats %}
-                            <span class="article-category">{{ cats.0.name }}</span>
-                            {% endif %}
-                        {% endwith %}
-                        {% if article.published_date %}
-                            <div class="article-date">{{ article.published_date|date:"j M Y" }}</div>
+                        {% if item.kind %}
+                        <span class="article-kind">{{ item.kind_label }}</span>
                         {% endif %}
-                        <h4><a href="{{ article.get_absolute_url|default:'#' }}">{{ article.title }}</a></h4>
-                        <p class="excerpt">
-                            {% if article.excerpt %}{{ article.excerpt|truncatewords:24 }}
-                            {% elif article.summary %}{{ article.summary|truncatewords:24 }}
-                            {% elif article.body %}{{ article.body|striptags|truncatewords:24 }}
-                            {% else %}No description available.{% endif %}
-                        </p>
-                        <a class="panel-link small" href="{{ article.get_absolute_url|default:'#' }}">
-                            Read Article <span class="arrow">&rarr;</span>
+                        {% if item.category %}
+                        <span class="article-category">{{ item.category }}</span>
+                        {% endif %}
+                        {% if item.date %}
+                            <div class="article-date">{{ item.date|date:"j M Y" }}</div>
+                        {% endif %}
+                        <h4>
+                            <a href="{{ item.url }}" {% if item.target %}target="_blank" rel="noopener"{% endif %}>
+                                {{ item.title }}
+                            </a>
+                        </h4>
+                        {% if item.excerpt %}
+                        <p class="excerpt">{{ item.excerpt|striptags|truncatewords:24 }}</p>
+                        {% endif %}
+                        {% if item.kind == 'story' %}
+                        <a class="panel-link small" href="{{ item.url }}">
+                            Read Story <span class="arrow">&rarr;</span>
                         </a>
+                        {% else %}
+                        <a class="panel-link small" href="{{ item.url }}" {% if item.target %}target="_blank" rel="noopener"{% endif %}>
+                            Explore Resource <span class="arrow">&rarr;</span>
+                        </a>
+                        {% endif %}
                     </div>
                 </article>
                 {% endfor %}
             </div>
             {% else %}
             <p class="empty-state">
-                {% if selected_category %}No stories yet in {{ selected_category_name }}.{% else %}No stories published yet.{% endif %}
+                {% if selected_category %}No content yet in {{ selected_category_name }}.{% else %}No content published yet.{% endif %}
             </p>
             {% endif %}
         </main>
@@ -80,9 +111,9 @@
                 <ul class="hairline-list popular-list">
                     {% for item in popular %}
                     <li>
-                        <a href="{{ item.get_absolute_url|default:'#' }}">{{ item.title }}</a>
-                        {% if item.published_date %}
-                            <span class="date">{{ item.published_date|date:"jS M, Y" }}</span>
+                        <a href="{{ item.url }}">{{ item.title }}</a>
+                        {% if item.date %}
+                            <span class="date">{{ item.date|date:"jS M, Y" }}</span>
                         {% endif %}
                     </li>
                     {% endfor %}

@@ -21,8 +21,8 @@
     {% if query and total_results == 0 %}
         <div class="empty-state">
             <p>No results for &ldquo;{{ query }}&rdquo;.</p>
-            <p class="empty-sub">Try a different word, or browse <a href="{% url 'website:magazine' %}">the Magazine</a>,
-               <a href="{% url 'website:insights' %}">Stories</a>, or <a href="{% url 'website:knowledge' %}">Services</a> directly.</p>
+            <p class="empty-sub">Try a different word, or browse <a href="{% url 'website:magazine' %}">the Magazine</a>
+               or <a href="{% url 'website:insights' %}">Insights</a> directly.</p>
         </div>
     {% endif %}
 
@@ -49,7 +49,7 @@
     {% if articles %}
     <section class="results-section">
         <div class="results-heading">
-            <h2>Stories</h2>
+            <h2>Insights</h2>
             <a href="{% url 'website:insights' %}" class="panel-link small">See All <span class="arrow">&rarr;</span></a>
         </div>
         <div class="results-grid">
@@ -74,7 +74,7 @@
     <section class="results-section">
         <div class="results-heading">
             <h2>Services &amp; Resources</h2>
-            <a href="{% url 'website:knowledge' %}" class="panel-link small">See All <span class="arrow">&rarr;</span></a>
+            <a href="{% url 'website:insights' %}?type=resources" class="panel-link small">See All <span class="arrow">&rarr;</span></a>
         </div>
         <div class="results-grid">
             {% for resource in resources %}

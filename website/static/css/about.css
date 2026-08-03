@@ -1,5 +1,7 @@
 /* =========================================================
    CALL SOSO — ABOUT
+   Editorial split layout with side panels, colour bands,
+   and full-bleed manifesto statement.
 ========================================================= */
 :root {
   --black:     #0a0a0a;
@@ -26,16 +28,29 @@
   border: 1px solid var(--black);
   color: var(--black);
   background: transparent;
-  padding: 13px 28px;
+  padding: 12px 26px;
   font-family: var(--font-sans);
-  font-size: 0.75rem;
+  font-size: 0.72rem;
+  font-weight: 600;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   cursor: pointer;
+  text-decoration: none;
+  transition: all .25s ease;
 }
 .btn-outline:hover { background: var(--orange); border-color: var(--orange); color: var(--white); }
 .btn-outline.light { border-color: var(--white); color: var(--white); }
 .btn-outline.light:hover { background: var(--orange); border-color: var(--orange); }
+
+.panel-kicker {
+  display: block;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--orange);
+  margin-bottom: 18px;
+}
 
 /* HERO */
 .about-hero {
@@ -54,7 +69,7 @@
 .about-hero .hero-microcopy { font-family: var(--font-display); font-style: italic; color: rgba(255,255,255,0.75); margin-top: 14px; }
 
 /* LAYOUT */
-.about-container { max-width: 1000px; margin: 0 auto; }
+.about-container { max-width: 1240px; margin: 0 auto; }
 .about-section { padding: 90px 40px; border-top: 1px solid var(--grey-line); }
 .about-container .about-section:first-child { border-top: none; }
 
@@ -63,7 +78,153 @@
 .dark-block h4 { color: var(--white); }
 .dark-block p { color: rgba(255,255,255,0.75); }
 
-/* HOW IT WORKS CARDS */
+/* =========================================================
+   WHO WE ARE — editorial split with side panel
+========================================================= */
+.about-intro {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 60px;
+  padding: 110px 60px 90px;
+  align-items: stretch;
+}
+.intro-copy { display: flex; flex-direction: column; justify-content: center; }
+.intro-title {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(2.2rem, 4.4vw, 3.4rem);
+  line-height: 1.12;
+  margin: 0 0 24px;
+}
+.intro-lead {
+  font-size: 1.15rem;
+  line-height: 1.6;
+  color: var(--black);
+  margin: 0 0 18px;
+  max-width: 520px;
+}
+.intro-body {
+  font-size: 0.95rem;
+  line-height: 1.65;
+  color: var(--grey);
+  margin: 0 0 28px;
+  max-width: 520px;
+}
+.intro-tags { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 10px; }
+.intro-tags li {
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--black);
+  border: 1px solid var(--grey-line);
+  padding: 7px 14px;
+}
+
+.intro-panel {
+  background: var(--black);
+  color: var(--white);
+  padding: 48px 44px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 22px;
+  position: relative;
+  overflow: hidden;
+}
+.intro-panel::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(160deg, rgba(255,90,31,.14), transparent 55%);
+  pointer-events: none;
+}
+.intro-panel > * { position: relative; z-index: 1; }
+.intro-panel blockquote {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(1.5rem, 2.6vw, 2.1rem);
+  line-height: 1.25;
+}
+.intro-panel .panel-caption { color: rgba(255,255,255,0.6); font-size: 0.9rem; line-height: 1.6; margin: 0; }
+.intro-panel .btn-outline { border-color: var(--white); color: var(--white); align-self: flex-start; }
+.intro-panel .btn-outline:hover { background: var(--orange); border-color: var(--orange); }
+
+/* =========================================================
+   VALUES — three-tone colour band
+========================================================= */
+.values-band {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--grey-line);
+  border: 1px solid var(--grey-line);
+  margin: 0 60px 0;
+}
+.value-item { padding: 40px 36px; color: var(--white); display: flex; flex-direction: column; gap: 8px; }
+.value-item.tone-1 { background: #3f5c8a; }
+.value-item.tone-2 { background: #4caf81; }
+.value-item.tone-3 { background: var(--orange); }
+.value-num { font-family: var(--font-display); font-style: italic; font-size: 1.1rem; opacity: .85; }
+.value-item h3 { font-family: var(--font-display); font-weight: 500; font-size: 1.4rem; margin: 0; }
+.value-item p { font-size: 0.9rem; line-height: 1.55; margin: 0; opacity: .9; }
+
+/* =========================================================
+   MANIFESTO — full-bleed statement band
+========================================================= */
+.manifesto-band {
+  background: linear-gradient(160deg, #101010, #1c2b45);
+  color: var(--white);
+  text-align: center;
+  padding: 110px 40px;
+  margin-top: 1px;
+  position: relative;
+  overflow: hidden;
+}
+.manifesto-band::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 18% 25%, rgba(255,90,31,.18) 0%, transparent 42%),
+    radial-gradient(circle at 82% 70%, rgba(79,122,82,.2) 0%, transparent 45%);
+}
+.manifesto-band > * { position: relative; z-index: 1; }
+.manifesto-band .eyebrow { color: rgba(255,255,255,0.55); }
+.manifesto-title {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(2rem, 4.4vw, 3.2rem);
+  margin: 0 0 26px;
+}
+.manifesto-text {
+  font-family: var(--font-display);
+  font-size: clamp(1.15rem, 2.2vw, 1.5rem);
+  line-height: 1.6;
+  max-width: 780px;
+  margin: 0 auto 36px;
+  color: rgba(255,255,255,0.88);
+}
+.manifesto-seals {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 14px;
+}
+.manifesto-seals span {
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  border: 1px solid rgba(255,255,255,0.25);
+  color: rgba(255,255,255,0.8);
+  padding: 8px 16px;
+}
+
+/* =========================================================
+   HOW IT WORKS CARDS
+========================================================= */
 .about-cards {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -77,29 +238,57 @@
 .about-card h3 { font-family: var(--font-display); font-weight: 500; font-size: 1.3rem; margin: 0 0 10px; }
 .about-card p { color: var(--grey); font-size: 0.92rem; line-height: 1.55; margin: 0; }
 
-/* IMPACT */
+/* =========================================================
+   IMPACT — colour-blocked stats on dark band
+========================================================= */
+.impact-band {
+  background: var(--black);
+  color: var(--white);
+  padding: 90px 60px;
+  border-top: 1px solid var(--grey-line);
+}
+.impact-head { text-align: center; }
+.impact-band .eyebrow { color: rgba(255,255,255,0.55); }
+.impact-band .section-title { color: var(--white); }
 .impact-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
   gap: 1px;
-  background: var(--grey-line);
-  border: 1px solid var(--grey-line);
-  margin-top: 40px;
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.12);
+  margin-top: 44px;
 }
-.impact-item { background: var(--white); padding: 34px; text-align: center; }
-.impact-number { display: block; font-family: var(--font-display); font-size: 2.4rem; color: var(--orange); margin-bottom: 8px; }
-.impact-item p { color: var(--grey); font-size: 0.9rem; margin: 0; }
+.impact-item { background: rgba(255,255,255,0.03); padding: 44px 34px; text-align: center; }
+.impact-number { display: block; font-family: var(--font-display); font-size: 3rem; color: var(--orange); margin-bottom: 10px; }
+.impact-item p { color: rgba(255,255,255,0.75); font-size: 0.9rem; margin: 0; }
 
-/* FOUNDERS */
+/* =========================================================
+   FOUNDERS
+========================================================= */
 .founders-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 40px;
-  max-width: 800px;
+  gap: 1px;
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.12);
+  max-width: 860px;
   margin: 40px auto 0;
-  text-align: left;
 }
-.founders-grid h4 { font-family: var(--font-display); font-weight: 500; font-size: 1.2rem; margin: 0 0 8px; }
+.founder-panel {
+  background: rgba(255,255,255,0.04);
+  padding: 40px 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.founder-mark {
+  font-family: var(--font-display);
+  font-size: 2.6rem;
+  color: var(--orange);
+  line-height: 1;
+}
+.founder-panel h4 { font-family: var(--font-display); font-weight: 500; font-size: 1.2rem; margin: 0; }
+.founder-panel p { font-size: 0.92rem; line-height: 1.6; margin: 0; color: rgba(255,255,255,0.75); }
 
 .founders-form {
   display: flex;
@@ -121,6 +310,70 @@
 .founders-form input[type="email"]::placeholder { color: rgba(255,255,255,0.5); }
 .founders-form input[type="email"]:focus { border-color: var(--orange); }
 
+/* =========================================================
+   FOUNDATION — split with side panel
+========================================================= */
+.foundation-split {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 60px;
+  align-items: stretch;
+}
+.foundation-copy { text-align: left; }
+.foundation-copy .section-title { text-align: left; }
+.foundation-copy .lede { margin: 0 0 16px; }
+.foundation-panel {
+  background: var(--off-white);
+  border: 1px solid var(--grey-line);
+  padding: 40px 38px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.foundation-panel ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 12px; }
+.foundation-panel li {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--grey-line);
+}
+.foundation-panel .btn-outline { align-self: flex-start; }
+
+/* LOCATION */
+.location-section { max-width: 1240px; margin: 0 auto; }
+.location-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 1px;
+  background: var(--grey-line);
+  border: 1px solid var(--grey-line);
+  margin-top: 40px;
+}
+.location-map { background: var(--off-white); min-height: 380px; }
+.location-map iframe {
+  width: 100%;
+  height: 100%;
+  min-height: 380px;
+  border: 0;
+  display: block;
+}
+.location-info { background: var(--white); padding: 40px; display: flex; flex-direction: column; }
+.location-info h3 { font-family: var(--font-display); font-weight: 500; font-size: 1.5rem; margin: 0 0 14px; }
+.location-info p { color: var(--grey); font-size: 0.92rem; line-height: 1.6; margin: 0 0 20px; }
+.location-points { list-style: none; padding: 0; margin: 0 0 28px; display: flex; flex-direction: column; gap: 12px; }
+.location-points li { font-size: 0.9rem; color: var(--black); line-height: 1.5; }
+.location-points li span {
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--orange);
+  border: 1px solid rgba(255,90,31,.3);
+  padding: 2px 8px;
+  margin-right: 8px;
+}
+.location-info .btn-outline { align-self: flex-start; }
+
 /* CTA */
 .about-cta { padding: 90px 40px; text-align: center; background: var(--orange); color: var(--white); }
 .about-cta .section-title { color: var(--white); }
@@ -128,7 +381,19 @@
 .about-cta .btn-outline.light:hover { background: var(--black); border-color: var(--black); }
 
 /* RESPONSIVE */
+@media (max-width: 900px) {
+  .about-intro { grid-template-columns: 1fr; gap: 40px; padding: 80px 30px 60px; }
+  .values-band { grid-template-columns: 1fr; margin: 0 30px; }
+  .impact-band { padding: 70px 30px; }
+  .foundation-split { grid-template-columns: 1fr; gap: 40px; }
+}
 @media (max-width: 700px) {
   .about-section { padding: 60px 24px; }
-  .founders-grid { grid-template-columns: 1fr; gap: 26px; }
+  .founders-grid { grid-template-columns: 1fr; gap: 1px; }
+  .location-grid { grid-template-columns: 1fr; }
+  .location-map, .location-map iframe { min-height: 280px; }
+  .about-intro { padding: 70px 24px 50px; }
+  .values-band { margin: 0 24px; }
+  .manifesto-band { padding: 80px 24px; }
+  .impact-grid { grid-template-columns: 1fr; }
 }

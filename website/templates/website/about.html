@@ -18,33 +18,75 @@
 
 <div class="about-container">
 
-    <!-- WHO WE ARE -->
-    <section class="about-section">
-        <p class="eyebrow center">Who We Are</p>
-        <h2 class="section-title">A circular economy venture</h2>
-        <p class="lede center">
-            Call Soso is a Milton Keynes–based circular economy venture working at the intersection of
-            corporate surplus, creative reuse, and community impact. We capture materials that would
-            otherwise be discarded and redirect them into meaningful second lives.
-        </p>
-        <p class="lede center">
-            From cardboard and textiles to foam and product returns, we work with businesses, upcyclers,
-            designers, and educators to transform waste into value — socially, environmentally, and economically.
-        </p>
+    <!-- WHO WE ARE — editorial split -->
+    <section class="about-intro">
+        <div class="intro-copy">
+            <p class="eyebrow">Who We Are</p>
+            <h2 class="intro-title">A circular economy venture, rooted in one city.</h2>
+            <p class="intro-lead">
+                Call Soso captures materials that would otherwise be discarded and redirects
+                them into meaningful second lives — socially, environmentally, and economically.
+            </p>
+            <p class="intro-body">
+                From cardboard and textiles to foam and product returns, we work with businesses,
+                upcyclers, designers, and educators to transform waste into value. Everything is
+                treated as data, story, and infrastructure for an imaginative economy.
+            </p>
+            <ul class="intro-tags">
+                <li>Surplus Capture</li>
+                <li>Creative Reuse</li>
+                <li>Community Impact</li>
+            </ul>
+        </div>
+
+        <aside class="intro-panel">
+            <span class="panel-kicker">The First Loop</span>
+            <blockquote>
+                &ldquo;Waste is only a material waiting for direction.&rdquo;
+            </blockquote>
+            <p class="panel-caption">
+                Every surplus stream we intercept becomes a node in the city's circular network.
+            </p>
+            <a href="{% url 'website:city' %}" class="btn-outline">See the City Network</a>
+        </aside>
     </section>
 
-    <!-- ROOTED MANIFESTO -->
-    <section class="about-section dark-block">
+    <!-- VALUES — three-tone band -->
+    <section class="values-band">
+        <div class="value-item tone-1">
+            <span class="value-num">01</span>
+            <h3>Honour Materials</h3>
+            <p>Surplus is intelligence, culture, and possibility — never waste.</p>
+        </div>
+        <div class="value-item tone-2">
+            <span class="value-num">02</span>
+            <h3>Build Systems</h3>
+            <p>We build systems, not scraps — lasting infrastructure for the circular economy.</p>
+        </div>
+        <div class="value-item tone-3">
+            <span class="value-num">03</span>
+            <h3>Resonate</h3>
+            <p>Circularity isn't compliance, it's creativity — made to echo through the city.</p>
+        </div>
+    </section>
+
+    <!-- ROOTED MANIFESTO — full-bleed statement -->
+    <section class="manifesto-band">
         <p class="eyebrow center">Manifesto</p>
-        <h2 class="section-title">The Rooted Manifesto</h2>
-        <p class="lede center">
-            We honour materials, edible and otherwise. Everything has a second life. We treat surplus as
-            intelligence, culture, and possibility. Circularity isn't compliance, it's creativity.
-            We build systems, not scraps.
+        <h2 class="manifesto-title">The Rooted Manifesto</h2>
+        <p class="manifesto-text">
+            We honour materials, edible and otherwise. Everything has a second life.
+            We treat surplus as intelligence, culture, and possibility. Circularity isn't
+            compliance, it's creativity. We build systems, not scraps.
         </p>
+        <div class="manifesto-seals">
+            <span>Materials are data.</span>
+            <span>Nothing is static.</span>
+            <span>Everything circulates.</span>
+        </div>
     </section>
 
-    <!-- HOW IT WORKS -->
+    <!-- HOW IT WORKS — connected steps -->
     <section class="about-section">
         <p class="eyebrow center">Process</p>
         <h2 class="section-title">How It Works</h2>
@@ -71,11 +113,12 @@
         </div>
     </section>
 
-    <!-- IMPACT -->
-    <section class="about-section">
-        <p class="eyebrow center">Our Impact</p>
-        <h2 class="section-title">What This Adds Up To</h2>
-
+    <!-- IMPACT — colour-blocked stats -->
+    <section class="impact-band">
+        <div class="impact-head">
+            <p class="eyebrow">Our Impact</p>
+            <h2 class="section-title">What This Adds Up To</h2>
+        </div>
         <div class="impact-grid">
             <div class="impact-item">
                 <span class="impact-number">10%</span>
@@ -98,12 +141,14 @@
         <h2 class="section-title">Founding Stories</h2>
 
         <div class="founders-grid">
-            <div>
+            <div class="founder-panel">
+                <span class="founder-mark">S.</span>
                 <h4>Sybil — Founder &amp; Creative Director</h4>
                 <p>Sybil built Call Soso from a clear instinct: everything we overlook — materials, food,
                    ideas, people — can reshape a city.</p>
             </div>
-            <div>
+            <div class="founder-panel">
+                <span class="founder-mark">N.</span>
                 <h4>Nyasha — Co-Founder</h4>
                 <p>Nyasha provides precision, structure, and operational flow to bring the ecosystem to life.</p>
             </div>
@@ -116,18 +161,66 @@
         </form>
     </section>
 
-    <!-- FOUNDATION -->
+    <!-- FOUNDATION — split with side panel -->
     <section class="about-section">
-        <p class="eyebrow center">Give Back</p>
-        <h2 class="section-title">The Call Soso Foundation</h2>
+        <div class="foundation-split">
+            <div class="foundation-copy">
+                <p class="eyebrow">Give Back</p>
+                <h2 class="section-title">The Call Soso Foundation</h2>
+                <p class="lede">
+                    We reinvest 10% of our profits into the Call Soso Foundation, supporting workshops,
+                    educational programmes, and hands-on learning experiences for communities.
+                </p>
+                <p class="lede">
+                    These initiatives empower people to understand materials, develop creative confidence,
+                    and participate directly in the circular economy.
+                </p>
+            </div>
+            <aside class="foundation-panel">
+                <span class="panel-kicker">The Foundation Funds</span>
+                <ul>
+                    <li>Community Workshops</li>
+                    <li>Educational Programmes</li>
+                    <li>Hands-on Learning Experiences</li>
+                    <li>Creative Confidence Building</li>
+                </ul>
+                <a href="{% url 'website:support' %}" class="btn-outline">Support the Mission</a>
+            </aside>
+        </div>
+    </section>
+
+    <!-- LOCATION -->
+    <section class="about-section location-section">
+        <p class="eyebrow center">Where We Work</p>
+        <h2 class="section-title">Rooted in Milton Keynes</h2>
         <p class="lede center">
-            We reinvest 10% of our profits into the Call Soso Foundation, supporting workshops,
-            educational programmes, and hands-on learning experiences for communities.
+            Call Soso is based in Milton Keynes — a city designed around grids, green spaces,
+            and movement. It's the natural home for a circular economy network.
         </p>
-        <p class="lede center">
-            These initiatives empower people to understand materials, develop creative confidence,
-            and participate directly in the circular economy.
-        </p>
+
+        <div class="location-grid">
+            <div class="location-map">
+                <iframe
+                    title="Call Soso — Milton Keynes map"
+                    src="https://www.openstreetmap.org/export/embed.html?bbox=-0.848%2C51.989%2C-0.548%2C52.119&layer=mapnik&marker=52.0406224%2C-0.7594171"
+                    loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+            <div class="location-info">
+                <h3>Milton Keynes, United Kingdom</h3>
+                <p>
+                    Our circularity audit, capture, and match operations run across the
+                    city region, connecting corporate surplus with makers, designers,
+                    and community groups.
+                </p>
+                <ul class="location-points">
+                    <li><span>Grid</span> — Surplus routed across the city's grid network</li>
+                    <li><span>Hub</span> — Central Milton Keynes operations</li>
+                    <li><span>Reach</span> — Regional partners across the South East</li>
+                </ul>
+                <a href="{% url 'website:city' %}" class="btn-outline">View the City Map</a>
+            </div>
+        </div>
     </section>
 
     <!-- CTA -->

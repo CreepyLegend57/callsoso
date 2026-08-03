@@ -129,6 +129,19 @@
 }
 .listing-rows li strong { color: var(--black); }
 
+.pending-badge {
+  display: inline-block;
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--white);
+  background: var(--orange);
+  padding: 3px 10px;
+  margin-left: 8px;
+  vertical-align: middle;
+}
+
 .empty-state {
   text-align: center;
   padding: 50px 20px;

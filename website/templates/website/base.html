@@ -37,6 +37,16 @@
             --font-display: 'Cormorant Garamond', Georgia, serif;
             --font-sans:    'Inter', -apple-system, sans-serif;
 
+            /* Loop duotones — shared across home, loops, directory */
+            --material-a:   #1c2b45;
+            --material-b:   #3f5c8a;
+            --edible-a:     #1f3a2a;
+            --edible-b:     #4f7a52;
+            --strategic-a:  #3a2f1c;
+            --strategic-b:  #8a6f3f;
+            --cultural-a:   #2b1f3a;
+            --cultural-b:   #6b4f8a;
+
             --header-h: 84px;
         }
 
@@ -77,7 +87,9 @@
             width: 100%;
             height: var(--header-h);
             z-index: 9999;
-            background: var(--white);
+            background: rgba(255,255,255,0.96);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
             border-bottom: 1px solid var(--grey-line);
         }
 
@@ -90,6 +102,7 @@
             gap: 24px;
         }
 
+        .logo { flex-shrink: 0; }
         .logo-link { display: flex; flex-direction: column; line-height: 1; }
         .logo-link h1 {
             margin: 0;
@@ -99,473 +112,119 @@
             letter-spacing: 0.04em;
             color: var(--black);
         }
+        .logo-link h1 .dot { color: var(--orange); }
         .logo-link .tagline {
-            margin-top: 3px;
+            margin-top: 4px;
             font-family: var(--font-display);
             font-style: italic;
-            font-size: 0.8rem;
+            font-size: 0.78rem;
             color: var(--grey);
         }
 
-        /* Primary nav — flat, tracked-out, no pills/backgrounds */
+        /* Primary nav — flat, tracked-out, animated underline */
         .main-nav ul {
             list-style: none;
             display: flex;
             align-items: center;
-            gap: 30px;
+            gap: 32px;
             padding: 0;
             margin: 0;
         }
         .main-nav a {
+            position: relative;
             font-family: var(--font-sans);
-            font-size: 0.75rem;
+            font-size: 0.73rem;
             font-weight: 500;
-            letter-spacing: 0.14em;
+            letter-spacing: 0.15em;
             text-transform: uppercase;
             color: var(--black);
-            padding: 6px 0;
-            border-bottom: 1px solid transparent;
+            padding: 8px 0;
         }
-        .main-nav a.active,
-        .main-nav a:hover {
-            color: var(--orange);
-            border-bottom-color: var(--orange);
+        .main-nav a::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: 2px;
+            width: 100%;
+            height: 2px;
+            background: var(--orange);
+            transform: scaleX(0);
+            transform-origin: left center;
+            transition: transform .3s ease;
         }
+        .main-nav a:hover { color: var(--orange); }
+        .main-nav a:hover::after,
+        .main-nav a.active::after {
+            transform: scaleX(1);
+        }
+        .main-nav a.active { color: var(--orange); }
 
-            /* ==========================================
-            CALL SOSO — PREMIUM CATEGORY MEGA DROPDOWN
-        ========================================== */
-        
-        .dropdown{
-            position:relative;
-        }
-        
-        .dropdown-menu{
-        
-            position:absolute;
-        
-            top:calc(100% + 18px);
-        
-            left:50%;
-        
-            transform:translateX(-50%) translateY(-10px);
-        
-            width:1050px;
-        
-            max-width:95vw;
-        
-            padding:28px;
-        
-            background:var(--white);
-        
-            border:1px solid var(--grey-line);
-        
-            border-radius:20px;
-        
-            box-shadow:
-                0 22px 60px rgba(0,0,0,.12);
-        
-            display:grid;
-        
-            grid-template-columns:repeat(5,1fr);
-        
-            gap:18px;
-        
-            list-style:none;
-        
-            margin:0;
-        
-            opacity:0;
-        
-            visibility:hidden;
-        
-            pointer-events:none;
-        
-            transition:
-                opacity .25s ease,
-                transform .25s ease,
-                visibility .25s ease;
-        
-            z-index:9999;
-        
-        }
-        
-        .dropdown:hover>.dropdown-menu,
-        .dropdown.open>.dropdown-menu,
-        .dropdown:focus-within>.dropdown-menu{
-        
-            opacity:1;
-        
-            visibility:visible;
-        
-            pointer-events:auto;
-        
-            transform:translateX(-50%) translateY(0);
-        
-        }
-        
-        .dropdown-menu::before{
-        
-            content:"";
-        
-            position:absolute;
-        
-            top:-9px;
-        
-            left:50%;
-        
-            width:18px;
-        
-            height:18px;
-        
-            background:#fff;
-        
-            transform:translateX(-50%) rotate(45deg);
-        
-            border-top:1px solid var(--grey-line);
-        
-            border-left:1px solid var(--grey-line);
-        
-        }
-        
-        .dropdown-menu>li{
-        
-            list-style:none;
-        
-            margin:0;
-        
-            padding:0;
-        
-        }
-        
-        .dropdown-menu li a{
-        
-            display:flex;
-        
-            flex-direction:column;
-        
-            justify-content:center;
-        
-            align-items:flex-start;
-        
-            gap:6px;
-        
-            width:100%;
-        
-            min-height:84px;
-        
-            padding:18px;
-        
-            border-radius:12px;
-        
-            background:#fff;
-        
-            border:1px solid transparent;
-        
-            transition:all .22s ease;
-        
-        }
-        
-        .dropdown-menu li a:hover{
-        
-            background:#faf8f4;
-        
-            border-color:#ece6dc;
-        
-            transform:translateY(-2px);
-        
-        }
-        
-        .dropdown-menu li a.active{
-        
-            background:#faf8f4;
-        
-            border-color:#ece6dc;
-        
-        }
-        
-        .dropdown-title{
-        
-            font-family:var(--font-display);
-        
-            font-size:1.08rem;
-        
-            font-weight:500;
-        
-            line-height:1.2;
-        
-            color:var(--black);
-        
-            transition:.25s;
-        
-        }
-        
-        .dropdown-subtitle{
-        
-            font-family:var(--font-sans);
-        
-            font-size:.70rem;
-        
-            letter-spacing:.14em;
-        
-            text-transform:uppercase;
-        
-            color:var(--grey);
-        
-            transition:.25s;
-        
-        }
-        
-        .dropdown-menu li a:hover .dropdown-title{
-        
-            color:var(--orange);
-        
-        }
-        
-        .dropdown-menu li a:hover .dropdown-subtitle{
-        
-            color:var(--orange);
-        
-        }
-        
-        .dropdown-menu li a.active .dropdown-title{
-        
-            color:var(--orange);
-        
-        }
-        
-        .dropdown-menu li a.active .dropdown-subtitle{
-        
-            color:var(--orange);
-        
-        }
-        
-        .dropdown-toggle{
-        
-            appearance:none;
-        
-            background:none;
-        
-            border:none;
-        
-            outline:none;
-        
-            cursor:pointer;
-        
-            padding:6px 0;
-        
-            margin:0;
-        
-            font-family:var(--font-sans);
-        
-            font-size:.75rem;
-        
-            font-weight:500;
-        
-            letter-spacing:.14em;
-        
-            text-transform:uppercase;
-        
-            color:var(--black);
-        
-            border-bottom:1px solid transparent;
-        
-            transition:.25s;
-        
-        }
-        
-        .dropdown-toggle:hover,
-        .dropdown-toggle.active,
-        .dropdown-toggle:focus{
-        
-            color:var(--orange);
-        
-            border-bottom-color:var(--orange);
-        
-        }
-        
-        .dropdown-toggle::after{
-        
-            content:" ▾";
-        
-            font-size:.65rem;
-        
-            margin-left:6px;
-        
-            transition:transform .25s ease;
-        
-        }
-        
-        .dropdown.open .dropdown-toggle::after,
-        .dropdown:hover .dropdown-toggle::after{
-        
-            transform:rotate(180deg);
-        
-        }
-        
-        .dropdown-empty{
-        
-            grid-column:1/-1;
-        
-            display:flex;
-        
-            justify-content:center;
-        
-            align-items:center;
-        
-            min-height:80px;
-        
-            color:var(--grey);
-        
-            font-size:.9rem;
-        
-        }
-        
-        .view-all-row{
-        
-            grid-column:1/-1;
-        
-            margin-top:10px;
-        
-            padding-top:20px;
-        
-            border-top:1px solid var(--grey-line);
-        
-        }
-        
-        .view-all{
-        
-            display:flex !important;
-        
-            justify-content:center;
-        
-            align-items:center;
-        
-            min-height:50px;
-        
-            font-family:var(--font-sans);
-        
-            font-size:.74rem;
-        
-            font-weight:600;
-        
-            letter-spacing:.14em;
-        
-            text-transform:uppercase;
-        
-            color:var(--orange);
-        
-            background:none !important;
-        
-            border:none !important;
-        
-        }
-        
-        .view-all:hover{
-        
-            color:var(--black);
-        
-            background:none !important;
-        
-            transform:none !important;
-        
-        }
-        
-        @media (max-width:1100px){
-        
-            .dropdown-menu{
-        
-                width:760px;
-        
-                grid-template-columns:repeat(2,1fr);
-        
-            }
-        
-        }
-        
-        @media (max-width:768px){
-        
-            .dropdown-menu{
-        
-                position:fixed;
-        
-                top:84px;
-        
-                left:50%;
-        
-                transform:translateX(-50%);
-        
-                width:94vw;
-        
-                max-height:72vh;
-        
-                overflow-y:auto;
-        
-                grid-template-columns:1fr;
-        
-            }
-        
-        }
-
-        /* ---------- Mobile ---------- */
-
-        @media (max-width:768px){
-
-            .dropdown-menu{
-
-                position:fixed;
-
-                top:84px;
-
-                left:50%;
-
-                transform:translateX(-50%);
-
-                width:94vw;
-
-                max-height:70vh;
-
-                overflow-y:auto;
-
-                grid-template-columns:1fr;
-
-            }
-
-        }
 
         /* Right-hand utility cluster: search / auth / social */
-        .utility-cluster { display: flex; align-items: center; gap: 22px; }
+        .utility-cluster {
+            display: flex;
+            align-items: center;
+            gap: 26px;
+            flex-shrink: 0;
+        }
 
-        .search-box input {
-            padding: 6px 0;
-            border: none;
+        .search-box {
             border-bottom: 1px solid var(--grey-line);
+            padding: 0 0 3px;
+        }
+        .search-box input {
+            padding: 0;
+            border: none;
             outline: none;
             font-family: var(--font-sans);
             font-size: 0.8rem;
-            width: 120px;
+            width: 110px;
             background: transparent;
+            color: var(--black);
         }
+        .search-box input::placeholder { color: var(--grey); }
         .search-box button {
             background: none;
             border: none;
             color: var(--black);
             cursor: pointer;
             padding: 0 0 0 6px;
+            font-size: 0.8rem;
         }
         .search-box button:hover { color: var(--orange); }
 
+        .auth-links {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            padding-left: 26px;
+            border-left: 1px solid var(--grey-line);
+        }
         .auth-links a {
-            font-size: 0.75rem;
+            font-size: 0.73rem;
             font-weight: 500;
             letter-spacing: 0.1em;
             text-transform: uppercase;
-            margin-left: 18px;
         }
         .auth-links a:hover { color: var(--orange); }
-        .auth-links a.signup { color: var(--orange); }
+        .auth-links a.signup {
+            color: var(--white);
+            background: var(--black);
+            padding: 9px 16px;
+            letter-spacing: 0.12em;
+            transition: background .25s ease, color .25s ease;
+        }
+        .auth-links a.signup:hover {
+            background: var(--orange);
+            color: var(--white);
+        }
 
-        .social-links a { margin-left: 14px; font-size: 0.85rem; color: var(--black); }
+        .social-links {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+        .social-links a { font-size: 0.9rem; color: var(--black); }
         .social-links a:hover { color: var(--orange); }
 
         /* ===== MAIN CONTENT ===== */
@@ -629,6 +288,8 @@
             border-right: 1px solid rgba(255,255,255,0.07);
             transition: background .3s ease;
             overflow: hidden;
+            text-decoration: none;
+            color: inherit;
         }
         .footer-cta-strip .cta-card:last-child { border-right: none; }
         .footer-cta-strip .cta-card::before {
@@ -725,7 +386,7 @@
 
             <div class="logo">
                 <a href="{% url 'website:home' %}" class="logo-link">
-                    <h1>Call Soso</h1>
+                    <h1>Call Soso<span class="dot">.</span></h1>
                     <p class="tagline">Circularity in Resonance</p>
                 </a>
             </div>
@@ -733,62 +394,10 @@
             <nav class="main-nav">
                 <ul>
                     <li><a href="{% url 'website:home' %}" class="{% if request.path == '/' %}active{% endif %}">Home</a></li>
+                    <li><a href="{% url 'website:browse' %}" class="{% if request.path == '/browse/' %}active{% endif %}">Marketplace</a></li>
                     <li><a href="{% url 'directory:directory_home' %}" class="{% if request.path == '/directory/' %}active{% endif %}">Directory</a></li>
-                    <li><a href="{% url 'website:insights' %}" class="{% if request.path == '/insights/' %}active{% endif %}">Stories</a></li>
-                    <li><a href="{% url 'website:knowledge' %}" class="{% if request.path == '/knowledge/' %}active{% endif %}">Services</a></li>
-                    <li class="dropdown">
-
-                        <button
-                            type="button"
-                            class="dropdown-toggle {% if request.path == '/categories/' %}active{% endif %}">
-                            Categories
-                        </button>
-                    
-                        <ul class="dropdown-menu">
-                    
-                            {% for category in nav_categories %}
-                    
-                            <li>
-                    
-                                <a
-                                    href="{% url 'website:categories' %}?category={{ category.slug }}"
-                                    class="{% if request.GET.category == category.slug %}active{% endif %}">
-                    
-                                    <span class="dropdown-title">
-                                        {{ category.name }}
-                                    </span>
-                    
-                                    <span class="dropdown-subtitle">
-                                        Stories • Services • Magazine
-                                    </span>
-                    
-                                </a>
-                    
-                            </li>
-                    
-                            {% empty %}
-                    
-                            <li class="dropdown-empty">
-                                No categories available.
-                            </li>
-                    
-                            {% endfor %}
-                    
-                            <li class="view-all-row">
-                    
-                                <a
-                                    href="{% url 'website:categories' %}"
-                                    class="view-all">
-                    
-                                    Browse All Categories →
-                    
-                                </a>
-                    
-                            </li>
-                    
-                        </ul>
-                    
-                    </li>
+                    <li><a href="{% url 'website:insights' %}" class="{% if request.path == '/insights/' %}active{% endif %}">Insights</a></li>
+                    <li><a href="{% url 'website:categories' %}" class="{% if request.path == '/categories/' %}active{% endif %}">Categories</a></li>
                     <li><a href="{% url 'website:about' %}" class="{% if request.path == '/about/' %}active{% endif %}">About</a></li>
                     <li><a href="{% url 'website:contact' %}" class="{% if request.path == '/contact/' %}active{% endif %}">Contact</a></li>
                 </ul>
@@ -845,33 +454,33 @@
 
         <div class="footer-cta-strip">
 
-            <div class="cta-card support">
+            <a href="{% url 'website:support' %}" class="cta-card support">
                 <span class="eyebrow">Community</span>
                 <h3>Support Us</h3>
                 <p class="sub">Back the mission via our Kickstarter portal and help grow the circular economy.</p>
-                <a href="{% url 'website:support' %}" class="arrow-link">Kickstarter Portal <span class="arr">→</span></a>
-            </div>
+                <span class="arrow-link">Kickstarter Portal <span class="arr">→</span></span>
+            </a>
 
-            <div class="cta-card contact">
+            <a href="{% url 'website:contact' %}" class="cta-card contact">
                 <span class="eyebrow">Collaborate</span>
                 <h3>Get in Touch</h3>
                 <p class="sub">Partner with us, pitch a story, or explore collaboration opportunities.</p>
-                <a href="{% url 'website:contact' %}" class="arrow-link">Contact Us <span class="arr">→</span></a>
-            </div>
+                <span class="arrow-link">Contact Us <span class="arr">→</span></span>
+            </a>
 
-            <div class="cta-card business">
+            <a href="{% url 'website:contact' %}" class="cta-card business">
                 <span class="eyebrow">For Business</span>
                 <h3>Get an Audit</h3>
                 <p class="sub">Request a circularity audit and discover where your surplus can flow next.</p>
-                <a href="{% url 'website:contact' %}" class="arrow-link">Start Audit <span class="arr">→</span></a>
-            </div>
+                <span class="arrow-link">Start Audit <span class="arr">→</span></span>
+            </a>
 
-            <div class="cta-card creators">
+            <a href="{% url 'website:tiers' %}" class="cta-card creators">
                 <span class="eyebrow">For Creators</span>
                 <h3>Join the Pulse</h3>
                 <p class="sub">List your practice, connect with surplus, and reach the circular community.</p>
-                <a href="{% url 'signup' %}" class="arrow-link">Join Now <span class="arr">→</span></a>
-            </div>
+                <span class="arrow-link">Join Now <span class="arr">→</span></span>
+            </a>
 
         </div>
 
@@ -885,36 +494,6 @@
 
 
 {% block modals %}{% endblock %}
-
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-    var dropdowns = document.querySelectorAll('.dropdown');
-
-    dropdowns.forEach(function (dropdown) {
-        var toggle = dropdown.querySelector('.dropdown-toggle');
-        if (!toggle) return;
-
-        toggle.addEventListener('click', function (e) {
-            e.preventDefault();
-            var isOpen = dropdown.classList.contains('open');
-            dropdowns.forEach(function (d) { d.classList.remove('open'); });
-            if (!isOpen) dropdown.classList.add('open');
-        });
-    });
-
-    document.addEventListener('click', function (e) {
-        if (!e.target.closest('.dropdown')) {
-            dropdowns.forEach(function (d) { d.classList.remove('open'); });
-        }
-    });
-
-    document.addEventListener('keydown', function (e) {
-        if (e.key === 'Escape') {
-            dropdowns.forEach(function (d) { d.classList.remove('open'); });
-        }
-    });
-});
-</script>
 
 </body>
 </html>

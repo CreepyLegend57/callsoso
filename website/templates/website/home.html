@@ -38,42 +38,43 @@
     </div>
 </header>
 
-<!-- INTRO STATEMENT -->
+<!-- INTRO STATEMENT + LOOP SWITCHBOARD INTRO (single heading) -->
 <section id="intro" class="intro-statement">
     <p class="eyebrow">Welcome</p>
     <h2>Step inside the Call Soso ecosystem.</h2>
-    <p class="lede">A space where circularity becomes movement, meaning, and momentum.</p>
+    <p class="lede">Choose your loop — four connected circular systems where circularity becomes movement, meaning, and momentum.</p>
 </section>
 
-<!-- MATERIAL LOOP / EDIBLE LOOP SPLIT -->
-<section class="loops-split">
-    <a href="{% url 'directory:demand_list' %}" class="loop-panel material" style="background-image: url('{% static 'images/loop-material.jpg' %}');">
-        <span class="eyebrow">The Material Loop</span>
-        <h2>Repurposing corporate surplus into new forms, products, and cultural value.</h2>
-        <span class="panel-link">Explore Material Loop <span class="arrow">&rarr;</span></span>
-    </a>
-    <a href="{% url 'directory:surplus_list' %}" class="loop-panel edible" style="background-image: url('{% static 'images/loop-edible.jpg' %}');">
-        <span class="eyebrow">The Edible Loop</span>
-        <h2>Reimagining food surplus as nourishment, employment, and civic creativity.</h2>
-        <span class="panel-link">Explore Edible Loop <span class="arrow">&rarr;</span></span>
-    </a>
+<!-- CHOOSE YOUR LOOP — SWITCHBOARD (4 panels) -->
+<section class="switchboard">
+    <div class="switchboard-grid">
+        {% for loop in loops %}
+        <a href="{% url 'website:loop_detail' loop.slug %}"
+           class="loop-panel {{ loop.slug }} {% if loop.highlighted %}highlighted{% endif %}"
+           style="background-image: url('{% static loop.image %}');">
+            <span class="eyebrow">{{ loop.name }}</span>
+            <h2>{{ loop.description }}</h2>
+            <span class="panel-link">{{ loop.cta_label }} <span class="arrow">&rarr;</span></span>
+        </a>
+        {% endfor %}
+    </div>
 </section>
 
 <!-- DIRECTORY / SITE INDEX — a genuine sequence through the ecosystem -->
 <section class="directory-index">
 
     <div class="index-row featured-row">
-        <a href="{% url 'directory:directory_home' %}" class="index-card featured" style="background-image: url('{% static 'images/directory-featured.jpg' %}');">
+        <a href="{% url 'website:browse' %}" class="index-card featured" style="background-image: url('{% static 'images/directory-featured.jpg' %}');">
             <span class="eyebrow">Featured</span>
             <h2>The Exchange Directory</h2>
             <p>A circular resource engine matching surplus with makers.</p>
-            <span class="panel-link">Enter Directory <span class="arrow">&rarr;</span></span>
+            <span class="panel-link">Browse the Marketplace <span class="arrow">&rarr;</span></span>
         </a>
-        <a href="{% url 'website:about' %}" class="index-card photo" style="background-image: url('{% static 'images/index-about.jpg' %}');">
+        <a href="{% url 'website:city' %}" class="index-card photo" style="background-image: url('{% static 'images/index-about.jpg' %}');">
             <span class="index-num">01</span>
-            <h3>About</h3>
-            <p>The Rooted Manifesto. Our ethos and cultural logic.</p>
-            <span class="panel-link small">Read the Manifesto <span class="arrow">&rarr;</span></span>
+            <h3>The Circular City</h3>
+            <p>Make the city a partner. Map the network, watch materials flow.</p>
+            <span class="panel-link small">View the City Map <span class="arrow">&rarr;</span></span>
         </a>
     </div>
 
@@ -88,7 +89,7 @@
             <span class="index-num">03</span>
             <h3>The Narrative</h3>
             <p>Impact Stories &amp; Use Cases.</p>
-            <span class="panel-link small">Read Stories <span class="arrow">&rarr;</span></span>
+            <span class="panel-link small">Read Insights <span class="arrow">&rarr;</span></span>
         </a>
         <a href="#" class="index-card photo" style="background-image: url('{% static 'images/index-living-system.jpg' %}');">
             <span class="index-num">04</span>
@@ -119,7 +120,7 @@
 <!-- LATEST STORIES -->
 <section id="latest-articles" class="latest-articles">
     <p class="eyebrow center">Reading</p>
-    <h2 class="section-title">Latest Stories</h2>
+    <h2 class="section-title">Latest Insights</h2>
 
     {% if latest_articles %}
         <div class="latest-grid" role="list">
@@ -167,7 +168,7 @@
     {% else %}
         <div class="no-articles">
             <p>
-                No stories published yet — come back soon.
+                No insights published yet — come back soon.
                 Explore our <a href="{% url 'website:about' %}">approach</a>
                 and <a href="{% url 'directory:directory_home' %}">directory</a>.
             </p>

@@ -1,0 +1,236 @@
+{% extends "website/base.html" %}
+{% load static %}
+
+{% block title %}Make the City a Partner — Call Soso{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/city.css' %}">
+
+<div class="city-page">
+
+    <!-- ================================
+         HERO
+    ================================ -->
+    <header class="city-hero">
+        <span class="eyebrow">The Circular City</span>
+        <h1>Make the city a partner.</h1>
+        <p class="lede">
+            Circularity isn't a programme — it's an infrastructure. Every surplus,
+            every demand, every match is a node in a living city network.
+            Waste is only a material waiting for direction.
+        </p>
+        <div class="city-actions">
+            <a href="{% url 'website:browse' %}" class="btn-outline primary">Browse the Exchange</a>
+            <a href="{% url 'website:loops_detail' %}" class="btn-outline">Explore the Loops</a>
+        </div>
+    </header>
+
+    <!-- ================================
+         CITY STATS
+    ================================ -->
+    <section class="city-stats">
+        <div class="stat"><span class="stat-num">{{ total_nodes }}</span><span class="stat-label">City Nodes</span></div>
+        <div class="stat"><span class="stat-num">{{ total_surplus }}</span><span class="stat-label">Surplus Streams</span></div>
+        <div class="stat"><span class="stat-num">{{ total_demand }}</span><span class="stat-label">Demand Signals</span></div>
+        <div class="stat"><span class="stat-num">{{ total_matches }}</span><span class="stat-label">Matched Routes</span></div>
+    </section>
+
+    <!-- ================================
+         RESOURCE FLOW — "Waste is only a material waiting for direction"
+    ================================ -->
+    <section class="city-flow">
+        <span class="eyebrow center">Resource Flow</span>
+        <h2 class="section-title">Waste is only a material waiting for direction.</h2>
+
+        <div class="flow-board">
+            <div class="flow-col">
+                <span class="flow-head surplus">Surplus</span>
+                {% for m in flow %}
+                <div class="flow-row">
+                    <span class="flow-label">{{ m.label }}</span>
+                    <span class="flow-count surplus">{{ m.surplus }}</span>
+                </div>
+                {% empty %}
+                <p class="flow-empty">No approved surplus streams yet.</p>
+                {% endfor %}
+            </div>
+
+            <div class="flow-mid">
+                <span class="flow-pipe" aria-hidden="true"></span>
+                <span class="flow-circle">→</span>
+            </div>
+
+            <div class="flow-col">
+                <span class="flow-head demand">Demand</span>
+                {% for m in flow %}
+                <div class="flow-row">
+                    <span class="flow-label">{{ m.label }}</span>
+                    <span class="flow-count demand">{{ m.demand }}</span>
+                </div>
+                {% empty %}
+                <p class="flow-empty">No demand signals yet.</p>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <!-- ================================
+         WASTE CALCULATOR — "Waste is only a material waiting for direction"
+    ================================ -->
+    <section class="waste-calculator" id="waste-calculator">
+        <span class="eyebrow center">Waste Calculator</span>
+        <h2 class="section-title">How much is your surplus actually worth?</h2>
+        <p class="lede center">Give a material a direction and see what it becomes: diverted from landfill, saved in emissions, and ready to re-enter the city's loops.</p>
+
+        <div class="calc-board">
+            <div class="calc-controls">
+                <label class="calc-field">
+                    <span class="calc-label">Material</span>
+                    <select id="calc-material">
+                        <option value="wood">Wood</option>
+                        <option value="metal">Metal</option>
+                        <option value="textiles">Textiles</option>
+                        <option value="plastic">Plastic</option>
+                        <option value="foam">Foam</option>
+                        <option value="cardboard">Cardboard</option>
+                        <option value="food">Food</option>
+                        <option value="other">Other</option>
+                    </select>
+                </label>
+                <label class="calc-field">
+                    <span class="calc-label">Quantity</span>
+                    <div class="calc-qty">
+                        <input id="calc-quantity" type="number" min="0" step="any" value="100" placeholder="e.g. 100">
+                        <span class="calc-unit">kg</span>
+                    </div>
+                </label>
+            </div>
+
+            <div class="calc-out">
+                <div class="calc-stat">
+                    <span class="calc-stat-num" id="calc-diverted">0</span>
+                    <span class="calc-stat-label">kg diverted from landfill</span>
+                </div>
+                <div class="calc-stat">
+                    <span class="calc-stat-num" id="calc-co2">0</span>
+                    <span class="calc-stat-label">kg CO₂e saved</span>
+                </div>
+                <div class="calc-stat">
+                    <span class="calc-stat-num" id="calc-value">&pound;0</span>
+                    <span class="calc-stat-label">estimated reuse value</span>
+                </div>
+            </div>
+
+            <div class="calc-direction" id="calc-direction">
+                <span class="calc-direction-label">Give it direction:</span>
+                <a id="calc-direction-link" href="{% url 'website:loop_detail' 'material' %}" class="btn-outline">The Material Loop</a>
+                <p class="calc-direction-note" id="calc-direction-note"></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================================
+         CITY NETWORK MAP
+    ================================ -->
+    <section class="city-network">
+        <span class="eyebrow center">The Network</span>
+        <h2 class="section-title">Where the city is already circulating.</h2>
+
+        <div class="network-canvas">
+            {% for node in nodes %}
+            <a href="{% url 'website:browse' %}?location={{ node.name|urlencode }}"
+               class="network-node"
+               style="left: {{ node.x }}%; top: {{ node.y }}%; width: {{ node.radius }}px; height: {{ node.radius }}px;"
+               title="{{ node.name }} — {{ node.count }} listing{{ node.count|pluralize }}">
+                <span class="node-dot"></span>
+                <span class="node-label">{{ node.name }}</span>
+            </a>
+            {% empty %}
+            <p class="network-empty">The city is still being mapped — add the first surplus or demand to plant a node.</p>
+            {% endfor %}
+        </div>
+
+        <div class="node-legend">
+            <span><i class="dot surplus"></i> Surplus stream</span>
+            <span><i class="dot demand"></i> Demand signal</span>
+            <span>Hover a node to see its location</span>
+        </div>
+    </section>
+
+    <!-- ================================
+         CITY DIRECTORY LIST
+    ================================ -->
+    <section class="city-directory">
+        <span class="eyebrow center">City Directory</span>
+        <h2 class="section-title">Partners by location</h2>
+
+        <div class="city-cards">
+            {% for node in nodes %}
+            <a href="{% url 'website:browse' %}?location={{ node.name|urlencode }}" class="city-card">
+                <span class="city-card-name">{{ node.name }}</span>
+                <span class="city-card-meta">
+                    <span class="pill surplus">{{ node.surplus }} surplus</span>
+                    <span class="pill demand">{{ node.demand }} demand</span>
+                </span>
+                <span class="city-card-materials">
+                    {% for m in node.materials %}<span class="chip">{{ m }}</span>{% endfor %}
+                </span>
+                <span class="panel-link small">See Listings <span class="arrow">&rarr;</span></span>
+            </a>
+            {% empty %}
+            <p class="lede center">No approved listings yet — the network grows as partners join.</p>
+            {% endfor %}
+        </div>
+    </section>
+
+</div>
+{% endblock %}
+
+{% block modals %}{% endblock %}
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    var CALC = {
+        wood:      { co2: 2.1, value: 0.45, loop: 'material', label: 'The Material Loop', note: 'Becomes timber, board, furniture, and build material for makers and designers.' },
+        metal:     { co2: 4.2, value: 1.30, loop: 'material', label: 'The Material Loop', note: 'Scrap is feed-stock, not waste — it returns as structure, tools, and parts.' },
+        textiles:  { co2: 3.4, value: 0.80, loop: 'cultural', label: 'The Cultural Loop', note: 'Fabric becomes story — reworked into garments, flags, and set dressing.' },
+        plastic:   { co2: 3.0, value: 0.30, loop: 'material', label: 'The Material Loop', note: 'Re-granulated into new sheet, filament, and product prototypes.' },
+        foam:      { co2: 1.9, value: 0.15, loop: 'strategic', label: 'The Strategic Loop', note: 'Light, versatile, and storable — routed where it is needed most.' },
+        cardboard: { co2: 1.1, value: 0.35, loop: 'material', label: 'The Material Loop', note: 'A structural sheet waiting to become packaging, panels, and formwork.' },
+        food:      { co2: 1.7, value: 0.60, loop: 'edible', label: 'The Edible Loop', note: 'Surplus becomes soil, compost, and a new meal in the same city.' },
+        other:     { co2: 2.0, value: 0.25, loop: 'strategic', label: 'The Strategic Loop', note: 'Audit it, route it, and give it a place in the wider system.' }
+    };
+
+    var materialEl = document.getElementById('calc-material');
+    var quantityEl = document.getElementById('calc-quantity');
+    var divertedEl = document.getElementById('calc-diverted');
+    var co2El = document.getElementById('calc-co2');
+    var valueEl = document.getElementById('calc-value');
+    var linkEl = document.getElementById('calc-direction-link');
+    var noteEl = document.getElementById('calc-direction-note');
+
+    function fmt(n) {
+        return Math.round(n).toLocaleString('en-GB');
+    }
+
+    function calculate() {
+        var mat = CALC[materialEl.value] || CALC.other;
+        var qty = parseFloat(quantityEl.value) || 0;
+        if (qty < 0) qty = 0;
+
+        divertedEl.textContent = fmt(qty);
+        co2El.textContent = fmt(qty * mat.co2);
+        valueEl.textContent = '\u00a3' + fmt(qty * mat.value);
+
+        var slug = mat.loop;
+        var slugMap = { material: 'material', edible: 'edible', strategic: 'strategic', cultural: 'cultural' };
+        linkEl.textContent = mat.label;
+        linkEl.setAttribute('href', '/loops/' + (slugMap[slug] || 'material') + '/');
+        noteEl.textContent = mat.note;
+    }
+
+    materialEl.addEventListener('change', calculate);
+    quantityEl.addEventListener('input', calculate);
+    calculate();
+});
+</script>

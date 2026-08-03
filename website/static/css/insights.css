@@ -82,28 +82,81 @@
 .insights-page { font-family: var(--font-sans); color: var(--black); max-width: 1300px; margin: 0 auto; padding: 0 40px 100px; }
 
 /* =========================================================
- TOOLBAR — filter pills, same visual language as Magazine/Knowledge
+ TOOLBAR — filter bar: labeled groups, segmented type control,
+ category pills, result count.
 ========================================================= */
 .insights-toolbar {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  padding: 0;
+  border: 1px solid var(--grey-line);
+  background: var(--off-white);
+  margin: 44px 0 60px;
+}
+
+.filter-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
-  gap: 12px;
-  padding: 44px 0 24px;
-  border-bottom: 1px solid var(--grey-line);
-  margin-bottom: 60px;
+  gap: 14px;
+  padding: 16px 22px;
 }
-.filter-pills { display: flex; flex-wrap: wrap; gap: 10px; }
+.filter-row + .filter-row {
+  border-top: 1px solid var(--grey-line);
+}
+
+.filter-group {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+.filter-label {
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--grey);
+  white-space: nowrap;
+}
+
+.segmented {
+  display: inline-flex;
+  border: 1px solid var(--grey-line);
+  background: var(--white);
+}
+.segmented a {
+  padding: 9px 20px;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--black);
+  border-right: 1px solid var(--grey-line);
+  transition: background .2s ease, color .2s ease;
+}
+.segmented a:last-child { border-right: none; }
+.segmented a:hover { color: var(--orange); }
+.segmented a.active { background: var(--black); color: var(--white); }
+.segmented a.active:hover { color: var(--white); }
+
+.result-count {
+  font-size: 0.78rem;
+  color: var(--grey);
+  white-space: nowrap;
+}
+
+.filter-pills { display: flex; flex-wrap: wrap; gap: 8px; }
 .filter-pill {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 9px 18px;
+  padding: 7px 14px;
   border: 1px solid var(--grey-line);
   background: var(--white);
   color: var(--black);
-  font-size: 0.78rem;
+  font-size: 0.75rem;
   letter-spacing: 0.03em;
   white-space: nowrap;
   transition: border-color .2s ease, background .2s ease, color .2s ease;
@@ -174,6 +227,15 @@
   background: linear-gradient(180deg, rgba(10,10,10,.35), rgba(10,10,10,.85));
 }
 .article-body { position: relative; z-index: 1; padding: 26px; display: flex; flex-direction: column; gap: 8px; flex: 1; justify-content: flex-end; }
+.article-kind {
+  align-self: flex-start;
+  font-size: 0.62rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--white);
+  background: var(--orange);
+  padding: 4px 10px;
+}
 .article-category { font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--orange); }
 .article-date { font-size: 0.72rem; letter-spacing: 0.06em; text-transform: uppercase; color: rgba(255,255,255,0.7); }
 .article-body h4 { margin: 0; font-family: var(--font-display); font-weight: 500; font-size: 1.25rem; }
