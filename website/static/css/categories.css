@@ -110,7 +110,10 @@
         linear-gradient(160deg, rgba(255,255,255,.35), transparent 60%);
     opacity:.18;
     transition:opacity .3s ease;
+    pointer-events:none;
 }
+
+.category-tile > * { position:relative; z-index:1; }
 
 .category-tile:hover{
     background:linear-gradient(160deg, var(--tone-a), var(--tone-b));
